@@ -73,5 +73,3 @@ For more options, run:
 ```batch
 python nvgif-cli.py --help
 ```
-
-These examples assume you're running the CLI in the same directory as the executable. Adjust paths as needed!
