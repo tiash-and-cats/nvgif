@@ -42,7 +42,7 @@ The specification is in [`specs/`](specs/README.md).
 
 A standalone NVGIF encoder/decoder is available as a command-line utility. It supports version-aware encoding, decoding, and header inspection across all NVGIF versions.
 
-It is located in the `python/` directory as `nvgif-cli.py`.
+It is located in the `python/` directory in the Github repo as `nvgif-cli.py`.
 
 This tool is ideal for scripting, testing, or integrating NVGIF into your own pipelines.
 
