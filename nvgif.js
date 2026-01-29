@@ -205,6 +205,30 @@ async function decodeNVGIF(bytes) {
   return canvas;
 }
 
+class NVGIFImage {
+  constructor(src) {
+    this.onload = () => {};
+    this.onerror = () => {};
+    this.imgData = null;
+
+    (async () => {
+      try {
+        const response = await fetch(src);
+        const buffer = await response.arrayBuffer();
+        const bytes = new Uint8Array(buffer);
+
+        const canvas = await decodeNVGIF(bytes);
+        const ctx = canvas.getContext("2d");
+        this.imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+        this.onload();
+      } catch (err) {
+        this.onerror(err);
+      }
+    })();
+  }
+}
+
 document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"], img[src$=".nvg2"],
                            img[src$=".nvg3"], img[src$=".nvg4"]`).forEach(async e => {
                                try{
