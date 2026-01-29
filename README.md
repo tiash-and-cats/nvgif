@@ -18,7 +18,7 @@ The MIME type of NVGIF files is `image/x-nvgif`
 
 The Github repo contains 3 reference implementations of NVGIF:
 
-- **Python (`python/`)**: Requires `pillow`. Provides an `NVGIF` class with `.encode` and `.decode` methods. Supports all versions (v1–v4).
+- **Python (`python/nvgif.py`)**: Requires `pillow`. Provides an `NVGIF` class with `.encode` and `.decode` methods. Supports all versions (v1–v4).
 - **JavaScript (`nvgif.js`)**: Browser decoder. Finds `<img>` elements with NVGIF sources and replaces them with decoded PNGs via [Blob URIs](https://en.wikipedia.org/wiki/Blob_URI_scheme). Supports v1–v3 (decode‑only).
 - **C# (`NVGIF.cs`)**: Provides an `NVGIF` class with `.Encode` and `.Decode` methods. Supports all versions (v1–v4).
 
