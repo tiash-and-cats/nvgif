@@ -10,16 +10,16 @@
 <p>Check the page source! You only need to include <code>nvgif.js</code> and NVGIF files will be decoded in-browser.</p>
 <p>NVGIF files can also be drawn on a canvas:</p>
 
-<canvas id="nvgifCanvas" width="278" height="229"></canvas>
+<canvas id="myCanvas" width="300" height="150" style="border:1px solid grey"></canvas>
 
 <script src="nvgif.js"></script> 
 <script>
-  const img = new NVGIFImage("images/drawing.nvg3");
-  img.onload = () => {
-    const canvas = document.getElementById("nvgifCanvas");
-    const ctx = canvas.getContext("2d");
-    ctx.putImageData(img.imgData, 0, 0);
-  };
+const img = new NVGIFImage("images/drawing.nvg3");
+img.onload = () => {
+  const canvas = document.getElementById("myCanvas");
+  const ctx = canvas.getContext("2d");
+  ctx.putImageData(img.imgData, 0, 0);
+};
 </script>
 
 </body>
