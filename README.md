@@ -1,7 +1,6 @@
 # This is version 4 of the Not Very Good Image Format 
 
-NVGIF is a tiny, simple image format designed for fun, experimentation, and learning.  
-Despite its tongue‑in‑cheek name, NVGIF is only slightly larger than PNG on average, and it comes with clear specs and **3(!)** reference implementations. As it has so many implementations, that basically proves it's a standard.
+NVGIF is a tiny, simple image format designed for fun, experimentation, and learning. Despite its tongue‑in‑cheek name, NVGIF is only slightly larger than PNG on average, and it comes with clear specs and **3(!)** reference implementations. As it has so many implementations, that basically proves it's a standard.
 
 Version 4 introduces refinements to compression (RLE + zlib), making decoding more efficient while keeping the format lightweight and approachable.
 
