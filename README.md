@@ -2,8 +2,17 @@
 
 The Not Very Good Image Format is a tiny, simple image format but only a bit larger than PNG on average!
 
-- Mimetype (I just made it up): `image/x-nvgif`
-- Extension: `.nvg, .nvg1, .nvg2, .nvg3, .nvg4`
+## File Extensions and Mimetype
+
+The MIME type of NVGIF files is `image/x-nvgif`
+
+| Extension | Versions Supported | Notes |
+|-----------|--------------------|-------|
+| `.nvg`    | v1–v4              | General extension, recommended for everyday use |
+| `.nvg1`   | v1                 | Explicit version marker (optional) |
+| `.nvg2`   | v2                 | Explicit version marker (optional) |
+| `.nvg3`   | v3                 | Explicit version marker (optional) |
+| `.nvg4`   | v4                 | Explicit version marker (optional) |
 
 ## Reference Implementations
 
