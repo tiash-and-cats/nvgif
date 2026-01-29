@@ -7,7 +7,7 @@ The Not Very Good Image Format is a tiny, simple image format but only a bit lar
 
 ## Reference Implementations
 
-This repository contains 3 reference implementations of NVGIF:
+The Github repo contains 3 reference implementations of NVGIF:
 
 - **Python (`python/`)**: Requires `pillow`. Provides an `NVGIF` class with `.encode` and `.decode` methods. Supports all versions (v1–v4).
 - **JavaScript (`nvgif.js`)**: Browser decoder. Finds `<img>` elements with NVGIF sources and replaces them with decoded PNGs via [Blob URIs](https://en.wikipedia.org/wiki/Blob_URI_scheme). Supports v1–v3 (decode‑only).
