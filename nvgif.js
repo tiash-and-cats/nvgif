@@ -197,7 +197,21 @@ async function decodeNVGIF(bytes) {
   return canvas;
 }
 
-window.NVGIFImage = class {
+document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"], img[src$=".nvg2"],
+                           img[src$=".nvg3"], img[src$=".nvg4"]`).forEach(async e => {
+                               try{
+  const response = await fetch(e.src);
+  const buffer = await response.arrayBuffer();
+  const bytes = new Uint8Array(buffer);
+  
+  const canvas = await decodeNVGIF(bytes);
+  
+  e.dataset.originalSrc = e.src;
+  e.src = URL.createObjectURL(await canvas.convertToBlob());
+                               }catch(e){console.error(e);throw e}
+});
+
+globalThis.NVGIFImage = class {
   constructor(src) {
     this.onload = () => {};
     this.onerror = () => {};
@@ -220,17 +234,3 @@ window.NVGIFImage = class {
     })();
   }
 };
-
-document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"], img[src$=".nvg2"],
-                           img[src$=".nvg3"], img[src$=".nvg4"]`).forEach(async e => {
-                               try{
-  const response = await fetch(e.src);
-  const buffer = await response.arrayBuffer();
-  const bytes = new Uint8Array(buffer);
-  
-  const canvas = await decodeNVGIF(bytes);
-  
-  e.dataset.originalSrc = e.src;
-  e.src = URL.createObjectURL(await canvas.convertToBlob());
-                               }catch(e){console.error(e);throw e}
-});
