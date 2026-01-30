@@ -1,3 +1,5 @@
+import pako from "https://cdn.jsdelivr.net/npm/pako@2.1.0/+esm";
+
 const C_NONE = 0;
 const C_RLE = 1;
 const C_ZLIB = 2;
@@ -71,17 +73,7 @@ async function streamToUint8Array(stream) {
 }
 
 async function inflateWithDS(compressedBytes) {
-  // Skip 2‑byte zlib header and 4‑byte Adler32 footer
-  if (compressedBytes.length < 6) {
-    throw new Error("Zlib stream too short");
-  }
-  const rawDeflate = compressedBytes.slice(2, compressedBytes.length - 4);
-  // const rawDeflate = compressedBytes;
-  const blob = new Blob([rawDeflate]);
-  const ds = new DecompressionStream("deflate");
-  const decompressedStream = blob.stream().pipeThrough(ds);
-  const buffer = await streamToUint8Array(decompressedStream);
-  return new Uint8Array(buffer);
+  return pako.inflate(compressedBytes);
 }
 
 async function decodeNVGIF(bytes) {
@@ -205,7 +197,7 @@ async function decodeNVGIF(bytes) {
   return canvas;
 }
 
-class NVGIFImage {
+window.NVGIFImage = class {
   constructor(src) {
     this.onload = () => {};
     this.onerror = () => {};
@@ -227,7 +219,7 @@ class NVGIFImage {
       }
     })();
   }
-}
+};
 
 document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"], img[src$=".nvg2"],
                            img[src$=".nvg3"], img[src$=".nvg4"]`).forEach(async e => {
