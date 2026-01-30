@@ -72,11 +72,7 @@ async function streamToUint8Array(stream) {
   return result;
 }
 
-async function inflateWithDS(compressedBytes) {
-  return pako.inflate(compressedBytes);
-}
-
-async function decodeNVGIF(bytes) {
+function decodeNVGIF(bytes) {
 
   const view = new DataView(bytes.buffer);
 
@@ -159,7 +155,7 @@ async function decodeNVGIF(bytes) {
       }
     } else if (compression === C_ZLIB) {
       const compressed = bytes.slice(offset);
-      const decompressed = await inflateWithDS(compressed);
+      const decompressed = pako.inflate(compressed);
 
       assert(decompressed.length === width * height * bpp, "Zlib size mismatch");
       for (let i = 0, j = 0; i < decompressed.length; i += bpp, j += 4) {
@@ -171,7 +167,7 @@ async function decodeNVGIF(bytes) {
     } else if (compression === C_RLEZLIB) {
       const compressed = bytes.slice(offset);
 
-      const decompressed = await inflateWithDS(compressed);
+      const decompressed = pako.inflate(compressed);
 
       let innerOffset = 0;
       for (let y = 0; y < height; y++) {
@@ -199,7 +195,6 @@ async function decodeNVGIF(bytes) {
 
 document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"], img[src$=".nvg2"],
                            img[src$=".nvg3"], img[src$=".nvg4"]`).forEach(async e => {
-                               try{
   const response = await fetch(e.src);
   const buffer = await response.arrayBuffer();
   const bytes = new Uint8Array(buffer);
@@ -208,10 +203,9 @@ document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"], img[src$=".nvg2"
   
   e.dataset.originalSrc = e.src;
   e.src = URL.createObjectURL(await canvas.convertToBlob());
-                               }catch(e){console.error(e);throw e}
 });
 
-export class NVGIFImage {
+class NVGIFImage {
   constructor(src) {
     this.onload = () => {};
     this.onerror = () => {};
@@ -223,8 +217,9 @@ export class NVGIFImage {
         const buffer = await response.arrayBuffer();
         const bytes = new Uint8Array(buffer);
 
-        const canvas = await decodeNVGIF(bytes);
+        const canvas = decodeNVGIF(bytes);
         const ctx = canvas.getContext("2d");
+        this.canvas = canvas;
         this.imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
         this.onload();
@@ -236,3 +231,11 @@ export class NVGIFImage {
 };
 
 globalThis.NVGIFImage = NVGIFImage;
+
+document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"], img[src$=".nvg2"],
+                           img[src$=".nvg3"], img[src$=".nvg4"]`).forEach(e => {
+  const img = new NVGIFImage(e.src);
+  img.onload = async() => {
+    e.src = URL.createObjectURL(await img.canvas.convertToBlob());
+  }
+});
