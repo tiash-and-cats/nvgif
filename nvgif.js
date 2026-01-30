@@ -52,26 +52,6 @@ function decodeRow(data, compression, bpp, width) {
   }
 }
 
-async function streamToUint8Array(stream) {
-  let chunks = [];
-  const ws = new WritableStream({
-    write(chunk) {
-      chunks.push(chunk);
-    }
-  });
-  await stream.pipeTo(ws);
-
-  // Flatten
-  const totalLength = chunks.reduce((sum, c) => sum + c.length, 0);
-  const result = new Uint8Array(totalLength);
-  let offset = 0;
-  for (const chunk of chunks) {
-    result.set(chunk, offset);
-    offset += chunk.length;
-  }
-  return result;
-}
-
 function decodeNVGIF(bytes) {
 
   const view = new DataView(bytes.buffer);
