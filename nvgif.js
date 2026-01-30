@@ -211,7 +211,7 @@ document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"], img[src$=".nvg2"
                                }catch(e){console.error(e);throw e}
 });
 
-globalThis.NVGIFImage = class {
+export class NVGIFImage {
   constructor(src) {
     this.onload = () => {};
     this.onerror = () => {};
@@ -234,3 +234,5 @@ globalThis.NVGIFImage = class {
     })();
   }
 };
+
+globalThis.NVGIFImage = NVGIFImage;
