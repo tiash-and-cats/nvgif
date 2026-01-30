@@ -16,7 +16,7 @@ function headerSizeForVersion(version) {
     case 1: return 8;
     case 2: return 9;
     case 3: return 10;
-    case 4: return 10;
+    case 4: return 11;
     default: throw new Error("Unsupported version");
   }
 }
