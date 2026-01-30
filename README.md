@@ -49,27 +49,27 @@ This tool is ideal for scripting, testing, or integrating NVGIF into your own pi
 ### Example Usage
 
 Encode a PNG file into NVGIF v4:
-```batch
+```bash
 python nvgif-cli.py encode input.png output.nvg --version 4
 ```
 
 Convert an `.nvg` file back into a standard PNG:
-```batch
+```bash
 python nvgif-cli.py decode input.nvg output.png
 ```
 
 Display an NVGIF file's header and metadata:
-```batch
+```bash
 python nvgif-cli.py info input.nvg
 ```
 
 View an NVGIF image in a resizable window:
-```batch
+```bash
 python nvgif-cli.py view image.nvg
 ```
 > Launches a graphical window with the image rendered over a checkerboard background (for transparency). Handy for previewing `.nvg` files without converting to PNG.
 
 For more options, run:
-```batch
+```bash
 python nvgif-cli.py --help
 ```
