@@ -8,7 +8,7 @@
 
 <table>
 <tr><td>PNG (2KB): </td><td><img src="images/drawing.png"></img></td></tr>
-<tr><td>NVGIFv3 (6KB): </td><td><img src="images/drawing.nvg3"></img></td></tr>
+<tr><td>NVGIFv4 (6KB): </td><td><img src="images/drawing.nvg"></img></td></tr>
 </table>
 
 <p>Check the page source! You only need to include <code>nvgif.js</code> and NVGIF files will be decoded in-browser.</p>
@@ -16,7 +16,7 @@
 
 <canvas id="myCanvas" width="400" height="400" style="border:1px solid grey"></canvas>
 
-<script src="nvgif.js"></script> 
+<script type="module" src="nvgif.js"></script> 
 <script>
 const img = new NVGIFImage("images/drawing.nvg3");
 img.onload = () => {
