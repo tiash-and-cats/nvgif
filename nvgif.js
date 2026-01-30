@@ -193,18 +193,6 @@ function decodeNVGIF(bytes) {
   return canvas;
 }
 
-document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"], img[src$=".nvg2"],
-                           img[src$=".nvg3"], img[src$=".nvg4"]`).forEach(async e => {
-  const response = await fetch(e.src);
-  const buffer = await response.arrayBuffer();
-  const bytes = new Uint8Array(buffer);
-  
-  const canvas = await decodeNVGIF(bytes);
-  
-  e.dataset.originalSrc = e.src;
-  e.src = URL.createObjectURL(await canvas.convertToBlob());
-});
-
 class NVGIFImage {
   constructor(src) {
     this.onload = () => {};
