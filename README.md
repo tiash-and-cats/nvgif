@@ -1,3 +1,8 @@
+---
+layout: default
+title: "Welcome to the Not Very Good Image Format docs!"
+---
+
 ![NVGIF logo](logo.png)
 
 # This is version 4 of the Not Very Good Image Format 
