@@ -45,7 +45,6 @@ namespace NVGIF
                     }
                     catch (InvalidDataException ide)
                     {
-                        Console.WriteLine("[NVGIF] Zlib decompression failed: " + ide.Message);
                         throw;
                     }
                 }
@@ -62,7 +61,6 @@ namespace NVGIF
                 }
                 /*else if (header.Version == 4 && header.Compression == CompressionType.RLE_Zlib)
                 {
-                    Console.WriteLine($"[NVGIF] Decompressed RLE_Zlib payload: {payload.Length} bytes");
 
                     int testOffset = 0;
                     for (int y = 0; y < header.Height; y++)
@@ -78,15 +76,11 @@ namespace NVGIF
 
                         testOffset += rowLen;
                     }
-
-                    Console.WriteLine("[NVGIF] Decompressed rows parsed cleanly.");
                 }*/
                 else if (header.Version == 4 && header.Compression == CompressionType.RLE_Zlib)
 {
-                    Console.WriteLine($"[Before] Zlib header: 0x{payload[0]:X2} 0x{payload[1]:X2}");
 
                     //payload = DecompressZlib(payload);
-                    Console.WriteLine($"[After] First 2 bytes of decompressed: 0x{payload[0]:X2} 0x{payload[1]:X2}");
 
                     int readOffset = 0;
                      
@@ -259,8 +253,7 @@ namespace NVGIF
             int deflateLength = data.Length - 6;
             if (deflateLength <= 0)
                 throw new InvalidDataException("Deflate stream length invalid");
-
-            Console.WriteLine($"Zlib header: 0x{data[0]:X2} 0x{data[1]:X2}");
+            
             using (var input = new MemoryStream(data, 2, deflateLength))
             using (var deflate = new DeflateStream(input, CompressionMode.Decompress))
             using (var output = new MemoryStream())
