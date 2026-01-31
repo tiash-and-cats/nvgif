@@ -31,7 +31,7 @@ The Github repo contains 3 reference implementations of NVGIF:
   Supports all versions (v1-v4, decode-only). Uses [`pako`](https://github.com/nodeca/pako) via jsDelivr for v4 compression. Example in [`nvgifjstest.html`](nvgifjstest.html).
 
 - **C# (`NVGIF.cs`)** ⚙️  
-  Provides an `NVGIF` class with `.Decode` method.  
+  Requires `System.Drawing.Common`. Provides an `NVGIF` class with `.Decode` method.  
   Supports all versions (v1–v4, decode-only).
 
 ## Specification
