@@ -220,6 +220,7 @@ document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"], img[src$=".nvg2"
 const observer = new MutationObserver(mutations => {
   for (const mutation of mutations) {
     mutation.addedNodes.forEach(node => {
+      console.log(node);
       // Case 1: node itself is an <img>
       if (node.tagName === "IMG" && /\.(nvg[1-4]?)$/i.test(node.src)) {
         handleNVGIFImage(node);
