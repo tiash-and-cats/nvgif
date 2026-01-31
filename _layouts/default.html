@@ -5,7 +5,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
-<script>hljs.highlightAll();</script>
+<script>
+hljs.configure({
+  cssSelector: "div pre code"
+});
+hljs.highlightAll();
+</script>
 <title>{{ page.title }} | NVGIF docs</title>
 <style>
 body {
