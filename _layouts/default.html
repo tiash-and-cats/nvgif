@@ -143,13 +143,20 @@ img {
   {{ content }}
 </article>
 
-<footer>
-<p><em>Perhaps the best image format was the friends we made along the way.</em></p>
-<p>&copy; tiash-and-cats <script>document.write(new Date().getFullYear());</script><br>
-<small>The NVGIF reference implementations and examples are licensed under the MIT License.</small></p>
+<footer role="contentinfo">
+  <p><em id="quote"></em></p>
+  <p>&copy; tiash-and-cats <span id="year"></span><br>
+  <small>The NVGIF reference implementations and examples are licensed under the MIT License.</small></p>
 </footer>
 
 <script>
+const quotes = [
+  "You didn't need efficiency, the efficiency was inside you all along.",
+  "Perhaps the best image format was the friends we made along the way."
+];
+document.getElementById("quote").textContent = quotes[Math.floor(Math.random() * quotes.length)];
+document.getElementById("year").textContent = new Date().getFullYear();
+
 function myFunction() {
   var x = document.getElementById("myTopnav");
   if (x.className === "") {
