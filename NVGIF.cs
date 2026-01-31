@@ -4,7 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 
-namespace airsquirrel
+namespace NVGIF
 {
     public static class NVGIF
     {
