@@ -59,29 +59,8 @@ namespace NVGIF
 
                     Array.Copy(payload, 0, pixels, 0, pixels.Length);
                 }
-                /*else if (header.Version == 4 && header.Compression == CompressionType.RLE_Zlib)
-                {
-
-                    int testOffset = 0;
-                    for (int y = 0; y < header.Height; y++)
-                    {
-                        if (testOffset + 2 > payload.Length)
-                            throw new InvalidDataException($"Row {y}: missing row length");
-
-                        ushort rowLen = (ushort)((payload[testOffset] << 8) | payload[testOffset + 1]);
-                        testOffset += 2;
-
-                        if (testOffset + rowLen > payload.Length)
-                            throw new InvalidDataException($"Row {y}: row overrun: {testOffset + rowLen} > {payload.Length}");
-
-                        testOffset += rowLen;
-                    }
-                }*/
                 else if (header.Version == 4 && header.Compression == CompressionType.RLE_Zlib)
-{
-
-                    //payload = DecompressZlib(payload);
-
+                {
                     int readOffset = 0;
                      
                     for (int y = 0; y < header.Height; y++)
