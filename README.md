@@ -30,9 +30,9 @@ The Github repo contains 3 reference implementations of NVGIF:
   Browser decoder. Finds `<img>` elements with NVGIF sources and replaces them with decoded PNGs via [Blob URIs](https://en.wikipedia.org/wiki/Blob_URI_scheme). Also has an `NVGIFImage` with `.onload` and `.onerror` so that you can draw images onto a canvas.
   Supports all versions (v1-v4, decode-only). Uses [`pako`](https://github.com/nodeca/pako) via jsDelivr for v4 compression. Example in [`nvgifjstest.html`](nvgifjstest.html).
 
-- **C# (`NVGIF.cs`)** ⚙️  
+- **C# (`csharp/NVGIF.cs`)** ⚙️  
   Requires `System.Drawing.Common`. Provides an `NVGIF` class with `.Decode` method.  
-  Supports all versions (v1–v4, decode-only).
+  Supports all versions (v1–v4, decode-only). Example in [`csharp/NVGIFTest.cs`](https://github.com/tiash-and-cats/nvgif/tree/master/csharp).
 
 ## Specification
 
