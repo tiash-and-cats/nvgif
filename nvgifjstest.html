@@ -33,9 +33,11 @@ window.addEventListener("DOMContentLoaded", () => { // important!!
   const btn = document.getElementById("myBtn");
   btn.onclick = () => {
     const div = document.getElementById("myDiv");
+    const p = document.createElement("p");
     const img = document.createElement("img");
     img.src = "images/drawing.nvg";
-    div.appendChild(img);
+    p.appendChild(img);
+    div.appendChild(p);
   }
 });
 </script>
