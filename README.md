@@ -42,7 +42,7 @@ The specification is in [`specs/`](specs/).
 
 A standalone NVGIF encoder/decoder is available as a command-line utility. It supports version-aware encoding, decoding, and header inspection across all NVGIF versions.
 
-It is located in the `python/` directory in the Github repo as `nvgif-cli.py`. As it uses the Python implementation of NVGIF, it needs Pillow to function. You need Python >=3.12 to run it.
+It is located in the `python/` directory in the Github repo as [`nvgif-cli.py`](https://github.com/tiash-and-cats/nvgif/tree/master/python/nvgif_cli.py). As it uses the Python implementation of NVGIF, it needs Pillow to function. You need Python >=3.12 to run it.
 
 This tool is ideal for scripting, testing, or integrating NVGIF into your own pipelines.
 
