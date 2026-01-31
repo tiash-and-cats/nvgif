@@ -7,8 +7,8 @@
 <hr>
 
 <table>
-<tr><td>PNG (2KB): </td><td><img src="images/drawing.png"></img></td></tr>
-<tr><td>NVGIFv4 (2KB): </td><td><img src="images/drawing.nvg"></img></td></tr>
+<tr><td>PNG (1.56KB): </td><td><img src="images/drawing.png"></img></td></tr>
+<tr><td>NVGIFv4 (1.06KB): </td><td><img src="images/drawing.nvg"></img></td></tr>
 </table>
 
 <p>Check the page source! You only need to include <code>nvgif.js</code> and NVGIF files will be decoded in-browser.</p>
@@ -18,7 +18,7 @@
 
 <script type="module" src="nvgif.js"></script> 
 <script>
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", () => { // important!!
   const img = new NVGIFImage("images/drawing.nvg3");
   img.onload = () => {
     const canvas = document.getElementById("myCanvas");
