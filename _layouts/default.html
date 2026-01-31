@@ -2,12 +2,15 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ page.title }} | NVGIF</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
 <style>
 body {
   margin: 0;
   font-family: system-ui, Arial, Helvetica, sans-serif;
+  color: #222222;
 }
 
 .topnav {
@@ -52,6 +55,9 @@ body {
   }
 }
 
+a {color: dodgerBlue;}
+a:hover {color: royalBlue;}
+
 @media screen and (max-width: 600px) {
   .topnav.responsive {position: relative;}
   .topnav.responsive .icon {
@@ -66,14 +72,26 @@ body {
   }
   .topnav.responsive a.text {display: none}
 }
+
+code:not(pre > code) {
+  padding: 4px;
+  border-radius: 4px;
+  background-color: #efefef;
+}
+
+blockquote {
+  margin-left: 0;
+  padding-left: 20px;
+  border-left: 5px solid grey;
+}
 </style>
 </head>
 <body>
 
 <div class="topnav" id="myTopnav">
-  <a href="#home" class="logo">nvgif</a>
+  <a href="/nvgif/" class="logo">nvgif</a>
   <a class="text">|</a>
-  <a href="#spec">Specification</a>
+  <a href="/nvgif/specs">Specification</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
   </a>
