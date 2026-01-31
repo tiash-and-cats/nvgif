@@ -205,9 +205,11 @@ async function handleNVGIFImages() {
                              img[src$=".nvg2"], img[src$=".nvg3"], 
                              img[src$=".nvg4"]`).forEach(async(e) => {
     const img = new NVGIFImage(e.src);
+    console.log("Loading image:", e.src);
     img.onload = async () => {
       e.dataset.originalSrc = e.src;
       e.src = URL.createObjectURL(await img.canvas.convertToBlob());
+      console.log("Loaded image:", e.src);
     };
     img.onerror = () => {
       console.error("Failed to decode NVGIF:", e.src);
@@ -217,12 +219,14 @@ async function handleNVGIFImages() {
                              picture > source[srcset$=".nvg2"], picture > source[srcset$=".nvg3"], 
                              picture > source[srcset$=".nvg4"]`).forEach(async(e) => {
     const img = new NVGIFImage(e.srcset);
+    console.log("Loading image:", e.srcset);
     img.onload = async () => {
       e.dataset.originalSrcset = e.srcset;
       e.srcset = URL.createObjectURL(await img.canvas.convertToBlob());
+      console.log("Loaded image:", e.srcset);
     };
     img.onerror = () => {
-      console.error("Failed to decode NVGIF:", e.src);
+      console.error("Failed to decode NVGIF:", e.srcset);
     };
   });
 }
