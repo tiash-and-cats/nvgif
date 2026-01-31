@@ -220,8 +220,15 @@ document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"], img[src$=".nvg2"
 const observer = new MutationObserver(mutations => {
   for (const mutation of mutations) {
     mutation.addedNodes.forEach(node => {
+      // Case 1: node itself is an <img>
       if (node.tagName === "IMG" && /\.(nvg[1-4]?)$/i.test(node.src)) {
         handleNVGIFImage(node);
+        return;
+      }
+      // Case 2: node contains <img> children (like a <p>)
+      if (node.querySelectorAll) {
+        node.querySelectorAll("img[src$='.nvg'], img[src$='.nvg1'], img[src$='.nvg2'], img[src$='.nvg3'], img[src$='.nvg4']")
+            .forEach(handleNVGIFImage);
       }
     });
   }
