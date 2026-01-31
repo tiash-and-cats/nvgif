@@ -209,7 +209,7 @@ async function handleNVGIFImages() {
     img.onload = async () => {
       e.dataset.originalSrc = e.src;
       e.src = URL.createObjectURL(await img.canvas.convertToBlob());
-      console.log("Loaded image:", e.src);
+      console.log("Loaded image:", e.dataset.originalSrc);
     };
     img.onerror = () => {
       console.error("Failed to decode NVGIF:", e.src);
@@ -223,7 +223,7 @@ async function handleNVGIFImages() {
     img.onload = async () => {
       e.dataset.originalSrcset = e.srcset;
       e.srcset = URL.createObjectURL(await img.canvas.convertToBlob());
-      console.log("Loaded image:", e.srcset);
+      console.log("Loaded image:", e.dataset.originalSrcset);
     };
     img.onerror = () => {
       console.error("Failed to decode NVGIF:", e.srcset);
