@@ -11,6 +11,14 @@ title: "nvgif.js demo page"
 </table>
 
 <p>Check the <a href="https://github.com/tiash-and-cats/nvgif/blob/master/nvgifjstest.html">source code</a>! You only need to include <code>nvgif.js</code> and NVGIF files will be decoded in-browser.</p>
+<p><code>&lt;picture&gt;</code> tags are also supported:</p>
+
+<picture>
+  <source media="(min-width: 650px)" srcset="images/railing.nvg">
+  <source media="(min-width: 465px)" srcset="images/img_girl.nvg">
+  <img src="images/drawing.nvg" style="width:auto;">
+</picture>
+
 <p>NVGIF files can also be drawn on a canvas:</p>
 
 <canvas id="myCanvas" width="400" height="400" style="border:1px solid grey"></canvas>

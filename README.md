@@ -27,7 +27,7 @@ The Github repo contains 3 reference implementations of NVGIF:
   Supports all versions (v1-v4).
 
 - **JavaScript (`nvgif.js`)** 🌐  
-  Browser decoder. Finds `<img>` elements with NVGIF sources and replaces them with decoded PNGs via [Blob URIs](https://en.wikipedia.org/wiki/Blob_URI_scheme). Also has an `NVGIFImage` with `.onload` and `.onerror` so that you can draw images onto a canvas.
+  Browser decoder. Finds `<img>` and `<picture>` elements with NVGIF sources and replaces them with decoded PNGs via [Blob URIs](https://en.wikipedia.org/wiki/Blob_URI_scheme). Also has an `NVGIFImage` with `.onload` and `.onerror` so that you can draw images onto a canvas.
   Supports all versions (v1-v4, decode-only). Uses [`pako`](https://github.com/nodeca/pako) via jsDelivr for v4 compression. Example in [`nvgifjstest.html`](nvgifjstest.html).
 
 - **C# (`csharp/NVGIF.cs`)** ⚙️  
@@ -42,7 +42,7 @@ The specification is in [`specs/`](specs/).
 
 A standalone NVGIF encoder/decoder is available as a command-line utility. It supports version-aware encoding, decoding, and header inspection across all NVGIF versions.
 
-It is located in the `python/` directory in the Github repo as [`nvgif-cli.py`](https://github.com/tiash-and-cats/nvgif/tree/master/python/nvgif_cli.py). As it uses the Python implementation of NVGIF, it needs Pillow to function. You need Python >=3.12 to run it.
+It is located in the `python/` directory in the Github repo as [`nvgif_cli.py`](https://github.com/tiash-and-cats/nvgif/tree/master/python/nvgif_cli.py). As it uses the Python implementation of NVGIF, it needs Pillow to function. You need Python >=3.12 to run it.
 
 This tool is ideal for scripting, testing, or integrating NVGIF into your own pipelines.
 

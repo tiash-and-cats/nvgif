@@ -200,39 +200,40 @@ class NVGIFImage {
 
 globalThis.NVGIFImage = NVGIFImage;
 
-// Function to handle NVGIF <img> elements
-async function handleNVGIFImage(e) {
-  const img = new NVGIFImage(e.src);
-  img.onload = async () => {
-    e.dataset.originalSrc = e.src;
-    e.src = URL.createObjectURL(await img.canvas.convertToBlob());
-  };
-  img.onerror = () => {
-    console.error("Failed to decode NVGIF:", e.src);
-  };
+async function handleNVGIFImages() {
+  document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"],
+                             img[src$=".nvg2"], img[src$=".nvg3"], 
+                             img[src$=".nvg4"]`).forEach(async(e) => {
+    const img = new NVGIFImage(e.src);
+    img.onload = async () => {
+      e.dataset.originalSrc = e.src;
+      e.src = URL.createObjectURL(await img.canvas.convertToBlob());
+    };
+    img.onerror = () => {
+      console.error("Failed to decode NVGIF:", e.src);
+    };
+  });
+  document.querySelectorAll(`picture > source[srcset$=".nvg"], picture > source[srcset$=".nvg1"],
+                             picture > source[srcset$=".nvg2"], picture > source[srcset$=".nvg3"], 
+                             picture > source[srcset$=".nvg4"]`).forEach(async(e) => {
+    const img = new NVGIFImage(e.src);
+    img.onload = async () => {
+      e.dataset.originalSrcset = e.srcset;
+      e.srcset = URL.createObjectURL(await img.canvas.convertToBlob());
+    };
+    img.onerror = () => {
+      console.error("Failed to decode NVGIF:", e.src);
+    };
+  });
 }
 
 // Initial scan
-document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"], img[src$=".nvg2"], img[src$=".nvg3"], img[src$=".nvg4"]`)
-  .forEach(handleNVGIFImage);
+handleNVGIFImages();
 
 // MutationObserver to catch new images
-const observer = new MutationObserver(mutations => {
-  for (const mutation of mutations) {
-    mutation.addedNodes.forEach(node => {
-      // Case 1: node itself is an <img>
-      if (node.tagName === "IMG" && /\.(nvg[1-4]?)$/i.test(node.src)) {
-        handleNVGIFImage(node);
-        return;
-      }
-      // Case 2: node contains <img> children (like a <p>)
-      if (node.querySelectorAll) {
-        node.querySelectorAll("img[src$='.nvg'], img[src$='.nvg1'], img[src$='.nvg2'], img[src$='.nvg3'], img[src$='.nvg4']")
-            .forEach(handleNVGIFImage);
-      }
-    });
-  }
-});
+// this *is* efficient, as when the DOM is mutated, the previously .nvg sources
+// have already been turned into blob URIs, so it doesn't re-decode those.
+const observer = new MutationObserver(handleNVGIFImages);
 
 observer.observe(document.body, {
   childList: true,
