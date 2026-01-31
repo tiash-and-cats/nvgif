@@ -114,6 +114,14 @@ article {
   padding-inline: 12vw;
   margin-top: 50px;
 }
+
+footer {
+  padding-block: 12px;
+  padding-inline: 12vw;
+  margin-top: 12px;
+  background-color: #555;
+  color: #ccc;
+}
 </style>
 </head>
 <body>
@@ -130,6 +138,12 @@ article {
 <article>
   {{ content }}
 </article>
+
+<footer>
+<p><em>Perhaps the best image format was the friends we made along the way.</em></p>
+<p>&copy; tiash-and-cats <script>document.write(new Date().getFullYear());</script><br>
+<small>The NVGIF reference implementations and examples are licensed under the MIT License.</small></p>
+</footer>
 
 <script>
 function myFunction() {
