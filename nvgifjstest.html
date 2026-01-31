@@ -16,6 +16,10 @@
 
 <canvas id="myCanvas" width="400" height="400" style="border:1px solid grey"></canvas>
 
+<p>NVGIFs can also be put into the DOM like any other image: <button id="myBtn">Click me!</button></p>
+
+<div id="myDiv"></div>
+
 <script type="module" src="nvgif.js"></script> 
 <script>
 window.addEventListener("DOMContentLoaded", () => { // important!!
@@ -24,6 +28,14 @@ window.addEventListener("DOMContentLoaded", () => { // important!!
     const canvas = document.getElementById("myCanvas");
     const ctx = canvas.getContext("2d");
     ctx.putImageData(img.imgData, 40, 40);
+  }
+  
+  const btn = document.getElementById("myBtn");
+  btn.onclick = () => {
+    const div = document.getElementById("myDiv");
+    const img = document.createElement("img");
+    img.src = "images/drawing.nvg";
+    div.appendChild(img);
   }
 });
 </script>

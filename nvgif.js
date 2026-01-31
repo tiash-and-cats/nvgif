@@ -200,10 +200,29 @@ class NVGIFImage {
 
 globalThis.NVGIFImage = NVGIFImage;
 
-document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"], img[src$=".nvg2"],
-                           img[src$=".nvg3"], img[src$=".nvg4"]`).forEach(e => {
+// Function to handle NVGIF <img> elements
+async function handleNVGIFImage(e) {
   const img = new NVGIFImage(e.src);
-  img.onload = async() => {
+  img.onload = async () => {
+    e.dataset.originalSrc = e.src;
     e.src = URL.createObjectURL(await img.canvas.convertToBlob());
+  };
+  img.onerror = () => {
+    console.error("Failed to decode NVGIF:", e.src);
+  };
+}
+
+// Initial scan
+document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"], img[src$=".nvg2"], img[src$=".nvg3"], img[src$=".nvg4"]`)
+  .forEach(handleNVGIFImage);
+
+// MutationObserver to catch new images
+const observer = new MutationObserver(mutations => {
+  for (const mutation of mutations) {
+    mutation.addedNodes.forEach(node => {
+      if (node.tagName === "IMG" && /\.(nvg[1-4]?)$/i.test(node.src)) {
+        handleNVGIFImage(node);
+      }
+    });
   }
 });
