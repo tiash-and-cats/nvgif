@@ -216,7 +216,7 @@ async function handleNVGIFImages() {
   document.querySelectorAll(`picture > source[srcset$=".nvg"], picture > source[srcset$=".nvg1"],
                              picture > source[srcset$=".nvg2"], picture > source[srcset$=".nvg3"], 
                              picture > source[srcset$=".nvg4"]`).forEach(async(e) => {
-    const img = new NVGIFImage(e.src);
+    const img = new NVGIFImage(e.srcset);
     img.onload = async () => {
       e.dataset.originalSrcset = e.srcset;
       e.srcset = URL.createObjectURL(await img.canvas.convertToBlob());
