@@ -36,7 +36,7 @@ The Github repo contains 3 reference implementations of NVGIF:
 
 ## Specification
 
-The specification is in [`specs/`](specs/README.md).
+The specification is in [`specs/`](specs/).
 
 ## NVGIF CLI Tool
 
