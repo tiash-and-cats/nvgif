@@ -9,7 +9,7 @@ class NVGIFv4:
     COMPRESSION_NONE = 0
     COMPRESSION_RLE = 1
     COMPRESSION_ZLIB = 2
-    COMPRESSION_RLE_ZLIB = 3  # future use
+    COMPRESSION_RLE_ZLIB = 3
 
     ALPHA_DISABLED = 0
     ALPHA_ENABLED = 1
@@ -37,7 +37,7 @@ class NVGIFv4:
             i += bpp * count
         return encoded
 
-    def encode(self, image_or_path, out_path, compression=COMPRESSION_RLE, alpha=ALPHA_DISABLED):
+    def encode(self, image_or_path, out_path, compression=COMPRESSION_RLE_ZLIB, alpha=ALPHA_DISABLED):
         if isinstance(image_or_path, Image.Image):
             img = image_or_path.convert("RGBA")
         else:
