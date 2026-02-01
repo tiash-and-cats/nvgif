@@ -1,7 +1,1 @@
 markdown: GFM
-theme: null
-plugins:
-  - jekyll-relative-links
-relative_links:
-  enabled: true
-  collections: true
