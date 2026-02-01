@@ -88,7 +88,6 @@ a:hover {color: royalBlue;}
     display: block;
     text-align: left;
   }
-  nav.responsive a.text {display: none}
 }
 
 code:not(pre > code) {
@@ -134,6 +133,23 @@ footer {
 
 img, canvas {
   max-width: 100%;
+}
+
+.footnotes {
+  font-size: .75em;
+  counter-reset: item 1;
+}
+
+.footnotes li::marker {
+  content: "[" counter(item) "] ";
+}
+
+.footnote-ref > a::before {
+  content: "[";
+}
+
+.footnote-ref > a::after {
+  content: "]";
 }
 </style>
 </head>
