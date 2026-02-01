@@ -42,23 +42,15 @@ nav a:hover {
   color: black;
 }
 
-nav a.logo {
+nav .logo {
   font-weight: bold;
   font-family: Verdana;
+  background-color: rebeccapurple;
 }
 
-nav .seperator {
-  float: left;
-  display: block;
-  text-align: center;
-  padding: 14px 0;
-  text-decoration: none;
-  font-size: 17px;
-  color: #777777;
-}
-
-nav .seperator:before {
-  content: "\FF5C";
+nav .logo:hover {
+  background-color: indigo;
+  color: white;
 }
 
 nav .icon {
@@ -88,6 +80,7 @@ a:hover {color: royalBlue;}
     display: block;
     text-align: left;
   }
+  nav.responsive a.text {display: none}
 }
 
 code:not(pre > code) {
@@ -157,7 +150,6 @@ img, canvas {
 
 <nav id="myTopnav">
   <a href="/nvgif/" class="logo">nvgif</a>
-  <span class="seperator"></span>
   <a href="/nvgif/specs">Specification</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
