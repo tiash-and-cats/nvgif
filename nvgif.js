@@ -205,30 +205,32 @@ async function handleNVGIFImages() {
                              img[src$=".nvg2"], img[src$=".nvg3"], 
                              img[src$=".nvg4"]`).forEach(async(e) => {
     const img = new NVGIFImage(e.src);
-    const start = Date.now();
-    console.log("nvgif: Loading image:", e.src);
+    const timerName = "[nvgif] loading " + e.src;
+    console.time(timerName);
     img.onload = async () => {
       e.dataset.originalSrc = e.src;
       e.src = URL.createObjectURL(await img.canvas.convertToBlob());
-      console.log("nvgif: Loaded image:", e.dataset.originalSrc, "in", Date.now() - start, "ms");
+      console.timeEnd(timerName);
     };
     img.onerror = () => {
-      console.error("nvgif: Failed to decode NVGIF:", e.src, "in", Date.now() - start, "ms");
+      console.error("[nvgif] failed to decode NVGIF:", e.src);
+      console.timeEnd(timerName);
     };
   });
   document.querySelectorAll(`picture > source[srcset$=".nvg"], picture > source[srcset$=".nvg1"],
                              picture > source[srcset$=".nvg2"], picture > source[srcset$=".nvg3"], 
                              picture > source[srcset$=".nvg4"]`).forEach(async(e) => {
     const img = new NVGIFImage(e.srcset);
-    const start = Date.now();
-    console.log("nvgif: Loading image:", e.srcset);
+    const timerName = "[nvgif] loading " + e.srcset;
+    console.time(timerName);
     img.onload = async () => {
       e.dataset.originalSrcset = e.srcset;
       e.srcset = URL.createObjectURL(await img.canvas.convertToBlob());
-      console.log("nvgif: Loaded image:", e.dataset.originalSrcset, "in", Date.now() - start, "ms");
+      console.timeEnd(timerName);
     };
     img.onerror = () => {
-      console.error("nvgif: Failed to decode NVGIF:", e.srcset, "in", Date.now() - start, "ms");
+      console.error("[nvgif] failed to decode NVGIF:", e.src);
+      console.timeEnd(timerName);
     };
   });
 }
