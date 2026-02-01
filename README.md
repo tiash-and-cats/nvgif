@@ -34,7 +34,7 @@ The Github repo contains 3 reference implementations of NVGIF:
   Requires `System.Drawing.Common`. Provides an `NVGIF` class with `.Decode` method.  
   Supports all versions (v1–v4, decode-only). Example in [`csharp/NVGIFTest.cs`](https://github.com/tiash-and-cats/nvgif/tree/master/csharp).
 
-Detailed API docs are in [NVGIF Implementations](implementations.md).
+Detailed API docs are in [NVGIF Implementations](implementations/).
 
 ## Specification
 
