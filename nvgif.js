@@ -173,7 +173,24 @@ function decodeNVGIF(bytes) {
   return canvas;
 }
 
-class NVGIFImage {
+async function loadNVGIF(url) {
+  if (loadNVGIF.cache[url]) {
+	return loadNVGIF.cache[url];
+  }
+  
+  const response = await fetch(url);
+  const buffer = await response.arrayBuffer();
+  const bytes = new Uint8Array(buffer);
+
+  const canvas = decodeNVGIF(bytes);
+  loadNVGIF.cache[url] = canvas;
+
+  return canvas;
+};
+loadNVGIF.cache = {};
+globalThis.loadNVGIF = loadNVGIF;
+
+globalThis.NVGIFImage = class {
   constructor(src) {
     this.onload = () => {};
     this.onerror = () => {};
@@ -181,14 +198,8 @@ class NVGIFImage {
 
     (async () => {
       try {
-        const response = await fetch(src);
-        const buffer = await response.arrayBuffer();
-        const bytes = new Uint8Array(buffer);
-
-        const canvas = decodeNVGIF(bytes);
-        const ctx = canvas.getContext("2d");
-        this.canvas = canvas;
-        this.imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        this.canvas = await loadNVGIF(src);
+        this.imgData = this.canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height);
 
         this.onload();
       } catch (err) {
@@ -198,38 +209,36 @@ class NVGIFImage {
   }
 };
 
-globalThis.NVGIFImage = NVGIFImage;
-
 async function handleNVGIFImages() {
   document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"],
                              img[src$=".nvg2"], img[src$=".nvg3"], 
                              img[src$=".nvg4"]`).forEach(async(e) => {
-    const img = new NVGIFImage(e.src);
-    const start = Date.now();
-    console.log("nvgif: Loading image:", e.src);
-    img.onload = async () => {
-      e.dataset.originalSrc = e.src;
-      e.src = URL.createObjectURL(await img.canvas.convertToBlob());
-      console.log("nvgif: Loaded image:", e.dataset.originalSrc, "in", Date.now() - start, "ms");
-    };
-    img.onerror = () => {
+    try {
+	  console.log("nvgif: Loading image:", e.src);
+	  const start = Date.now();
+      const canvas = await loadNVGIF(e.src);
+      e.dataset.oldSrc = e.src;
+      e.src = URL.createObjectURL(await canvas.convertToBlob());
+      console.log("nvgif: Loaded image:", e.dataset.oldSrc, "in", Date.now() - start, "ms");
+	} catch {
       console.error("nvgif: Failed to decode NVGIF:", e.src);
-    };
+	}
   });
-  document.querySelectorAll(`picture > source[srcset$=".nvg"], picture > source[srcset$=".nvg1"],
-                             picture > source[srcset$=".nvg2"], picture > source[srcset$=".nvg3"], 
+  document.querySelectorAll(`picture > source[srcset$=".nvg"], 
+                             picture > source[srcset$=".nvg1"],
+                             picture > source[srcset$=".nvg2"], 
+							 picture > source[srcset$=".nvg3"], 
                              picture > source[srcset$=".nvg4"]`).forEach(async(e) => {
-    const img = new NVGIFImage(e.srcset);
-    const start = Date.now();
-    console.log("nvgif: Loading image:", e.srcset);
-    img.onload = async () => {
-      e.dataset.originalSrcset = e.srcset;
-      e.srcset = URL.createObjectURL(await img.canvas.convertToBlob());
-      console.log("nvgif: Loaded image:", e.dataset.originalSrcset, "in", Date.now() - start, "ms");
-    };
-    img.onerror = () => {
-      console.error("nvgif: Failed to decode NVGIF:", e.srcset);
-    };
+    try {
+      console.log("nvgif: Loading image:", e.srcset);
+	  const start = Date.now();
+      const canvas = await loadNVGIF(e.srcset);
+      e.dataset.oldSrcset = e.srcset;
+      e.src = URL.createObjectURL(await canvas.convertToBlob());
+      console.log("nvgif: Loaded image:", e.dataset.oldSrcset, "in", Date.now() - start, "ms");
+	} catch {
+      console.error("nvgif: Failed to decode NVGIF:", e.src);
+	}
   });
 }
 
