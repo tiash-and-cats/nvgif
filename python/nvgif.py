@@ -2,13 +2,15 @@ from nvgif_v1 import NVGIFv1
 from nvgif_v2 import NVGIFv2
 from nvgif_v3 import NVGIFv3
 from nvgif_v4 import NVGIFv4
+from nvgif_v5 import NVGIFv5
 
 class NVGIF:
     DEFAULT_COMPRESSIONS = {
-        1: "none",
-        2: "rle",
-        3: "rle",
-        4: "rlezlib"
+        1: ["none"],
+        2: ["rle"],
+        3: ["rle"],
+        4: ["rlezlib"],
+        5: ["rle", "zlib"]
     }
     
     def __init__(self):
@@ -17,6 +19,7 @@ class NVGIF:
             2: NVGIFv2(),
             3: NVGIFv3(),
             4: NVGIFv4(),
+            5: NVGIFv5()
         }
 
     def encode(self, image, out_path, version=4, compression=None, alpha=0):
@@ -40,11 +43,20 @@ class NVGIF:
                 "zlib": NVGIFv4.COMPRESSION_ZLIB,
                 "rlezlib": NVGIFv4.COMPRESSION_RLE_ZLIB,
             },
+            5: {
+                "none": NVGIFv5.CompressionType.NONE,
+                "rle": NVGIFv5.CompressionType.RLE,
+                "zlib": NVGIFv5.CompressionType.ZLIB,
+                "rgb565": NVGIFv5.CompressionType.RGB565,
+            }
         }
         
-        if isinstance(compression, str):
+        if isinstance(compression, list):
             try:
-                compression = compression_map[version][compression]
+                compression_num = 0
+                for c in compression:
+                    compression_num |= compression_map[version][c]
+                compression = compression_num
             except (KeyError, TypeError):
                 raise ValueError(f"Unsupported compression '{compression}' for NVGIFv{version}")
                 

@@ -1,10 +1,10 @@
 ![NVGIF logo](logo.png)
 
-# This is version 4 of the Not Very Good Image Format 
+# This is version 5 of the Not Very Good Image Format 
 
 NVGIF is a tiny, simple image format designed for fun, experimentation, and learning. Despite its tongue‑in‑cheek name, NVGIF is only slightly larger than PNG on average, and it comes with clear specs and **3(!)** reference implementations. As it has so many implementations, that basically proves it's a standard.
 
-Version 4 introduces refinements to compression (RLE + zlib), making decoding more efficient while keeping the format lightweight and approachable.
+Version 5 expands NVGIF with flexible compression bitmasks and introduces RGB565 as a lossy encoding option, reducing file size while discarding alpha for efficiency.
 
 ## File Extensions and Mimetype
 
@@ -24,15 +24,15 @@ The Github repo contains 3 reference implementations of NVGIF:
 
 - **Python (`python/nvgif.py`)** 🐍  
   Requires `pillow`. Provides an `NVGIF` class with `.encode` and `.decode` methods.  
-  Supports all versions (v1-v4).
+  Supports all versions (v1-v5).
 
 - **JavaScript (`nvgif.js`)** 🌐  
   Browser decoder. Finds `<img>` and `<picture>` elements with NVGIF sources and replaces them with decoded PNGs via [Blob URIs](https://en.wikipedia.org/wiki/Blob_URI_scheme). Also has an `NVGIFImage` with `.onload` and `.onerror` so that you can draw images onto a canvas.
-  Supports all versions (v1-v4, decode-only). Uses [`pako`](https://github.com/nodeca/pako) via jsDelivr for v4 compression. Example in [`nvgifjstest.html`](nvgifjstest.html).
+  Supports v1-v4 (decode-only). Uses [`pako`](https://github.com/nodeca/pako) via jsDelivr for v4 compression. Example in [`nvgifjstest.html`](nvgifjstest.html).
 
 - **C# (`csharp/NVGIF.cs`)** ⚙️  
   Requires `System.Drawing.Common`. Provides an `NVGIF` class with `.Decode` method.  
-  Supports all versions (v1–v4, decode-only). Example in [`csharp/NVGIFTest.cs`](https://github.com/tiash-and-cats/nvgif/tree/master/csharp).
+  Supports v1-v4 (decode-only). Example in [`csharp/NVGIFTest.cs`](https://github.com/tiash-and-cats/nvgif/tree/master/csharp).
 
 Detailed API docs are in [NVGIF Implementations](implementations/).
 
