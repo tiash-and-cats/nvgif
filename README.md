@@ -38,7 +38,7 @@ Detailed API docs are in [NVGIF Implementations](implementations/).
 
 ## Specification
 
-The specification is in [`specs/`](specs/).
+The specification can be found [here](specs/). It used to be at [`https://tiashdev.github.io/tiashfam-resources/nvgif/specs/`](https://tiashdev.github.io/tiashfam-resources/nvgif/specs/).
 
 ## NVGIF CLI Tool
 
