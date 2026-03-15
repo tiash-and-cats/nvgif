@@ -237,7 +237,7 @@ async function handleNVGIFImages() {
 	  const start = Date.now();
       const canvas = await loadNVGIF(e.srcset);
       e.dataset.oldSrcset = e.srcset;
-      e.src = URL.createObjectURL(await canvas.convertToBlob());
+      e.srcset = URL.createObjectURL(await canvas.convertToBlob());
       console.log("nvgif: Loaded image:", e.dataset.oldSrcset, "in", Date.now() - start, "ms");
 	} catch {
       console.error("nvgif: Failed to decode NVGIF:", e.src);
