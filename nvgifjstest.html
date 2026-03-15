@@ -33,10 +33,10 @@ title: "nvgif.js demo page"
 <script>
 window.addEventListener("DOMContentLoaded", () => { // important!!
   (async() => {
-    const nvgifCanvas = await loadNVGIF("images/drawing.nvg");
+    const imgCanvas = await loadNVGIF("images/drawing.nvg");
     const canvas = document.getElementById("myCanvas");
     const ctx = canvas.getContext("2d");
-    ctx.putImageData(img.imgData, 40, 40);
+    ctx.putImageData(imgCanvas, 40, 40);
   })();
   
   const btn = document.getElementById("myBtn");
