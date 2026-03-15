@@ -36,7 +36,7 @@ window.addEventListener("DOMContentLoaded", () => { // important!!
     const imgCanvas = await loadNVGIF("images/drawing.nvg");
     const canvas = document.getElementById("myCanvas");
     const ctx = canvas.getContext("2d");
-    ctx.putImageData(imgCanvas, 40, 40);
+    ctx.drawImage(imgCanvas, 40, 40);
   })();
   
   const btn = document.getElementById("myBtn");
