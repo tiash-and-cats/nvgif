@@ -8,6 +8,7 @@ NVGIF doesn’t aim to be a universal format. It aims to be *yours*. And it shal
 
 - [NVGIF v1–v3](v123.md): The early days. Minimal headers, row-based RLE, and the debut of alpha support in v3.
 - [NVGIF v4](v4.md): Introduces per-row hybrid compression using RLE_Zlib and refined extensibility.
+- [NVGIF v5](v4.md): Introduces batch RLE and bitmasks for compression, as well as RGB565 lossy compression
 
 ### 🔍 Version identification
 
