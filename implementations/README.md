@@ -44,6 +44,6 @@ The C# implementation of NVGIF requires `System.Drawing.Common`.
 
 The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `MutationObserver` to look for changes in the DOM. When it detects one, it will sweep through all undecoded NVGIFs in the page and decode them. It supports `<img>` and `<picture>`.
 
-<code>async function loadNVGIF(src: string): <a href="https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas>OffscreenCanvas</a></code>
+<code>async function loadNVGIF(src: string): <a href="https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas">OffscreenCanvas</a></code>
 > An NVGIF decoder. Supports v1-4. Decodes the NVGIF at the URL `src` and returns the image data in the form of an `OffscreenCanvas`.
 `class NVGIFImage(src: string)`  > This class tries to mimic the behavior of `Image`. When it is created, it starts loading the image at `src`. If the load succeeds, calls `onload` with no arguments and sets `imgData` to an `ImageData` object with the decoded data. If the load fails, calls `onerror` with no arguments.  > `onload`  > > A callback called upon a successful load.  > > `onerror`  > > A callback called upon a failed load.  > > `imgData`  > > If the load was successful, is an [`ImageData`](https://developer.mozilla.org/en-US/docs/Web/API/ImageData) object with decoded image data, otherwise `null`.
