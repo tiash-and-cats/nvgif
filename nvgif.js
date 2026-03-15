@@ -196,7 +196,10 @@ globalThis.NVGIFImage = class {
     this.onerror = () => {};
     this.imgData = null;
 
-    (async () => {
+    this.reload();
+  }
+  reload() {
+	(async () => {
       try {
         this.canvas = await loadNVGIF(src);
         this.imgData = this.canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height);

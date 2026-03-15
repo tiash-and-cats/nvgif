@@ -38,6 +38,7 @@ window.addEventListener("DOMContentLoaded", () => { // important!!
     const ctx = canvas.getContext("2d");
     ctx.putImageData(img.imgData, 40, 40);
   }
+  img.reload();
   
   const btn = document.getElementById("myBtn");
   btn.onclick = () => {
