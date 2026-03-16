@@ -147,11 +147,11 @@ The Python implementation of NVGIF requires Pillow.
 > > > RGB565 encoding as rudimentary compression. 
 >
 > `def encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int | CompressionType=CompressionType.RLE | CompressionType.ZLIB, alpha=False) -> None:`  
-> > Takes the image at `png_path` and encodes it into an NVGIFv4 at `nvg_path` with `alpha` using `compression`.  
+> > Takes the image at `png_path` and encodes it into an NVGIFv5 at `nvg_path` with `alpha` using `compression`.  
 > > > **NOTE:** Alpha cannot be used with RGB565 encoding. Doing so will emit a [`UserWarning`](https://docs.python.org/3/library/exceptions.html#UserWarning) and alpha will not be enabled.
 >   
 > `def decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  
-> > Takes the NVGIFv4 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
+> > Takes the NVGIFv5 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ### `nvgif.NVGIF` objects
 
@@ -213,3 +213,6 @@ The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `Mutati
 > 
 > <code>imgData: <a href="https://developer.mozilla.org/en-US/docs/Web/API/ImageData">ImageData</a> | null</code>
 > > If the load was successful, is an [`ImageData`](https://developer.mozilla.org/en-US/docs/Web/API/ImageData) object with decoded image data, otherwise `null`.
+>
+> <code>canvas: <a href="https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas">OffscreenCanvas</a> | null</code>
+> > If the load was successful, is an [`OffscreenCanvas`](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas) object with decoded image data on it's surface, otherwise `null`.
