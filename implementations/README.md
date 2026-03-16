@@ -22,15 +22,48 @@ The Python implementation of NVGIF requires Pillow.
 
 ### `nvgif_v2.NVGIFv2` objects
 `class nvgif_v2.NVGIFv2:`  > An NVGIF v2 encoder and decoder.  
->> `HEADER_MAGIC = b"NVG"`  > > The magic number for NVGIF files.  >  > `VERSION = 2`  > > The NVGIF version the decoder decodes.  >  > `COMPRESSION_NONE = 0`  > > No compression.  >  > `COMPRESSION_RLE = 1`  > > RLE compression.  >  > `def encode(png_path: str | PIL.Image.Image, nvg_path: str, compression=COMPRESSION_RLE) -> None:`  > > Takes the image at `png_path` and encodes it into an NVGIFv2 at `nvg_path` using `compression`.  >  > `def decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  > > Takes the NVGIFv2 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
+>> `HEADER_MAGIC = b"NVG"`  > > The magic number for NVGIF files.  >  > `VERSION = 2`  > > The NVGIF version the decoder decodes.  >  > `COMPRESSION_NONE = 0`  > > No compression.  >  > `COMPRESSION_RLE = 1`  > > RLE compression.  >  > `def encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int=COMPRESSION_RLE) -> None:`  > > Takes the image at `png_path` and encodes it into an NVGIFv2 at `nvg_path` using `compression`.  >  > `def decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  > > Takes the NVGIFv2 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ### `nvgif_v3.NVGIFv3` objects
 `class nvgif_v3.NVGIFv3:`  > An NVGIF v3 encoder and decoder.
->  > `HEADER_MAGIC = b"NVG"`  > > The magic number for NVGIF files. >   > `VERSION = 3`  > > The NVGIF version the decoder decodes.  >   > `COMPRESSION_NONE = 0`  > > No compression.  >   > `COMPRESSION_RLE = 1`  > > RLE compression.  >   > `ALPHA_DISABLED = 0`  > > RGB pixels.  >   > `ALPHA_ENABLED = 1`  > > RGBA pixels.  >   > `def encode(png_path: str | PIL.Image.Image, nvg_path: str, compression=COMPRESSION_RLE, alpha=ALPHA_DISABLED) -> None:`  > > Takes the image at `png_path` and encodes it into an NVGIFv3 at `nvg_path` with `alpha` using `compression`.  >   > `def decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  > > Takes the NVGIFv3 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
+>  > `HEADER_MAGIC = b"NVG"`  > > The magic number for NVGIF files. >   > `VERSION = 3`  > > The NVGIF version the decoder decodes.  >   > `COMPRESSION_NONE = 0`  > > No compression.  >   > `COMPRESSION_RLE = 1`  > > RLE compression.  >   > `ALPHA_DISABLED = 0`  > > RGB pixels.  >   > `ALPHA_ENABLED = 1`  > > RGBA pixels.  >   > `def encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int=COMPRESSION_RLE, alpha=ALPHA_DISABLED) -> None:`  > > Takes the image at `png_path` and encodes it into an NVGIFv3 at `nvg_path` with `alpha` using `compression`.  >   > `def decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  > > Takes the NVGIFv3 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ### `nvgif_v4.NVGIFv4` objects
 `class nvgif_v4.NVGIFv4:`  > An NVGIF v4 encoder and decoder.  
->> `HEADER_MAGIC = b"NVG"`  > > The magic number for NVGIF files. >    > `VERSION = 4`  > > The NVGIF version the decoder decodes.  >   > `COMPRESSION_NONE = 0`  > > No compression.  >   > `COMPRESSION_RLE = 1`  > > RLE compression.  >   > `COMPRESSION_ZLIB = 2`  > > Zlib compression.  >   > `COMPRESSION_RLE_ZLIB = 3`  > > RLE *and* Zlib compression. See spec for details.  >   > `ALPHA_DISABLED = 0`  > > RGB pixels.  >   > `ALPHA_ENABLED = 1`  > > RGBA pixels.  >   > `def encode(png_path: str | PIL.Image.Image, nvg_path: str, compression=COMPRESSION_RLE_ZLIB, alpha=ALPHA_DISABLED) -> None:`  > > Takes the image at `png_path` and encodes it into an NVGIFv4 at `nvg_path` with `alpha` using `compression`.  >   > `def decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  > > Takes the NVGIFv4 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
+>> `HEADER_MAGIC = b"NVG"`  > > The magic number for NVGIF files. >    > `VERSION = 4`  > > The NVGIF version the decoder decodes.  >   > `COMPRESSION_NONE = 0`  > > No compression.  >   > `COMPRESSION_RLE = 1`  > > RLE compression.  >   > `COMPRESSION_ZLIB = 2`  > > Zlib compression.  >   > `COMPRESSION_RLE_ZLIB = 3`  > > RLE *and* Zlib compression. See spec for details.  >   > `ALPHA_DISABLED = 0`  > > RGB pixels.  >   > `ALPHA_ENABLED = 1`  > > RGBA pixels.  >   > `def encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int=COMPRESSION_RLE_ZLIB, alpha=ALPHA_DISABLED) -> None:`  > > Takes the image at `png_path` and encodes it into an NVGIFv4 at `nvg_path` with `alpha` using `compression`.  >   > `def decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  > > Takes the NVGIFv4 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
+
+### `nvgif_v5.NVGIFv5` objects
+
+`class nvgif_v5.NVGIFv5:` 
+> An NVGIFv5 encoder and decoder.
+>
+> `HEADER_MAGIC = b"NVG"`  
+> > The magic number for NVGIF files. 
+>   
+> `VERSION = 5`  
+> > The NVGIF version the decoder decodes.  
+>
+> `class CompressionType:`
+> > An [IntFlag enum](https://docs.python.org/3/library/enum.html#enum.IntFlag) that represents compression types.
+> >
+> > `NONE = 0`  
+> > > No compression.
+> >   
+> > `RLE = 1`  
+> > > RLE compression.  
+> >   
+> > `ZLIB = 2`  
+> > > Zlib compression.
+> >   
+> > `RGB565 = 4`  
+> > > RGB565 encoding as rudimentary compression. 
+>
+> `def encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int | CompressionType=CompressionType.RLE | CompressionType.ZLIB, alpha=False) -> None:`  
+> > Takes the image at `png_path` and encodes it into an NVGIFv4 at `nvg_path` with `alpha` using `compression`.  
+> > > **NOTE:** Alpha cannot be used with RGB565 encoding. Doing so will emit a [`UserWarning`](https://docs.python.org/3/library/exceptions.html#UserWarning) and alpha will not be enabled.
+>   
+> `def decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  
+> > Takes the NVGIFv4 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ### `nvgif.NVGIF` objects
 `class nvgif.NVGIF:`  > An NVGIF encoder and decoder wrapper that wraps `nvgif_v1.NVGIFv1` to `nvgif_v4.NVGIFv4`.  
@@ -50,7 +83,7 @@ The C# implementation of NVGIF requires `System.Drawing.Common`.
 
 The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `MutationObserver` to look for changes in the DOM. When it detects one, it will sweep through all undecoded NVGIFs in the page and decode them. It supports `<img>` and `<picture>`.
 
-<code>async function loadNVGIF(src: string): <a href="https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas">OffscreenCanvas</a></code>
+<code>async globalThis.loadNVGIF(src: string): <a href="https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas">OffscreenCanvas</a></code>
 > An NVGIF decoder. Supports v1-4. Decodes the NVGIF at the URL `src` and returns the image data in the form of an `OffscreenCanvas`.
-`class NVGIFImage(src: string)`  > This class tries to mimic the behavior of `Image`. When it is created, it starts loading the image at `src`. If the load succeeds, calls `onload` with no arguments and sets `imgData` to an `ImageData` object with the decoded data. If the load fails, calls `onerror` with no arguments.  
+`class globalThis.NVGIFImage(src: string)`  > This class tries to mimic the behavior of `Image`. When it is created, it starts loading the image at `src`. If the load succeeds, calls `onload` with no arguments and sets `imgData` to an `ImageData` object with the decoded data. If the load fails, calls `onerror` with no arguments.  
 >> `onload: () => void`  > > A callback called upon a successful load.  > > `onerror: () => void`  > > A callback called upon a failed load.  > > <code>imgData: <a href="https://developer.mozilla.org/en-US/docs/Web/API/ImageData">ImageData</a> | null</code>> > If the load was successful, is an [`ImageData`](https://developer.mozilla.org/en-US/docs/Web/API/ImageData) object with decoded image data, otherwise `null`.

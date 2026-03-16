@@ -48,7 +48,9 @@ class NVGIFv5:
         bpp = 4 if alpha else 3
 
         if alpha and compression & self.CompressionType.RGB565:
-            warnings.warn(UserWarning("RGB565 encoding cannot have alpha."))
+            warnings.warn("RGB565 encoding cannot have alpha. Alpha will not be enabled.", UserWarning)
+            bpp = 3
+            alpha = False
 
         raw = bytearray()
         
