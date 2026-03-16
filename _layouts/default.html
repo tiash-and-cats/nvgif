@@ -179,7 +179,7 @@ function myFunction() {
 }
 
 document.querySelectorAll("div.highlighter-rouge:has(div.highlight > pre.highlight > code)").forEach(e => {
-  const [langClass] = Array.from(e.classList).filter(x => x.startswith("language-"));
+  const [langClass] = Array.from(e.classList).filter(x => x.startsWith("language-"));
   e.querySelector("div.highlight > pre.highlight").classList.add("hljs");
   e.querySelector("div.highlight > pre.highlight").classList.add(langClass);
 });
