@@ -8,6 +8,7 @@
 <script>
 document.querySelectorAll("div.highlighter-rouge:has(div.highlight > pre.highlight > code)").forEach(e => {
   const [langClass] = e.classList.filter(x => x.startswith("language-"));
+  console.log(langClass);
   e.querySelector("div.highlight > pre.highlight").classList.add(langClass);
 });
 hljs.highlightAll();
