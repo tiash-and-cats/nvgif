@@ -5,16 +5,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
-<script>
-const es = document.querySelectorAll("div.highlighter-rouge:has(div.highlight > pre.highlight > code)"); 
-console.log(es);
-es.forEach(e => {
-  const [langClass] = e.classList.filter(x => x.startswith("language-"));
-  console.log(langClass);
-  e.querySelector("div.highlight > pre.highlight").classList.add(langClass);
-});
-hljs.highlightAll();
-</script>
 <title>{{ page.title }} | NVGIF docs</title>
 <style>
 body {
@@ -187,6 +177,12 @@ function myFunction() {
     x.className = "";
   }
 }
+
+document.querySelectorAll("div.highlighter-rouge:has(div.highlight > pre.highlight > code)").forEach(e => {
+  const [langClass] = e.classList.filter(x => x.startswith("language-"));
+  e.querySelector("div.highlight > pre.highlight").classList.add(langClass);
+});
+hljs.highlightAll();
 </script>
 
 </body>
