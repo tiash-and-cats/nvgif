@@ -178,17 +178,18 @@ The C# implementation of NVGIF requires `System.Drawing.Common`.
 >
 > `public enum CompressionType : byte`  
 > > An enum of compression types.  
-> > > `None = 0`  
-> > > > No compression.  
-> > >  
-> > > `RLE = 1`  
-> > > > RLE compression.  
-> > >  
-> > > `Zlib = 2`  
-> > > > Zlib compression.  
-> > >  
-> > > `RLE_Zlib = 3`  
-> > > > RLE *and* Zlib compression. See spec for details.   
+> >
+> > `None = 0`  
+> > > No compression.  
+> >  
+> > `RLE = 1`  
+> > > RLE compression.  
+> >   
+> > `Zlib = 2`  
+> > > Zlib compression.  
+> >  
+> > `RLE_Zlib = 3`  
+> > > RLE *and* Zlib compression. See spec for details.   
 > 
 > `public static Bitmap Decode(byte[] nvgData)`  
 > > Decode an NVGIF buffer (v1..v4) and return a Bitmap.
