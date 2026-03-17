@@ -23,12 +23,12 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 >  
 > `VERSION = 1`  
 > > The NVGIF version the decoder decodes.  
->  
-> `def encode(png_path: str | PIL.Image.Image, nvg_path: str) -> None:`  
-> > Takes the image at `png_path` and encodes it into an NVGIFv1 at `nvg_path`.  
->   
-> `def decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  
-> > Takes the NVGIFv1 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
+  
+#### `NVGIFv1.encode(png_path: str | PIL.Image.Image, nvg_path: str) -> None:`  
+> Takes the image at `png_path` and encodes it into an NVGIFv1 at `nvg_path`.  
+   
+#### `NVGIFv1.decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  
+> Takes the NVGIFv1 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ### `nvgif_v2.NVGIFv2` objects
 
@@ -46,12 +46,12 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 >  
 > `COMPRESSION_RLE = 1`  
 > > RLE compression.  
->  
-> `def encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int=COMPRESSION_RLE) -> None:`  
-> > Takes the image at `png_path` and encodes it into an NVGIFv2 at `nvg_path` using `compression`.  
->  
-> `def decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  
-> > Takes the NVGIFv2 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
+  
+#### `NVGIFv2.encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int=COMPRESSION_RLE) -> None:`  
+> Takes the image at `png_path` and encodes it into an NVGIFv2 at `nvg_path` using `compression`.  
+ 
+#### `NVGIFv2.decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  
+> Takes the NVGIFv2 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ### `nvgif_v3.NVGIFv3` objects
 
@@ -75,12 +75,12 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 >   
 > `ALPHA_ENABLED = 1`  
 > > RGBA pixels.  
->   
-> `def encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int=COMPRESSION_RLE, alpha=ALPHA_DISABLED) -> None:`  
-> > Takes the image at `png_path` and encodes it into an NVGIFv3 at `nvg_path` with `alpha` using `compression`.  
->   
-> `def decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  
-> > Takes the NVGIFv3 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
+
+#### `NVGIFv3.encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int=COMPRESSION_RLE, alpha=ALPHA_DISABLED) -> None:`  
+> Takes the image at `png_path` and encodes it into an NVGIFv3 at `nvg_path` with `alpha` using `compression`.  
+ 
+#### `NVGIFv3.decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  
+> Takes the NVGIFv3 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ### `nvgif_v4.NVGIFv4` objects
 
@@ -110,12 +110,12 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 >   
 > `ALPHA_ENABLED = 1`  
 > > RGBA pixels.  
->   
-> `def encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int=COMPRESSION_RLE_ZLIB, alpha=ALPHA_DISABLED) -> None:`  
-> > Takes the image at `png_path` and encodes it into an NVGIFv4 at `nvg_path` with `alpha` using `compression`.  
->   
-> `def decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  
-> > Takes the NVGIFv4 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
+  
+#### `NVGIFv4.encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int=COMPRESSION_RLE_ZLIB, alpha=ALPHA_DISABLED) -> None:`  
+> Takes the image at `png_path` and encodes it into an NVGIFv4 at `nvg_path` with `alpha` using `compression`.  
+  
+#### `NVGIFv4.decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  
+> Takes the NVGIFv4 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ### `nvgif_v5.NVGIFv5` objects
 
@@ -128,27 +128,17 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 > `VERSION = 5`  
 > > The NVGIF version the decoder decodes.  
 >
-> `class CompressionType:`
-> > An [IntFlag enum](https://docs.python.org/3/library/enum.html#enum.IntFlag) that represents compression types.
-> >
-> > `NONE = 0`  
-> > > No compression.
-> >   
-> > `RLE = 1`  
-> > > RLE compression.  
-> >   
-> > `ZLIB = 2`  
-> > > Zlib compression.
-> >   
-> > `RGB565 = 4`  
-> > > RGB565 encoding as rudimentary compression. 
->
-> `def encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int | CompressionType=CompressionType.RLE | CompressionType.ZLIB, alpha=False) -> None:`  
-> > Takes the image at `png_path` and encodes it into an NVGIFv5 at `nvg_path` with `alpha` using `compression`.  
-> > > **NOTE:** Alpha cannot be used with RGB565 encoding. Doing so will emit a [`UserWarning`](https://docs.python.org/3/library/exceptions.html#UserWarning) and alpha will not be enabled.
->   
-> `def decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  
-> > Takes the NVGIFv5 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
+
+#### `class NVGIFv5.CompressionType:`
+> An [IntFlag enum](https://docs.python.org/3/library/enum.html#enum.IntFlag) that represents compression types.
+> >> `NONE = 0`  > > No compression.>   > `RLE = 1`  > > RLE compression.  >   > `ZLIB = 2`  > > Zlib compression.>   > `RGB565 = 4`  > > RGB565 encoding as rudimentary compression. 
+
+#### `NVGIFv5.encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int | CompressionType=NVGIFv5.CompressionType.RLE | NVGIFv5.CompressionType.ZLIB, alpha=False) -> None:`  
+> Takes the image at `png_path` and encodes it into an NVGIFv5 at `nvg_path` with `alpha` using `compression`.  
+> > **NOTE:** Alpha cannot be used with RGB565 encoding. Doing so will emit a [`UserWarning`](https://docs.python.org/3/library/exceptions.html#UserWarning) and alpha will not be enabled.
+  
+#### `NVGIFv5.decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`  
+> Takes the NVGIFv5 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ### `nvgif.NVGIF` objects
 
@@ -157,12 +147,12 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 >
 > `DEFAULT_COMPRESSIONS`  
 > > A dictionary mapping versions to their default compression.  
->   
-> `def encode(self, image: str | PIL.Image.Image, out_path: str, version=4, compression=None, alpha=0) -> None:`  
-> > Takes the image at `image` and encodes it into an NVGIF with version `verison` at `out_path`.  
->   
-> `def decode(self, in_path: str[, out_path: str]) -> PIL.Image.Image | None:`  
-> > Takes the NVGIF at `in_path` and decodes it into an image at `out_path`. If `out_path` is not given, returns the decoded `PIL.Image.Image`.
+  
+#### `NVGIF.encode(self, image: str | PIL.Image.Image, out_path: str, version=4, compression=None, alpha=0) -> None:`  
+> Takes the image at `image` and encodes it into an NVGIF with version `version` at `out_path`.  
+
+#### `NVGIF.decode(self, in_path: str[, out_path: str]) -> PIL.Image.Image | None:`  
+> Takes the NVGIF at `in_path` and decodes it into an image at `out_path`. If `out_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ## C#
 
@@ -170,23 +160,11 @@ The C# implementation of NVGIF requires `System.Drawing.Common`.
 
 ### `public static class NVGIF.NVGIF`  
 > An NVGIF decoder. Supports v1-4.  
->
-> `public enum CompressionType : byte`  
-> > An enum of compression types.  
-> >
-> > `None = 0`  
-> > > No compression.  
-> >  
-> > `RLE = 1`  
-> > > RLE compression.  
-> >   
-> > `Zlib = 2`  
-> > > Zlib compression.  
-> >  
-> > `RLE_Zlib = 3`  
-> > > RLE *and* Zlib compression. See spec for details.   
-> 
-> `public static Bitmap Decode(byte[] nvgData)`  
+
+### `public enum NVGIF.NVGIF.CompressionType : byte`  
+> An enum of compression types.  >> `None = 0`  > > No compression.  >  > `RLE = 1`  > > RLE compression.  >   > `Zlib = 2`  > > Zlib compression.  >  > `RLE_Zlib = 3`  > > RLE *and* Zlib compression. See spec for details.   
+
+### `public static Bitmap NVGIF.NVGIF.Decode(byte[] nvgData)`  
 > > Decode an NVGIF buffer (v1..v4) and return a Bitmap.
 
 ## JavaScript
@@ -195,7 +173,7 @@ The C# implementation of NVGIF requires `System.Drawing.Common`.
 
 The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `MutationObserver` to look for changes in the DOM. When it detects one, it will sweep through all undecoded NVGIFs in the page and decode them. It supports `<img>` and `<picture>`.
 
-### <code>async globalThis.loadNVGIF(src: string): OffscreenCanvas`
+### `async globalThis.loadNVGIF(src: string): OffscreenCanvas`
 > An NVGIF decoder. Supports v1-4. Decodes the NVGIF at the URL `src` and returns the image data in the form of an [`OffscreenCanvas`](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas).
 
 ### `class globalThis.NVGIFImage(src: string)`  
