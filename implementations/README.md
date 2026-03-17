@@ -168,7 +168,7 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 
 The C# implementation of NVGIF requires `System.Drawing.Common`.
 
-#### `public static class NVGIF.NVGIF`  
+### `public static class NVGIF.NVGIF`  
 > An NVGIF decoder. Supports v1-4.  
 >
 > `public enum CompressionType : byte`  
