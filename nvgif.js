@@ -4,6 +4,7 @@ const C_NONE = 0;
 const C_RLE = 1;
 const C_ZLIB = 2;
 const C_RLEZLIB = 3;
+const C_RGB565 = 4
 
 function assert(condt, message) {
   if (!condt) {
@@ -16,7 +17,8 @@ function headerSizeForVersion(version) {
     case 1: return 8;
     case 2: return 9;
     case 3: return 10;
-    case 4: return 11;
+    case 4:
+    case 5: return 11;
     default: throw new Error("Unsupported version");
   }
 }
@@ -42,11 +44,37 @@ function rleDecode(data, bpp, expectedPixels) {
   return new Uint8Array(result);
 }
 
-function decodeRow(data, compression, bpp, width) {
+function batchRleDecode(data) {
+  const decoded = [];
+  let i = 0;
+  while (i < data.length) {
+    const count = data[i];
+    const value = data[i + 1];
+    for (let j = 0; j < count; j++) {
+      decoded.push(value);
+    }
+    i += 2;
+  }
+  return Uint8Array.from(decoded);
+}
+
+function decodeRow(data, compression, bpp, width, version) {
   if (compression === C_NONE) {
     return data; // raw RGB/RGBA
   } else if (compression === C_RLE) {
     return rleDecode(data, bpp, width);
+  } else if (compression & C_RGB565) {
+    const decoded = new Uint8Array(new ArrayBuffer());
+    for (let i = 0, j = 0; i < data.length; i += 2, j++) {
+      const value = data[i] << 8 | data[i+1];
+      const r = ((value >> 11) & 0x1F) << 3;
+      const g = ((value >> 5) & 0x3F) << 2;
+      const b = (value & 0x1F) << 3;
+      decoded[j] = r;
+      decoded[j+1] = g;
+      decoded[j+2] = b;
+    }
+    return decoded;
   } else {
     throw new Error("Unsupported compression: " + compression);
   }
@@ -77,6 +105,7 @@ function decodeNVGIF(bytes) {
       break;
     case 3:
     case 4:
+    case 5:
       compression = bytes[4];
       alpha = !!bytes[5];
       width = view.getUint16(6, false);
@@ -104,7 +133,7 @@ function decodeNVGIF(bytes) {
       const rowData = bytes.slice(offset, offset + rowLength);
       offset += rowLength;
 
-      const decoded = decodeRow(rowData, compression, bpp, width);
+      const decoded = decodeRow(rowData, compression, bpp, width, version);
 
       for (let x = 0; x < width; x++) {
         const srcIndex = x * bpp;
@@ -164,6 +193,30 @@ function decodeNVGIF(bytes) {
           pixelBuffer[dstIndex + 2] = rowDecoded[srcIndex + 2];
           pixelBuffer[dstIndex + 3] = bpp === 4 ? rowDecoded[srcIndex + 3] : 255;
         }
+      }
+    }
+  } else if (version >= 5) {
+    let data = bytes.slice(offset);
+    if (compression & C_ZLIB) {
+      data = pako.inflate(data);
+    }
+    if (compression & C_RLE) {
+      data = batchRleDecode(data);
+    }
+    // Same row-based logic as v1–3
+    for (let y = 0; y < height; y++) {
+      const rowLength = view.getUint16(offset, false);
+      offset += 2;
+      const rowData = bytes.slice(offset, offset + rowLength);
+      offset += rowLength;
+      const decoded = decodeRow(rowData, compression, bpp, width);
+      for (let x = 0; x < width; x++) {
+        const srcIndex = x * bpp;
+        const dstIndex = (y * width + x) * 4;
+        pixelBuffer[dstIndex]     = decoded[srcIndex];
+        pixelBuffer[dstIndex + 1] = decoded[srcIndex + 1];
+        pixelBuffer[dstIndex + 2] = decoded[srcIndex + 2];
+        pixelBuffer[dstIndex + 3] = bpp === 4 ? decoded[srcIndex + 3] : 255;
       }
     }
   }
