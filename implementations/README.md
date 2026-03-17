@@ -11,7 +11,7 @@ Together, these implementations make NVGIF portable across platforms and languag
 
 ## Python
 
-The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow is included ([`python/NvgifImagePlugin.py`](https://github.com/tiash-and-cats/nvgif/tree/master/python/NvgifImagePlugin.py)). To use it, simply import it (with `nvgif.py` and all the `nvgif-v1-5.py` files in the same directory) and open an NVGIF of your choice.
+The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow is included ([`python/NvgifImagePlugin.py`](https://github.com/tiash-and-cats/nvgif/tree/master/python/NvgifImagePlugin.py)). To use it, simply import it (with `nvgif.py` and all the `nvgif_v1-5.py` files in the same directory) and open an NVGIF of your choice.
 
 ### `nvgif_v1.NVGIFv1` objects
 
