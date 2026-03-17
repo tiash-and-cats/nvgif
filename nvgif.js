@@ -216,8 +216,6 @@ function decodeNVGIF(bytes) {
   
       const decoded = decodeRow(rowData, compression, bpp, width, version);
   
-      console.log(decoded); 
-  
       for (let x = 0; x < width; x++) {
         const srcIndex = x * bpp;
         const dstIndex = (y * width + x) * 4;
