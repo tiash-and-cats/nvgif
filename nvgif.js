@@ -64,15 +64,15 @@ function decodeRow(data, compression, bpp, width, version) {
   } else if (compression === C_RLE) {
     return rleDecode(data, bpp, width);
   } else if (compression & C_RGB565) {
-    const decoded = new Uint8Array(new ArrayBuffer());
-    for (let i = 0, j = 0; i < data.length; i += 2, j++) {
-      const value = data[i] << 8 | data[i+1];
+    const decoded = new Uint8Array(width * 3);
+    for (let i = 0, j = 0; i < data.length; i += 2, j += 3) {
+      const value = (data[i] << 8) | data[i + 1];
       const r = ((value >> 11) & 0x1F) << 3;
       const g = ((value >> 5) & 0x3F) << 2;
       const b = (value & 0x1F) << 3;
-      decoded[j] = r;
-      decoded[j+1] = g;
-      decoded[j+2] = b;
+      decoded[j]     = r;
+      decoded[j + 1] = g;
+      decoded[j + 2] = b;
     }
     return decoded;
   } else {
@@ -197,19 +197,23 @@ function decodeNVGIF(bytes) {
     }
   } else if (version >= 5) {
     let data = bytes.slice(offset);
+  
     if (compression & C_ZLIB) {
       data = pako.inflate(data);
     }
     if (compression & C_RLE) {
       data = batchRleDecode(data);
     }
-    // Same row-based logic as v1–3
+  
+    let innerOffset = 0;
     for (let y = 0; y < height; y++) {
-      const rowLength = view.getUint16(offset, false);
-      offset += 2;
-      const rowData = bytes.slice(offset, offset + rowLength);
-      offset += rowLength;
-      const decoded = decodeRow(rowData, compression, bpp, width);
+      const rowLen = (data[innerOffset] << 8) | data[innerOffset + 1];
+      innerOffset += 2;
+      const rowData = data.slice(innerOffset, innerOffset + rowLen);
+      innerOffset += rowLen;
+  
+      const decoded = decodeRow(rowData, compression, bpp, width, version);
+  
       for (let x = 0; x < width; x++) {
         const srcIndex = x * bpp;
         const dstIndex = (y * width + x) * 4;
