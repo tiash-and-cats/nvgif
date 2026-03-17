@@ -143,13 +143,13 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 ### `nvgif.NVGIF` objects
 
 #### `class nvgif.NVGIF:`  
-> An NVGIF encoder and decoder wrapper that wraps `nvgif_v1.NVGIFv1` to `nvgif_v4.NVGIFv4`.  
+> An NVGIF encoder and decoder wrapper that wraps `nvgif_v1.NVGIFv1` to `nvgif_v5.NVGIFv5`.  
 >
 > `DEFAULT_COMPRESSIONS`  
 > > A dictionary mapping versions to their default compression.  
   
 #### `NVGIF.encode(self, image: str | PIL.Image.Image, out_path: str, version=4, compression=None, alpha=0) -> None:`  
-> Takes the image at `image` and encodes it into an NVGIF with version `version` at `out_path`.  
+> Takes the image at `image` and encodes it into an NVGIF with version `version` at `out_path`. If `compression` is not given, it is set to `NVGIF.DEFAULT_COMPRESSIONS[version]`.
 
 #### `NVGIF.decode(self, in_path: str[, out_path: str]) -> PIL.Image.Image | None:`  
 > Takes the NVGIF at `in_path` and decodes it into an image at `out_path`. If `out_path` is not given, returns the decoded `PIL.Image.Image`.
