@@ -63,6 +63,8 @@ function decodeRow(data, compression, bpp, width, version) {
     return data; // raw RGB/RGBA
   } else if (compression === C_RLE) {
     return rleDecode(data, bpp, width);
+  } else if (version < 5) {
+    throw new Error("Unsupported compression: " + compression);
   } else if (compression & C_RGB565) {
     const decoded = new Uint8Array(width * 3);
     for (let i = 0, j = 0; i < data.length; i += 2, j += 3) {
@@ -75,8 +77,6 @@ function decodeRow(data, compression, bpp, width, version) {
       decoded[j + 2] = b;
     }
     return decoded;
-  } else {
-    throw new Error("Unsupported compression: " + compression);
   }
 }
 
