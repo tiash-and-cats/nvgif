@@ -77,6 +77,8 @@ function decodeRow(data, compression, bpp, width, version) {
       decoded[j + 2] = b;
     }
     return decoded;
+  } else {
+    return data
   }
 }
 
