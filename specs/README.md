@@ -15,7 +15,7 @@ All NVGIF files declare their version in a fixed position within the header:
 | Offset  | Field      | Description                   |
 |---------|------------|-------------------------------|
 | 0–2     | Magic      | Always "NVG" |
-| 3       | Version    | Format version (1–4) |
+| 3       | Version    | Format version (1–5) |
 | 4+      | Payload    | Version-specific header/data |
 
 Because the version byte is always at offset 3, older decoders can reliably detect when they encounter a newer file. For example, a v1-only decoder will correctly identify a v2 or v4 file as unsupported, instead of misreading or crashing, since it can inspect the version byte early and bail out gracefully. This makes NVGIF intentionally incompatible but safely recognizable across versions, ensuring both forwards- and backwards-facing tools fail predictably, not silently.

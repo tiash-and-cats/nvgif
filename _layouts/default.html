@@ -283,7 +283,7 @@ hljs.highlightAll();
 
 // Table of Contents
 function buildTOCGraph(level, i, headings) {
-  const g = { heading: headings[i].textContent, id: headings[i].id, childHeadings: [] };
+  const g = { heading: headings[i].innerHTML, id: headings[i].id, childHeadings: [] };
   let j = i + 1;
   while (j < headings.length) {
     const e = headings[j];
@@ -303,7 +303,7 @@ function buildTOCView(g, e) {
   if (g.childHeadings.length === 0) {
     const a = document.createElement("a");
     a.href = `#${g.id}`;
-    a.innerText = g.heading;
+    a.innerHTML = g.heading;
     e.appendChild(a);
   } else {
     const btn = document.createElement("button");
