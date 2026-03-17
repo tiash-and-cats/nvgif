@@ -15,7 +15,7 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 
 ### `nvgif_v1.NVGIFv1` objects
 
-`class nvgif_v1.NVGIFv1:`  
+#### `class nvgif_v1.NVGIFv1:`  
 > An NVGIF v1 encoder and decoder.  
 >
 > `HEADER_MAGIC = b"NVG"`  
@@ -32,7 +32,7 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 
 ### `nvgif_v2.NVGIFv2` objects
 
-`class nvgif_v2.NVGIFv2:`  
+#### `class nvgif_v2.NVGIFv2:`  
 > An NVGIF v2 encoder and decoder.  
 >
 > `HEADER_MAGIC = b"NVG"`  
@@ -55,7 +55,7 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 
 ### `nvgif_v3.NVGIFv3` objects
 
-`class nvgif_v3.NVGIFv3:`  
+#### `class nvgif_v3.NVGIFv3:`  
 > An NVGIF v3 encoder and decoder.
 >  
 > `HEADER_MAGIC = b"NVG"`  
@@ -84,7 +84,7 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 
 ### `nvgif_v4.NVGIFv4` objects
 
-`class nvgif_v4.NVGIFv4:`  
+#### `class nvgif_v4.NVGIFv4:`  
 > An NVGIF v4 encoder and decoder.  
 >
 > `HEADER_MAGIC = b"NVG"`  
@@ -119,7 +119,7 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 
 ### `nvgif_v5.NVGIFv5` objects
 
-`class nvgif_v5.NVGIFv5:` 
+#### `class nvgif_v5.NVGIFv5:` 
 > An NVGIFv5 encoder and decoder.
 >
 > `HEADER_MAGIC = b"NVG"`  
@@ -152,7 +152,7 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 
 ### `nvgif.NVGIF` objects
 
-`class nvgif.NVGIF:`  
+#### `class nvgif.NVGIF:`  
 > An NVGIF encoder and decoder wrapper that wraps `nvgif_v1.NVGIFv1` to `nvgif_v4.NVGIFv4`.  
 >
 > `DEFAULT_COMPRESSIONS`  
@@ -168,9 +168,7 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 
 The C# implementation of NVGIF requires `System.Drawing.Common`.
 
-### namespace `NVGIF`
-
-`public static class NVGIF`  
+#### `public static class NVGIF.NVGIF`  
 > An NVGIF decoder. Supports v1-4.  
 >
 > `public enum CompressionType : byte`  
@@ -197,10 +195,10 @@ The C# implementation of NVGIF requires `System.Drawing.Common`.
 
 The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `MutationObserver` to look for changes in the DOM. When it detects one, it will sweep through all undecoded NVGIFs in the page and decode them. It supports `<img>` and `<picture>`.
 
-<code>async globalThis.loadNVGIF(src: string): <a href="https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas">OffscreenCanvas</a></code>
-> An NVGIF decoder. Supports v1-4. Decodes the NVGIF at the URL `src` and returns the image data in the form of an `OffscreenCanvas`.
+### <code>async globalThis.loadNVGIF(src: string): OffscreenCanvas`
+> An NVGIF decoder. Supports v1-4. Decodes the NVGIF at the URL `src` and returns the image data in the form of an [`OffscreenCanvas`](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas).
 
-`class globalThis.NVGIFImage(src: string)`  
+### `class globalThis.NVGIFImage(src: string)`  
 > This class tries to mimic the behavior of `Image`. When it is created, it starts loading the image at `src`. If the load succeeds, calls `onload` with no arguments and sets `imgData` to an `ImageData` object with the decoded data. If the load fails, calls `onerror` with no arguments.  
 >
 > `onload: () => void`  
