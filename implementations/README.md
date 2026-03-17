@@ -2,9 +2,6 @@
 
 ## Introduction
 
-NVGIF is a modular image format designed to be both technically clear and creatively extensible.  
-Each version builds on the same magic number (`NVG`) while introducing new features such as compression schemes and alpha channel support.  
-
 The GitHub repository provides reference implementations in Python, C#, and JavaScript.  
 - **Python** → full encoder/decoder support for NVGIF v1–v4, with Pillow integration.  
 - **C#** → lightweight decoder for NVGIF v1–v4 using `System.Drawing.Common`.  
@@ -14,7 +11,7 @@ Together, these implementations make NVGIF portable across platforms and languag
 
 ## Python
 
-The Python implementation of NVGIF requires Pillow.
+The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow is included ([`python/NvgifImagePlugin.py`](https://github.com/tiash-and-cats/nvgif/tree/master/python/NvgifImagePlugin.py)). To use it, simply import it (with `nvgif.py` and all the `nvgif-v1-5.py` files in the same directory) and open an NVGIF of your choice.
 
 ### `nvgif_v1.NVGIFv1` objects
 

@@ -8,29 +8,30 @@ Version 5 expands NVGIF with flexible compression bitmasks and introduces RGB565
 
 ## File Extensions and Mimetype
 
-The MIME type of NVGIF files is `image/x-nvgif`
+The MIME type of NVGIF files is `image/x-nvgif`.
 
 | Extension | Versions Supported | Notes |
 |-----------|--------------------|-------|
-| `.nvg`    | v1–v4              | General extension, recommended for everyday use |
+| `.nvg`    | v1–v5              | General extension, recommended for everyday use |
 | `.nvg1`   | v1                 | Explicit version marker (optional) |
 | `.nvg2`   | v2                 | Explicit version marker (optional) |
 | `.nvg3`   | v3                 | Explicit version marker (optional) |
 | `.nvg4`   | v4                 | Explicit version marker (optional) |
+| `.nvg5`   | v5                 | Explicit version marker (optional) |
 
 ## Reference Implementations
 
 The Github repo contains 3 reference implementations of NVGIF:
 
-- **Python (`python/nvgif.py`)** 🐍  
+- **Python (`python/nvgif.py`)**
   Requires `pillow`. Provides an `NVGIF` class with `.encode` and `.decode` methods.  
-  Supports all versions (v1-v5).
+  Supports all versions (v1-v5). There is an NVGIF plugin for Pillow in [`python/NvgifImagePlugin.py`](https://github.com/tiash-and-cats/nvgif/tree/master/python/NvgifImagePlugin.py). Just import it (with all the other files in the same directory) and you'll be able to open NVGIF files with Pillow!
 
-- **JavaScript (`nvgif.js`)** 🌐  
+- **JavaScript (`nvgif.js`)**
   Browser decoder. Finds `<img>` and `<picture>` elements with NVGIF sources and replaces them with decoded PNGs via [Blob URIs](https://en.wikipedia.org/wiki/Blob_URI_scheme). Also has an `NVGIFImage` with `.onload` and `.onerror` so that you can draw images onto a canvas.
-  Supports v1-v4 (decode-only). Uses [`pako`](https://github.com/nodeca/pako) via jsDelivr for v4 compression. Example in [`nvgifjstest.html`](nvgifjstest.html).
+  Supports all versions (v1-v5, decode-only). Uses [`pako`](https://github.com/nodeca/pako) via jsDelivr for v4 compression. Example in [`nvgifjstest.html`](nvgifjstest.html).
 
-- **C# (`csharp/NVGIF.cs`)** ⚙️  
+- **C# (`csharp/NVGIF.cs`)**
   Requires `System.Drawing.Common`. Provides an `NVGIF` class with `.Decode` method.  
   Supports v1-v4 (decode-only). Example in [`csharp/NVGIFTest.cs`](https://github.com/tiash-and-cats/nvgif/tree/master/csharp).
 
