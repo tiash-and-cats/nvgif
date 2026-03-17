@@ -280,8 +280,8 @@ async function handleNVGIFImages() {
       e.dataset.oldSrc = e.src;
       e.src = URL.createObjectURL(await canvas.convertToBlob());
       console.log("nvgif: Loaded image:", e.dataset.oldSrc, "in", Date.now() - start, "ms");
-	} catch {
-      console.error("nvgif: Failed to decode NVGIF:", e.src);
+	} catch (err) {
+      console.error("nvgif: Failed to decode NVGIF:", e.src, err);
 	}
   });
   document.querySelectorAll(`picture > source[srcset$=".nvg"], 
