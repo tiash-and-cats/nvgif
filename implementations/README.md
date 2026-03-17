@@ -148,10 +148,10 @@ The Python implementation of NVGIF requires Pillow. It supports all NVGIF versio
 > `DEFAULT_COMPRESSIONS`  
 > > A dictionary mapping versions to their default compression.  
   
-#### `NVGIF.encode(self, image: str | PIL.Image.Image, out_path: str, version=4, compression=None, alpha=0) -> None:`  
+#### `NVGIF.encode(image: str | PIL.Image.Image, out_path: str, version=4, compression=None, alpha=0) -> None:`  
 > Takes the image at `image` and encodes it into an NVGIF with version `version` at `out_path`. If `compression` is not given, it is set to `NVGIF.DEFAULT_COMPRESSIONS[version]`.
 
-#### `NVGIF.decode(self, in_path: str[, out_path: str]) -> PIL.Image.Image | None:`  
+#### `NVGIF.decode(in_path: str[, out_path: str]) -> PIL.Image.Image | None:`  
 > Takes the NVGIF at `in_path` and decodes it into an image at `out_path`. If `out_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ## C#
@@ -174,7 +174,7 @@ The C# implementation of NVGIF requires `System.Drawing.Common`. It supports v1-
 The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `MutationObserver` to look for changes in the DOM. When it detects one, it will sweep through all undecoded NVGIFs in the page and decode them. It supports `<img>` and `<picture>`. It supports all versions of NVGIF (decode-only).
 
 ### `async globalThis.loadNVGIF(src: string): OffscreenCanvas`
-> An NVGIF decoder. Supports v1-4. Decodes the NVGIF at the URL `src` and returns the image data in the form of an [`OffscreenCanvas`](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas).
+> Decodes the NVGIF at the URL `src` and returns the image data in the form of an [`OffscreenCanvas`](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas).
 
 ### `class globalThis.NVGIFImage(src: string)`  
 > This class tries to mimic the behavior of `Image`. When it is created, it starts loading the image at `src`. If the load succeeds, calls `onload` with no arguments and sets `imgData` to an `ImageData` object with the decoded data. If the load fails, calls `onerror` with no arguments.  
