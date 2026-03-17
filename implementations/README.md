@@ -3,7 +3,7 @@
 ## Introduction
 
 The GitHub repository provides reference implementations in Python, C#, and JavaScript.  
-- **Python** → full encoder/decoder support for NVGIF v1–v4, with Pillow integration.  
+- **Python** → full encoder/decoder support for NVGIF v1–v5, with Pillow integration.  
 - **C#** → lightweight decoder for NVGIF v1–v4 using `System.Drawing.Common`.  
 - **JavaScript** → browser‑ready decoder that integrates with the DOM via `MutationObserver`.  
 
@@ -11,7 +11,7 @@ Together, these implementations make NVGIF portable across platforms and languag
 
 ## Python
 
-The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow is included ([`python/NvgifImagePlugin.py`](https://github.com/tiash-and-cats/nvgif/tree/master/python/NvgifImagePlugin.py)). To use it, simply import it (with `nvgif.py` and all the `nvgif_v1-5.py` files in the same directory) and open an NVGIF of your choice.
+The Python implementation of NVGIF requires Pillow. It supports all NVGIF versions (v1-v5). An NVGIF plugin for Pillow is included ([`python/NvgifImagePlugin.py`](https://github.com/tiash-and-cats/nvgif/tree/master/python/NvgifImagePlugin.py)). To use it, simply import it (with `nvgif.py` and all the `nvgif_v1-5.py` files in the same directory) and open an NVGIF of your choice.
 
 ### `nvgif_v1.NVGIFv1` objects
 
@@ -156,7 +156,7 @@ The Python implementation of NVGIF requires Pillow. An NVGIF plugin for Pillow i
 
 ## C#
 
-The C# implementation of NVGIF requires `System.Drawing.Common`.
+The C# implementation of NVGIF requires `System.Drawing.Common`. It supports v1-v4, and it can only decode NVGIF files as of now.
 
 ### `public static class NVGIF.NVGIF`  
 > An NVGIF decoder. Supports v1-4.  
@@ -171,7 +171,7 @@ The C# implementation of NVGIF requires `System.Drawing.Common`.
 
 > **Note:** Types are given for illustration purposes only, the implementation itself is not written in TypeScript, but rather JavaScript.
 
-The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `MutationObserver` to look for changes in the DOM. When it detects one, it will sweep through all undecoded NVGIFs in the page and decode them. It supports `<img>` and `<picture>`.
+The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `MutationObserver` to look for changes in the DOM. When it detects one, it will sweep through all undecoded NVGIFs in the page and decode them. It supports `<img>` and `<picture>`. It supports all versions of NVGIF (decode-only).
 
 ### `async globalThis.loadNVGIF(src: string): OffscreenCanvas`
 > An NVGIF decoder. Supports v1-4. Decodes the NVGIF at the URL `src` and returns the image data in the form of an [`OffscreenCanvas`](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas).
