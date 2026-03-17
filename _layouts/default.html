@@ -58,6 +58,13 @@ nav .icon {
     float: right;
     display: block;
   }
+  .sidenav { display: none }
+  article {
+    margin-left: 0 !important;
+  }
+  footer {
+    margin-left: 0 !important;
+  }
 }
 
 a {color: dodgerBlue;}
@@ -108,6 +115,7 @@ tr:nth-child(even) {
 article {
   padding-inline: 12vw;
   margin-top: 66px;
+  margin-left: 200px; /* Same as the width of the sidenav */
 }
 
 footer {
@@ -116,6 +124,7 @@ footer {
   margin-top: 12px;
   background-color: #555;
   color: #ccc;
+  margin-left: 200px;
 }
 
 img, canvas {
@@ -138,6 +147,91 @@ img, canvas {
 .footnote-ref > a::after {
   content: "]";
 }
+
+h1, h2, h3, h4, h5, h6 {
+  & > .permalink {
+    color: #999999;
+    font-size: 0.8em;
+    padding: 0 4px;
+    display: none;
+  }
+  &:hover > .permalink {
+    display: inline;
+  }
+}
+
+/* Fixed sidenav, full height */
+.sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 50px;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn, .sidenav h1 {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+.sidenav h1 {
+  margin: 0 0 3px 0;
+  color: #f1f1f1;
+}
+
+.dropdown-btn > a {
+  text-decoration: none;
+  padding: 0;
+  display: inline;
+  color: inherit;
+}
+
+.dropdown-btn > a:hover {
+  text-decoration: underline;
+}
+
+/* On mouse-over */
+.sidenav a:hover, .dropdown-btn:hover {
+  color: #f1f1f1;
+}
+
+/* Add an active class to the active dropdown button */
+.active {
+  background-color: #7C0094;
+  color: white;
+}
+
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  padding-left: 8px;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+
+/* Some media queries for responsiveness */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
 </style>
 </head>
 <body>
@@ -146,7 +240,7 @@ img, canvas {
   <a href="/nvgif/" class="logo">nvgif</a>
   <a href="/nvgif/specs/">Specification</a>
   <a href="/nvgif/implementations/">Implementations</a>
-  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+  <a href="javascript:void(0);" class="icon" onclick="openNav()">
     <i class="fa fa-bars"></i>
   </a>
 </nav>
@@ -162,14 +256,8 @@ img, canvas {
 </footer>
 
 <script>
-const quotes = [
-  "You didn't need efficiency, the efficiency was inside you all along.",
-  "Perhaps the best image format was the friends we made along the way."
-];
-document.getElementById("quote").textContent = quotes[Math.floor(Math.random() * quotes.length)];
-document.getElementById("year").textContent = new Date().getFullYear();
-
-function myFunction() {
+// Navigation
+function openNav() {
   var x = document.getElementById("myTopnav");
   if (x.className === "") {
     x.className = "responsive";
@@ -178,6 +266,7 @@ function myFunction() {
   }
 }
 
+// Syntax highlighting
 document.querySelectorAll("div.highlighter-rouge:has(div.highlight > pre.highlight > code)").forEach(e => {
   const [langClass] = Array.from(e.classList).filter(x => x.startsWith("language-"));
   e.querySelector("div.highlight > pre.highlight").classList.add("hljs");
@@ -185,6 +274,88 @@ document.querySelectorAll("div.highlighter-rouge:has(div.highlight > pre.highlig
 });
 
 hljs.highlightAll();
+
+// Table of Contents
+function buildTOCGraph(level, i, headings) {
+  const g = { heading: headings[i].textContent, id: headings[i].id, childHeadings: [] };
+  let j = i + 1;
+  while (j < headings.length) {
+    const e = headings[j];
+    const eLevel = parseInt(e.tagName.replace("H",""));
+    if (eLevel <= level) break; // stop when same or higher level
+    g.childHeadings.push(buildTOCGraph(eLevel, j, headings));
+    // skip past the subtree we just consumed
+    while (j+1 < headings.length && parseInt(headings[j+1].tagName.replace("H","")) > eLevel) {
+      j++;
+    }
+    j++;
+  }
+  return g;
+}
+
+function buildTOCView(g, e) {
+  if (g.childHeadings.length === 0) {
+    const a = document.createElement("a");
+    a.href = `#${g.id}`;
+    a.innerText = g.heading;
+    e.appendChild(a);
+  } else {
+    const btn = document.createElement("button");
+    btn.className = "dropdown-btn";
+    const a = document.createElement("a");
+    a.href = `#${g.id}`;
+    a.innerText = g.heading;
+    btn.appendChild(a);
+    const i = document.createElement("i");
+    i.className = "fa fa-caret-down";
+    btn.appendChild(i);
+    e.appendChild(btn);
+    const drp = document.createElement("div");
+    drp.className = "dropdown-container";
+    for (let subG of g.childHeadings) {
+      buildTOCView(subG, drp);
+    }
+    e.appendChild(drp);
+  }
+}
+
+const headings = document.querySelectorAll("article :is(h1, h2, h3, h4, h5, h6)");
+const toc = buildTOCGraph(1, 0, headings);
+buildTOCView(toc, document.querySelector(".sidenav"));
+
+var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
+
+for (i = 0; i < dropdown.length; i++) {
+  dropdown[i].addEventListener("click", function(e) {
+    if (e.target.tagName === "A") return;
+    this.classList.toggle("active");
+    var dropdownContent = this.nextElementSibling;
+    if (dropdownContent.style.display === "block") {
+      dropdownContent.style.display = "none";
+    } else {
+      dropdownContent.style.display = "block";
+    }
+  });
+}
+
+// Permalinks
+headings.forEach(e => {
+  const a = document.createElement("a");
+  a.innerText = "#";
+  a.href = `#${e.id}`;
+  a.className = "permalink";
+  e.innerText += " "
+  e.appendChild(a);
+});
+
+// Funny quotes!
+const quotes = [
+  "You didn't need efficiency, the efficiency was inside you all along.",
+  "Perhaps the best image format was the friends we made along the way."
+];
+document.getElementById("quote").textContent = quotes[Math.floor(Math.random() * quotes.length)];
+document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 
 </body>
