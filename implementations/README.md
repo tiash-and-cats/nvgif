@@ -2,10 +2,11 @@
 
 ## Introduction
 
-The GitHub repository provides reference implementations in Python, C#, and JavaScript.  
+The GitHub repository provides reference implementations in Python, C#, JavaScript, and C.  
 - **Python** → full encoder/decoder support for NVGIF v1–v5, with Pillow integration.  
 - **C#** → lightweight decoder for NVGIF v1–v4 using `System.Drawing.Common`.  
 - **JavaScript** → browser‑ready decoder that integrates with the DOM via `MutationObserver`.  
+- **C** → simple decoder for v1 and v2, using [`lodepng`](https://lodev.org/lodepng/). 
 
 Together, these implementations make NVGIF portable across platforms and languages, while keeping the format's playful spirit alive.
 
@@ -70,7 +71,7 @@ The Python implementation of NVGIF requires Pillow. It supports all NVGIF versio
 > `COMPRESSION_RLE = 1`  
 > > RLE compression.  
 >   
-> `ALPHA_DISABLED = 0`  
+> `ALPHA_DISABLED = 0`
 > > RGB pixels.  
 >   
 > `ALPHA_ENABLED = 1`  
@@ -190,3 +191,13 @@ The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `Mutati
 >
 > <code>canvas: <a href="https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas">OffscreenCanvas</a> | null</code>
 > > If the load was successful, is an [`OffscreenCanvas`](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas) object with decoded image data on it's surface, otherwise `null`.
+
+## C
+
+The C implementation of NVGIF uses [`lodepng`](https://lodev.org/lodepng/). It was tested with TCC 0.9.27. It only supports v1 and v2 decoding right now. To use it, download the files and link against `lodepng.c` and `nvgif.c`, and include the header file `nvgif.h`. Listed below are the main things in `nvgif.h` and `nvgif.c`:
+
+### `int nvg_decode_image(const char *filename, const char *outpng)`
+> Decodes the NVGIF at `filename` into a PNG at `outpng`. If the decoding is successful, returns 0. If there were errors, returns -1 and puts an error message in `nvg_error`.
+
+### `char nvg_error[128]`
+> Starts out blank. When an error occurs, an error message is put into this string.

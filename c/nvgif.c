@@ -18,12 +18,6 @@ int nvg__throwerr(const char *fmt, ...) {
     return -1; // caller must return this if desired
 }
 
-/*int nvg__throwerr(const char *fmt, ...) {
-    fprintf(stderr, "[DEBUG] entered nvg__throwerr\n");
-    strcpy(nvg_error, "TEST ERROR");
-    return -1;
-}*/
-
 static int nvg__fread(void *addr, size_t size, size_t num, FILE *f) {
     if (fread(addr, size, num, f) != num) {
         fclose(f);

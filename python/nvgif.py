@@ -1,3 +1,13 @@
+"""
+NVGIF Python implementation
+Copyright (c) tiash-and-cats & contributors
+The NVGIF docs & reference implementations are licensed under the MIT License.
+In practice this means you can use this code in your projects without paying
+any kind of fee or subscription.
+
+This file contains a class NVGIF which is a wrapper for nvgif_v1.NVGIFv1
+through nvgif_v5.NVGIFv5.
+"""
 from nvgif_v1 import NVGIFv1
 from nvgif_v2 import NVGIFv2
 from nvgif_v3 import NVGIFv3

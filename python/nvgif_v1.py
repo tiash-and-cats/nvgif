@@ -1,3 +1,12 @@
+"""
+NVGIF Python implementation
+Copyright (c) tiash-and-cats & contributors
+The NVGIF docs & reference implementations are licensed under the MIT License.
+In practice this means you can use this code in your projects without paying
+any kind of fee or subscription.
+
+This file provides an encoder and decoder for NVGIFv1.
+"""
 from PIL import Image
 
 class NVGIFv1:

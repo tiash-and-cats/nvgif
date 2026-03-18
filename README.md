@@ -6,6 +6,10 @@ NVGIF is a tiny, simple image format designed for fun, experimentation, and lear
 
 Version 5 expands NVGIF with flexible compression bitmasks and introduces RGB565 as a lossy encoding option, reducing file size while discarding alpha for efficiency.
 
+## How do I use this repo?
+
+This repo isn't really meant to be cloned. Cloning is only required if you want to contribute. Instead, download individual files (or folders using [download-directory.github.io](https://download-directory.github.io/)).
+
 ## File Extensions and Mimetype
 
 The MIME type of NVGIF files is `image/x-nvgif`.
@@ -21,7 +25,7 @@ The MIME type of NVGIF files is `image/x-nvgif`.
 
 ## Reference Implementations
 
-The Github repo contains 3 reference implementations of NVGIF:
+The Github repo contains 4 reference implementations of NVGIF:
 
 - **Python (`python/nvgif.py`)**
   Requires `pillow`. Provides an `NVGIF` class with `.encode` and `.decode` methods.  
@@ -29,11 +33,14 @@ The Github repo contains 3 reference implementations of NVGIF:
 
 - **JavaScript (`nvgif.js`)**
   Browser decoder. Finds `<img>` and `<picture>` elements with NVGIF sources and replaces them with decoded PNGs via [Blob URIs](https://en.wikipedia.org/wiki/Blob_URI_scheme). Also has an `NVGIFImage` with `.onload` and `.onerror` so that you can draw images onto a canvas.
-  Supports all versions (v1-v5, decode-only). Uses [`pako`](https://github.com/nodeca/pako) via jsDelivr for v4 compression. Example in [`nvgifjstest.html`](nvgifjstest.html).
+  Supports all versions (v1-v5, decode-only). Uses [`pako`](https://github.com/nodeca/pako) via jsDelivr for v4 compression. It also has a more modern promise-based loader. Example in [`nvgifjstest.html`](nvgifjstest.html).
 
 - **C# (`csharp/NVGIF.cs`)**
   Requires `System.Drawing.Common`. Provides an `NVGIF` class with `.Decode` method.  
   Supports v1-v4 (decode-only). Example in [`csharp/NVGIFTest.cs`](https://github.com/tiash-and-cats/nvgif/tree/master/csharp).
+  
+- **C (`c/nvgif.c`)**
+  Uses [`lodepng`](https://lodev.org/lodepng/). Provides an `nvg_decode_image` function and uses `nvg_error` for errors. Supports v1 and v2 (decode-only). Example in [`c/main.c`](https://github.com/tiash-and-cats/nvgif/tree/master/c/).
 
 Detailed API docs are in [NVGIF Implementations](implementations/).
 
@@ -53,26 +60,26 @@ This tool is ideal for scripting, testing, or integrating NVGIF into your own pi
 
 Encode a PNG file into NVGIF v4:
 ```bash
-python nvgif-cli.py encode input.png output.nvg --version 4
+python nvgif_cli.py encode input.png output.nvg --version 4
 ```
 
 Convert an `.nvg` file back into a standard PNG:
 ```bash
-python nvgif-cli.py decode input.nvg output.png
+python nvgif_cli.py decode input.nvg output.png
 ```
 
 Display an NVGIF file's header and metadata:
 ```bash
-python nvgif-cli.py info input.nvg
+python nvgif_cli.py info input.nvg
 ```
 
 View an NVGIF image in a resizable window:
 ```bash
-python nvgif-cli.py view image.nvg
+python nvgif_cli.py view image.nvg
 ```
 > Launches a graphical window with the image rendered over a checkerboard background (for transparency). Handy for previewing `.nvg` files without converting to PNG.
 
 For more options, run:
 ```bash
-python nvgif-cli.py --help
+python nvgif_cli.py --help
 ```

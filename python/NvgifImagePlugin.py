@@ -1,3 +1,13 @@
+"""
+NVGIF Python implementation
+Copyright (c) tiash-and-cats & contributors
+The NVGIF docs & reference implementations are licensed under the MIT License.
+In practice this means you can use this code in your projects without paying
+any kind of fee or subscription.
+
+This is an NVGIF plugin for Pillow. It needs nvgif.py, which needs nvgif_v1.py through
+nvgif_v5.py.
+"""
 from PIL import Image, ImageFile
 from nvgif import NVGIF
 
