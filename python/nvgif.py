@@ -60,7 +60,12 @@ class NVGIF:
             except (KeyError, TypeError):
                 raise ValueError(f"Unsupported compression '{compression}' for NVGIFv{version}")
                 
-        self.versions[version].encode(image, out_path, compression=compression, alpha=alpha)
+        if version >= 3:
+            self.versions[version].encode(image, out_path, compression=compression, alpha=alpha)
+        elif version == 2:
+            self.versions[version].encode(image, out_path, compression=compression)
+        elif version == 1:
+            self.versions[version].encode(image, out_path)
 
     def decode(self, in_path, out_path=None): 
         with open(in_path, "rb") as f:

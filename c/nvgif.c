@@ -1,3 +1,11 @@
+/*
+NVGIF C implementation
+Copyright (c) tiash-and-cats & contributors
+The NVGIF docs & reference implementations are licensed under the MIT License.
+In practice this means you can use this code in your projects without paying
+any kind of fee or subscription.
+*/
+
 #include "nvgif.h"
 
 char nvg_error[128];
@@ -68,18 +76,14 @@ unsigned char* nvg__decode_row(const unsigned char *row, int comp, int bpp, int 
 
 int nvg_decode_image(const char *filename, const char *outpng) {
     FILE *f = fopen(filename, "rb");
-    puts("trying to open file");
     if (!f) {
         return nvg__throwerr("unable to open file");
     }
-    puts("opened file");
 
     char magic[3];
-    puts("trying to read magic");
     if (nvg__fread(magic, 1, 3, f) < 0) {
         return nvg__throwerr("failed to read magic");
     }
-    puts("read magic; trying to read version");
     unsigned char version;
     if (nvg__fread(&version, 1, 1, f) < 0) {
         return nvg__throwerr("failed to read version");
@@ -89,23 +93,13 @@ int nvg_decode_image(const char *filename, const char *outpng) {
         fclose(f);
         return nvg__throwerr("could not find NVGIF magic");
     }
-    
-    puts("read magic & version");
 
-    if (version < 1 || version > 3) {
+    if (version < 1 || version > 2) {
         fclose(f);
-        return nvg__throwerr("unsupported NVGIF version (v1-3 supported)");
+        return nvg__throwerr("unsupported NVGIF version (v1 & v2 supported)");
     }
-    
-    puts("checked version; reading alpha and compression");
 
-    int bpp = 3, alpha = 0, comp = C_NONE;
-    if (version >= 3) {
-        if (nvg__fread(&alpha, 1, 1, f) < 0) {
-            return nvg__throwerr("failed to read alpha");
-        }
-        bpp += alpha;
-    }
+    int bpp = 3, comp = C_NONE;
     if (version >= 2) {
         if (nvg__fread(&comp, 1, 1, f) < 0) {
             return nvg__throwerr("failed to read compression");
@@ -116,18 +110,13 @@ int nvg_decode_image(const char *filename, const char *outpng) {
     uint16_t h = nvg__read_be16(f);
     if (!w || !h) { fclose(f); return -1; }
 
-    puts("read width and height");
-
     unsigned char *pixels = malloc(w * h * 4);
     if (!pixels) {
         fclose(f);
         return nvg__throwerr("not enough memory to allocate pixels");
     }
     
-    puts("allocated pixel buffer");
-
     for (int y = 0; y < h; y++) {
-        printf("decoding row #%d\n", y);
         uint16_t rowlen = nvg__read_be16(f);
         unsigned char *row = malloc(rowlen);
         if (!row) {

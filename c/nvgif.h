@@ -1,3 +1,11 @@
+/*
+NVGIF C implementation
+Copyright (c) tiash-and-cats & contributors
+The NVGIF docs & reference implementations are licensed under the MIT License.
+In practice this means you can use this code in your projects without paying
+any kind of fee or subscription.
+*/
+
 #ifndef NVGIF_H
 #define NVGIF_H
 
