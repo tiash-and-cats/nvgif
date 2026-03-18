@@ -1,0 +1,165 @@
+#include "nvgif.h"
+
+char nvg_error[128];
+
+int nvg__throwerr(const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    vsnprintf(nvg_error, sizeof(nvg_error), fmt, args);
+    va_end(args);
+    return -1; // caller must return this if desired
+}
+
+/*int nvg__throwerr(const char *fmt, ...) {
+    fprintf(stderr, "[DEBUG] entered nvg__throwerr\n");
+    strcpy(nvg_error, "TEST ERROR");
+    return -1;
+}*/
+
+static int nvg__fread(void *addr, size_t size, size_t num, FILE *f) {
+    if (fread(addr, size, num, f) != num) {
+        fclose(f);
+        return -1;
+    }
+    return 0;
+}
+
+uint16_t nvg__read_be16(FILE *f) {
+    unsigned char buf[2];
+    if (nvg__fread(buf, 1, 2, f) < 0) {
+        return 0; // signal error
+    }
+    return (buf[0] << 8) | buf[1];
+}
+
+unsigned char* nvg__decode_rle(const unsigned char *row, int bpp, int expectedPixels) {
+    unsigned char *result = malloc(expectedPixels * bpp);
+    if (!result) {
+        nvg__throwerr("not enough memory for RLE decode"); return NULL;
+    }
+    int i = 0, pixelsDecoded = 0, out = 0;
+    while (pixelsDecoded < expectedPixels) {
+        unsigned char count = row[i];
+        const unsigned char *unit = row + i + 1;
+        for (int j = 0; j < count && pixelsDecoded < expectedPixels; j++) {
+            memcpy(result + out, unit, bpp);
+            out += bpp;
+            pixelsDecoded++;
+        }
+        i += 1 + bpp;
+    }
+    return result;
+}
+
+unsigned char* nvg__decode_row(const unsigned char *row, int comp, int bpp, int w) {
+    if (comp == C_NONE) {
+        unsigned char *copy = malloc(w * bpp);
+        if (!copy) {
+            nvg__throwerr("not enough memory for raw row"); return NULL;
+        }
+        memcpy(copy, row, w * bpp);
+        return copy;
+    } else if (comp == C_RLE) {
+        return nvg__decode_rle(row, bpp, w);
+    } else {
+        nvg__throwerr("unsupported compression type %d", comp); return NULL;
+    }
+}
+
+int nvg_decode_image(const char *filename, const char *outpng) {
+    FILE *f = fopen(filename, "rb");
+    puts("trying to open file");
+    if (!f) {
+        return nvg__throwerr("unable to open file");
+    }
+    puts("opened file");
+
+    char magic[3];
+    puts("trying to read magic");
+    if (nvg__fread(magic, 1, 3, f) < 0) {
+        return nvg__throwerr("failed to read magic");
+    }
+    puts("read magic; trying to read version");
+    unsigned char version;
+    if (nvg__fread(&version, 1, 1, f) < 0) {
+        return nvg__throwerr("failed to read version");
+    }
+
+    if (magic[0] != 'N' || magic[1] != 'V' || magic[2] != 'G') {
+        fclose(f);
+        return nvg__throwerr("could not find NVGIF magic");
+    }
+    
+    puts("read magic & version");
+
+    if (version < 1 || version > 3) {
+        fclose(f);
+        return nvg__throwerr("unsupported NVGIF version (v1-3 supported)");
+    }
+    
+    puts("checked version; reading alpha and compression");
+
+    int bpp = 3, alpha = 0, comp = C_NONE;
+    if (version >= 3) {
+        if (nvg__fread(&alpha, 1, 1, f) < 0) {
+            return nvg__throwerr("failed to read alpha");
+        }
+        bpp += alpha;
+    }
+    if (version >= 2) {
+        if (nvg__fread(&comp, 1, 1, f) < 0) {
+            return nvg__throwerr("failed to read compression");
+        }
+    }
+
+    uint16_t w = nvg__read_be16(f);
+    uint16_t h = nvg__read_be16(f);
+    if (!w || !h) { fclose(f); return -1; }
+
+    puts("read width and height");
+
+    unsigned char *pixels = malloc(w * h * 4);
+    if (!pixels) {
+        fclose(f);
+        return nvg__throwerr("not enough memory to allocate pixels");
+    }
+    
+    puts("allocated pixel buffer");
+
+    for (int y = 0; y < h; y++) {
+        printf("decoding row #%d\n", y);
+        uint16_t rowlen = nvg__read_be16(f);
+        unsigned char *row = malloc(rowlen);
+        if (!row) {
+            fclose(f);
+            return nvg__throwerr("not enough memory to allocate row");
+        }
+        if (nvg__fread(row, 1, rowlen, f) < 0) { free(row); fclose(f); return -1; }
+
+        unsigned char *decoded = nvg__decode_row(row, comp, bpp, w);
+        if (!decoded) { free(row); fclose(f); return -1; }
+
+        for (int x = 0; x < w; x++) {
+            int src = x * bpp;
+            int dst = (y * w + x) * 4;
+            pixels[dst]     = decoded[src];
+            pixels[dst + 1] = decoded[src + 1];
+            pixels[dst + 2] = decoded[src + 2];
+            pixels[dst + 3] = (bpp == 4) ? decoded[src + 3] : 255;
+        }
+
+        free(row);
+        free(decoded);
+    }
+
+    fclose(f);
+
+    unsigned error = lodepng_encode32_file(outpng, pixels, w, h);
+    if (error) {
+        free(pixels);
+        return nvg__throwerr("lodepng error %u: %s", error, lodepng_error_text(error));
+    }
+
+    free(pixels);
+    return 0;
+}
