@@ -4,7 +4,7 @@
 
 The GitHub repository provides reference implementations in Python, C#, JavaScript, and C.  
 - **Python** → full encoder/decoder support for NVGIF v1–v5, with Pillow integration.  
-- **C#** → lightweight decoder for NVGIF v1–v4 using `System.Drawing.Common`.  
+- **C#** → lightweight, Windows-specific decoder for NVGIF v1–v4 using `System.Drawing.Common`.  
 - **JavaScript** → browser‑ready decoder that integrates with the DOM via `MutationObserver`.  
 - **C** → simple decoder for v1 and v2, using [`lodepng`](https://lodev.org/lodepng/). 
 
@@ -157,7 +157,7 @@ The Python implementation of NVGIF requires Pillow. It supports all NVGIF versio
 
 ## C#
 
-The C# implementation of NVGIF requires `System.Drawing.Common`. It supports v1-v4, and it can only decode NVGIF files as of now.
+The C# implementation of NVGIF requires `System.Drawing.Common`. As such, it is Windows-specific. It supports v1-v4, and it can only decode NVGIF files as of now.
 
 ### `public static class NVGIF.NVGIF`  
 > An NVGIF decoder. Supports v1-4.  
