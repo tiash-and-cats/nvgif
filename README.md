@@ -8,7 +8,7 @@ Version 5 expands NVGIF with flexible compression bitmasks and introduces RGB565
 
 ## How do I use this repo?
 
-The [GitHub repo](https://github.com/tiash-and-cats/nvgif/) isn't really meant to be cloned. Cloning is only required if you want to contribute. Instead, download individual files (or folders using [download-directory.github.io](https://download-directory.github.io/)).
+The [GitHub repo](https://github.com/tiash-and-cats/nvgif/) isn't really meant to be cloned. Cloning is only required if you want to contribute. Instead, view files and download individual files (or folders using [download-directory.github.io](https://download-directory.github.io/)).
 
 ## File Extensions and Mimetype
 
