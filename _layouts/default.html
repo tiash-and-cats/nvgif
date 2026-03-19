@@ -318,10 +318,9 @@ function buildTOCView(g, e) {
     e.appendChild(a);
   } else {
     const btn = document.createElement("button");
-    btn.className = "dropdown-btn";
+    btn.className = "dropdown-btn active";
     const a = document.createElement("a");
     a.href = `#${g.id}`;
-	a.className = "active";
     a.innerHTML = g.heading;
     btn.appendChild(a);
     const i = document.createElement("i");
@@ -330,7 +329,7 @@ function buildTOCView(g, e) {
     e.appendChild(btn);
     const drp = document.createElement("div");
     drp.className = "dropdown-container";
-	drp.style.display = "none";
+	drp.style.display = "block";
     for (let subG of g.childHeadings) {
       buildTOCView(subG, drp);
     }
