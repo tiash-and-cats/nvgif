@@ -234,6 +234,17 @@ h1, h2, h3, h4, h5, h6 {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.sidenav::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.sidenav {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
 </style>
 </head>
 <body>
@@ -310,6 +321,7 @@ function buildTOCView(g, e) {
     btn.className = "dropdown-btn";
     const a = document.createElement("a");
     a.href = `#${g.id}`;
+	a.className = "active":
     a.innerHTML = g.heading;
     btn.appendChild(a);
     const i = document.createElement("i");
@@ -318,6 +330,7 @@ function buildTOCView(g, e) {
     e.appendChild(btn);
     const drp = document.createElement("div");
     drp.className = "dropdown-container";
+	drp.style.display = "none";
     for (let subG of g.childHeadings) {
       buildTOCView(subG, drp);
     }
