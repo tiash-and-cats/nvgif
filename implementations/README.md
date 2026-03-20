@@ -194,7 +194,7 @@ The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `Mutati
 
 ## C
 
-The C implementation of NVGIF was tested with TCC 0.9.27 and MSVC++ 19.50.35727 for x64. It only supports v1 and v2 decoding right now. To use it, download the files and link against `nvgif.c`, and include the header file `nvgif.h`. It has been tested with `lodepng` and OpenCV. Examples are in [`c/`](https://github.com/tiash-and-cats/nvgif/tree/master/c). Listed below are the main things in `nvgif.h` and `nvgif.c`:
+The C implementation of NVGIF was tested with TCC 0.9.27 and MSVC++ 19.50.35727 for x64. It only supports v1 and v2 decoding right now. To use it, download the files and link against `nvgif.c`, and include the header file `nvgif.h`. It has been tested with `lodepng` (C) and OpenCV (C++). Examples are in [`c/`](https://github.com/tiash-and-cats/nvgif/tree/master/c). Listed below are the main things in `nvgif.h` and `nvgif.c`:
 
 ### `typedef struct nvg_Image`
 > A structure that represents a decoded NVGIF.
