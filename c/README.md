@@ -1,4 +1,4 @@
-# NVGIF C implementation
+# NVGIF C demo
 
 - `make simple` → builds the pure C decoder with TinyCC (default).
 - `make opencv` → builds the OpenCV viewer & decoder with MSVC++.
