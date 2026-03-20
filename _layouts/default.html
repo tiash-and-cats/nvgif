@@ -288,7 +288,7 @@ document.querySelectorAll("div.highlighter-rouge:has(div.highlight > pre.highlig
   const language = Array.from(e.classList).filter(x => x.startsWith("language-"))[0].slice(9);
   const codeE = e.querySelector("code");
   codeE.classList.add("hljs");
-  codeE.innerHTML = hljs.highlight(codeE.innerText, { language, ignoreIllegals: true });
+  codeE.innerHTML = hljs.highlight(codeE.innerText, { language, ignoreIllegals: true }).value;
 });
 
 // Table of Contents
