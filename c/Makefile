@@ -8,6 +8,15 @@
 
 CC=tcc
 FLAGS=
+OPENCV=E:\opencv
+OPENCV_LIB=opencv_world4120.lib
+OUTC=nvgifsimple.exe
+OUTCPP=nvgifopencv.exe
 
-all:
-	$(CC) -o nvgifdecode.exe -I. main.c lodepng.c nvgif.c $(FLAGS)
+simple:
+	$(CC) -o $(OUTC) -I. main.c lodepng.c nvgif.c $(FLAGS)
+
+opencv:
+	cl /EHsc main.cpp nvgif.c \
+	/I"$(OPENCV)/build/include" \
+	/Fe"$(OUTCPP)" /link $(OPENCV_LIB)

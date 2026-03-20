@@ -1,2 +1,8 @@
 csharp/bin
 csharp/obj
+c/*.exe
+c/*.obj
+c/*.dll
+c/*.lib
+c/*.png
+python/__pycache__/*

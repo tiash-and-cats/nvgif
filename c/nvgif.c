@@ -8,14 +8,18 @@ any kind of fee or subscription.
 
 #include "nvgif.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 char nvg_error[128];
 
-int nvg__throwerr(const char *fmt, ...) {
+void* nvg__throwerr(const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     vsnprintf(nvg_error, sizeof(nvg_error), fmt, args);
     va_end(args);
-    return -1; // caller must return this if desired
+    return NULL; // caller must return this if desired
 }
 
 static int nvg__fread(void *addr, size_t size, size_t num, FILE *f) {
@@ -26,12 +30,13 @@ static int nvg__fread(void *addr, size_t size, size_t num, FILE *f) {
     return 0;
 }
 
-uint16_t nvg__read_be16(FILE *f) {
+int nvg__read_be16(FILE *f, uint16_t *out) {
     unsigned char buf[2];
     if (nvg__fread(buf, 1, 2, f) < 0) {
-        return 0; // signal error
+        return -1; // signal error
     }
-    return (buf[0] << 8) | buf[1];
+    *out = (buf[0] << 8) | buf[1];
+    return 0; // success
 }
 
 unsigned char* nvg__decode_rle(const unsigned char *row, int bpp, int expectedPixels) {
@@ -68,8 +73,15 @@ unsigned char* nvg__decode_row(const unsigned char *row, int comp, int bpp, int 
     }
 }
 
-int nvg_decode_image(const char *filename, const char *outpng) {
-    FILE *f = fopen(filename, "rb");
+void nvg_free_image(nvg_Image *img) {
+    if (img) {
+        free(img->pixels);
+        free(img);
+    }
+}
+
+nvg_Image* nvg_decode_image(const char *filename) {
+	FILE *f = fopen(filename, "rb");
     if (!f) {
         return nvg__throwerr("unable to open file");
     }
@@ -100,9 +112,14 @@ int nvg_decode_image(const char *filename, const char *outpng) {
         }
     }
 
-    uint16_t w = nvg__read_be16(f);
-    uint16_t h = nvg__read_be16(f);
-    if (!w || !h) { fclose(f); return -1; }
+    uint16_t w;
+    if (nvg__read_be16(f, &w) < 0) {
+        return nvg__throwerr("failed to read width");
+    }
+	uint16_t h;
+    if (nvg__read_be16(f, &h) < 0) {
+        return nvg__throwerr("failed to read height");
+    }
 
     unsigned char *pixels = malloc(w * h * 4);
     if (!pixels) {
@@ -111,7 +128,10 @@ int nvg_decode_image(const char *filename, const char *outpng) {
     }
     
     for (int y = 0; y < h; y++) {
-        uint16_t rowlen = nvg__read_be16(f);
+        uint16_t rowlen;
+		if (nvg__read_be16(f, &rowlen) < 0) {
+			return nvg__throwerr("could not read row length");
+		}
         unsigned char *row = malloc(rowlen);
         if (!row) {
             fclose(f);
@@ -136,13 +156,16 @@ int nvg_decode_image(const char *filename, const char *outpng) {
     }
 
     fclose(f);
-
-    unsigned error = lodepng_encode32_file(outpng, pixels, w, h);
-    if (error) {
-        free(pixels);
-        return nvg__throwerr("lodepng error %u: %s", error, lodepng_error_text(error));
-    }
-
-    free(pixels);
-    return 0;
+	
+    nvg_Image *img = malloc(sizeof(nvg_Image));
+    if (!img) { return nvg__throwerr("not enough memory for image struct"); }
+    img->width = w;
+    img->height = h;
+    img->pixels = pixels;
+	
+    return img;
 }
+
+#ifdef __cplusplus
+}
+#endif

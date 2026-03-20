@@ -1,11 +1,3 @@
-/*
-NVGIF C implementation
-Copyright (c) tiash-and-cats & contributors
-The NVGIF docs & reference implementations are licensed under the MIT License.
-In practice this means you can use this code in your projects without paying
-any kind of fee or subscription.
-*/
-
 #ifndef NVGIF_H
 #define NVGIF_H
 
@@ -14,19 +6,35 @@ any kind of fee or subscription.
 #include <string.h>
 #include <stdint.h>
 #include <stdio.h>
-#include "lodepng.h"
 
 #define C_NONE 0
 #define C_RLE  1
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 extern char nvg_error[128];
 
+typedef struct {
+    unsigned char *pixels; // RGBA buffer
+    int width;
+    int height;
+} nvg_Image;
+
 // Function declarations
-uint16_t nvg__read_be16(FILE *f);
+int nvg__read_be16(FILE *f, uint16_t *out);
 unsigned char* nvg__decode_rle(const unsigned char *row, int bpp, int expectedPixels);
 unsigned char* nvg__decode_row(const unsigned char *row, int comp, int bpp, int w);
-int nvg_decode_image(const char *filename, const char *outpng);
-static int nvg__fread(void *addr, size_t size, size_t num, FILE *f);
-int nvg__throwerr(const char *fmt, ...);
+int nvg__fread(void *addr, size_t size, size_t num, FILE *f);
+void* nvg__throwerr(const char *fmt, ...);
 
+nvg_Image* nvg_decode_image(const char *filename);
+void nvg_free_image(nvg_Image *img);
+
+#ifdef __cplusplus
+}
 #endif
+
+
+#endif /* !defined NVGIF_H */

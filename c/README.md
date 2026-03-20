@@ -1,15 +1,14 @@
-# NVGIF C demo
+# NVGIF C implementation
 
-To run the demo, do:
-``` bash
-make
-```
-It defaults to compiling with TCC. To compile with GCC, you can do:
-``` bash
-make CC=gcc
-```
-If you need to add more compile flags, you can do:
-``` bash
-make CC=gcc FLAGS=<--someflag>
-```
-You will get an executable called `nvgifdecode.exe` that decodes NVGIFs of versions 1 and 2.
+- `make simple` → builds the pure C decoder with TinyCC (default).
+- `make opencv` → builds the OpenCV viewer & decoder with MSVC++.
+
+You can override variables at the command line:
+- `CC` → compiler (default: tcc)
+- `FLAGS` → extra flags for C compiler
+- `OPENCV` → path to OpenCV installation (default: E:\opencv)
+- `OPENCV_LIB` → OpenCV monolithic library name (default: opencv_world4120.lib)
+
+Examples:
+- `make simple CC=gcc FLAGS="-O2 -Wall"`
+- `make opencv OPENCV=./opencv OPENCV_LIB=opencv_world480.lib`

@@ -194,10 +194,38 @@ The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `Mutati
 
 ## C
 
-The C implementation of NVGIF uses [`lodepng`](https://lodev.org/lodepng/). It was tested with TCC 0.9.27. It only supports v1 and v2 decoding right now. To use it, download the files and link against `lodepng.c` and `nvgif.c`, and include the header file `nvgif.h`. Listed below are the main things in `nvgif.h` and `nvgif.c`:
+The C implementation of NVGIF was tested with TCC 0.9.27 and MSVC++ 19.50.35727 for x64. It only supports v1 and v2 decoding right now. To use it, download the files and link against `nvgif.c`, and include the header file `nvgif.h`. It has been tested with `lodepng` and OpenCV. Examples are in [`c/`](https://github.com/tiash-and-cats/nvgif/tree/master/c). Listed below are the main things in `nvgif.h` and `nvgif.c`:
 
-### `int nvg_decode_image(const char *filename, const char *outpng)`
-> Decodes the NVGIF at `filename` into a PNG at `outpng`. If the decoding is successful, returns 0. If there were errors, returns -1 and puts an error message in `nvg_error`.
+### `typedef struct nvg_Image`
+> A structure that represents a decoded NVGIF.
+>
+> `unsigned char *pixels`
+> > A buffer that contains RGBA data.
+>
+> `int width`
+> > The width of the image.
+>
+> `int height`
+> > The height of the image.
+
+### `nvg_Image* nvg_decode_image(const char *filename)`
+> Decodes the NVGIF at `filename` and returns image data in the form of an `nvg_Image *`. The pointer must be freed using `nvg_free_image`. If there were errors, returns `NULL` and puts an error message in `nvg_error`.
+
+### `void nvg_free_image(nvg_Image *img)`
+> Frees the image at `img`. This must be called after you are done with image structs returned from `nvg_decode_image`.
 
 ### `char nvg_error[128]`
 > Starts out blank. When an error occurs, an error message is put into this string.
+
+### Important note for OpenCV
+The `pixels` buffer in `nvg_Image` is **RGBA**.  
+OpenCV expects **BGRA** (or BGR) channel ordering.  
+To display or save correctly, convert after wrapping into a `cv::Mat`:
+
+```cpp
+cv::Mat rgba(img->height, img->width, CV_8UC4, img->pixels);
+cv::Mat bgra;
+cv::cvtColor(rgba, bgra, cv::COLOR_RGBA2BGRA);
+```
+
+Without this conversion, colors will appear swapped (e.g. red → blue).
