@@ -6,7 +6,7 @@ The GitHub repository provides reference implementations in Python, C#, JavaScri
 - **Python** → full encoder/decoder support for NVGIF v1–v5, with Pillow integration.  
 - **C#** → lightweight, Windows-specific decoder for NVGIF v1–v4 using `System.Drawing.Common`.  
 - **JavaScript** → browser‑ready decoder that integrates with the DOM via `MutationObserver`.  
-- **C** → simple decoder for v1 and v2, using [`lodepng`](https://lodev.org/lodepng/). 
+- **C** → simple, portable decoder for v1 and v2, easily integrated into libraries like OpenCV.
 
 Together, these implementations make NVGIF portable across platforms and languages, while keeping the format's playful spirit alive.
 

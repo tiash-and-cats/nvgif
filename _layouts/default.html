@@ -285,12 +285,11 @@ function openNav() {
 
 // Syntax highlighting
 document.querySelectorAll("div.highlighter-rouge:has(div.highlight > pre.highlight > code)").forEach(e => {
-  const [langClass] = Array.from(e.classList).filter(x => x.startsWith("language-"));
-  e.querySelector("div.highlight > pre.highlight").classList.add("hljs");
-  e.querySelector("div.highlight > pre.highlight").classList.add(langClass);
+  const language = Array.from(e.classList).filter(x => x.startsWith("language-"))[0].slice(9);
+  const codeE = e.querySelector("code");
+  codeE.classList.add("hljs");
+  codeE.innerHTML = hljs.highlight(codeE.innerText, { language, ignoreIllegals: true });
 });
-
-hljs.highlightAll();
 
 // Table of Contents
 function buildTOCGraph(level, i, headings) {
