@@ -23,6 +23,8 @@ The MIME type of NVGIF files is `image/x-nvgif`.
 | `.nvg4`   | v4                 | Explicit version marker (optional) |
 | `.nvg5`   | v5                 | Explicit version marker (optional) |
 
+> **NOTE:** None of the reference decoders really care about the file extension, so it's more of a human thing.
+
 ## Reference Implementations
 
 The Github repo contains 4 reference implementations of NVGIF:
@@ -40,7 +42,7 @@ The Github repo contains 4 reference implementations of NVGIF:
   Supports v1-v4 (decode-only). Example in [`csharp/NVGIFTest.cs`](https://github.com/tiash-and-cats/nvgif/tree/master/csharp).
   
 - **C (`c/nvgif.c`):**
-  Provides an `nvg_decode_image` function and uses `nvg_error` for errors. Supports v1 and v2 (decode-only). Tested with TCC and lodepng, and MSVC and OpenCV. Examples in [`c/`](https://github.com/tiash-and-cats/nvgif/tree/master/c/).
+  Provides an `nvg_decode_image` function and uses `nvg_error` for errors. Supports v1-v3 (decode-only). Tested with TCC and lodepng, and MSVC and OpenCV. Examples in [`c/`](https://github.com/tiash-and-cats/nvgif/tree/master/c/).
 
 Detailed API docs are in [NVGIF Implementations](implementations/).
 
