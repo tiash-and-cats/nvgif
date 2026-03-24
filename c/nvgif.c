@@ -14,7 +14,7 @@ extern "C" {
 
 char nvg_error[128];
 
-void* nvg__throwerr(const char *fmt, ...) {
+static void* nvg__throwerr(const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     vsnprintf(nvg_error, sizeof(nvg_error), fmt, args);
@@ -30,7 +30,7 @@ static int nvg__fread(void *addr, size_t size, size_t num, FILE *f) {
     return 0;
 }
 
-int nvg__read_be16(FILE *f, uint16_t *out) {
+static int nvg__read_be16(FILE *f, uint16_t *out) {
     unsigned char buf[2];
     if (nvg__fread(buf, 1, 2, f) < 0) {
         return -1; // signal error
@@ -39,7 +39,7 @@ int nvg__read_be16(FILE *f, uint16_t *out) {
     return 0; // success
 }
 
-unsigned char* nvg__decode_rle(const unsigned char *row, int bpp, int expectedPixels) {
+static unsigned char* nvg__decode_rle(const unsigned char *row, int bpp, int expectedPixels) {
     unsigned char *result = malloc(expectedPixels * bpp);
     if (!result) {
         nvg__throwerr("not enough memory for RLE decode"); return NULL;
@@ -58,15 +58,15 @@ unsigned char* nvg__decode_rle(const unsigned char *row, int bpp, int expectedPi
     return result;
 }
 
-unsigned char* nvg__decode_row(const unsigned char *row, int comp, int bpp, int w) {
-    if (comp == C_NONE) {
+static unsigned char* nvg__decode_row(const unsigned char *row, int comp, int bpp, int w) {
+    if (comp == nvg_COMPRESSION_NONE) {
         unsigned char *copy = malloc(w * bpp);
         if (!copy) {
             nvg__throwerr("not enough memory for raw row"); return NULL;
         }
         memcpy(copy, row, w * bpp);
         return copy;
-    } else if (comp == C_RLE) {
+    } else if (comp == nvg_COMPRESSION_RLE) {
         return nvg__decode_rle(row, bpp, w);
     } else {
         nvg__throwerr("unsupported compression type %d", comp); return NULL;
@@ -81,7 +81,7 @@ void nvg_free_image(nvg_Image *img) {
 }
 
 nvg_Image* nvg_decode_image(const char *filename) {
-	FILE *f = fopen(filename, "rb");
+    FILE *f = fopen(filename, "rb");
     if (!f) {
         return nvg__throwerr("unable to open file");
     }
@@ -100,23 +100,30 @@ nvg_Image* nvg_decode_image(const char *filename) {
         return nvg__throwerr("could not find NVGIF magic");
     }
 
-    if (version < 1 || version > 2) {
+    if (version < 1 || version > 3) {
         fclose(f);
-        return nvg__throwerr("unsupported NVGIF version (v1 & v2 supported)");
+        return nvg__throwerr("unsupported NVGIF version (v1 & v3 supported)");
     }
 
-    int bpp = 3, comp = C_NONE;
+    int comp = nvg_COMPRESSION_NONE;
     if (version >= 2) {
         if (nvg__fread(&comp, 1, 1, f) < 0) {
             return nvg__throwerr("failed to read compression");
         }
     }
+    int alpha = 0;
+    if (version >= 3) {
+        if (nvg__fread(&alpha, 1, 1, f) < 0) {
+            return nvg__throwerr("failed to read alpha flag");
+        }
+    }
+    int bpp = (alpha ? 4 : 3);
 
     uint16_t w;
     if (nvg__read_be16(f, &w) < 0) {
         return nvg__throwerr("failed to read width");
     }
-	uint16_t h;
+    uint16_t h;
     if (nvg__read_be16(f, &h) < 0) {
         return nvg__throwerr("failed to read height");
     }
@@ -126,21 +133,28 @@ nvg_Image* nvg_decode_image(const char *filename) {
         fclose(f);
         return nvg__throwerr("not enough memory to allocate pixels");
     }
-    
+
     for (int y = 0; y < h; y++) {
         uint16_t rowlen;
-		if (nvg__read_be16(f, &rowlen) < 0) {
-			return nvg__throwerr("could not read row length");
-		}
+        if (nvg__read_be16(f, &rowlen) < 0) {
+            return nvg__throwerr("could not read row length");
+        }
         unsigned char *row = malloc(rowlen);
         if (!row) {
             fclose(f);
             return nvg__throwerr("not enough memory to allocate row");
         }
-        if (nvg__fread(row, 1, rowlen, f) < 0) { free(row); fclose(f); return -1; }
+        if (nvg__fread(row, 1, rowlen, f) < 0) {
+            free(row);
+            return nvg__throwerr("could not read row");
+        }
 
         unsigned char *decoded = nvg__decode_row(row, comp, bpp, w);
-        if (!decoded) { free(row); fclose(f); return -1; }
+        if (!decoded) {
+            free(row);
+            fclose(f);
+            return NULL;
+        }
 
         for (int x = 0; x < w; x++) {
             int src = x * bpp;
@@ -156,16 +170,16 @@ nvg_Image* nvg_decode_image(const char *filename) {
     }
 
     fclose(f);
-	
+
     nvg_Image *img = malloc(sizeof(nvg_Image));
     if (!img) { return nvg__throwerr("not enough memory for image struct"); }
     img->width = w;
     img->height = h;
     img->pixels = pixels;
-	
+
     return img;
 }
 
 #ifdef __cplusplus
-}
+} /* extern "C" */
 #endif
