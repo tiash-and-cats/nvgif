@@ -42,8 +42,8 @@ def main():
     encode = sub.add_parser("encode", help="Encode PNG to NVGIF")
     encode.add_argument("input", help="Input image file (.png/.jpeg/.bmp/etc.)")
     encode.add_argument("output", help="Output file (.nvg)")
-    encode.add_argument("-V", "--version", type=int, choices=[1, 2, 3, 4, 5], default=5, help="NVGIF version (default: 5)")
-    encode.add_argument("-c", "--compression", choices=["none", "rle", "zlib", "rlezlib", "rgb565"], nargs="*", help="Compression type (rlezlib only for v4, rgb565 and multiple values, e.g. -c rle -c zlib, for >=v5)")
+    encode.add_argument("-V", "--version", type=int, choices=[1, 2, 3, 4, 5, 6], default=6, help="NVGIF version (default: 6)")
+    encode.add_argument("-c", "--compression", choices=["none", "rle", "zlib", "rlezlib", "rgb565"], nargs="*", help="Compression type (rlezlib only for v4, rgb565 and multiple values, e.g. -c rle zlib, for >=v5)")
     encode.add_argument("-a", "--alpha", action="store_true", help="Enable alpha (NVGIF v3+ only)")
 
     decode = sub.add_parser("decode", help="Convert NVGIF to PNG")
