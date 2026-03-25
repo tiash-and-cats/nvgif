@@ -322,7 +322,7 @@ The C implementation of NVGIF was tested with TCC 0.9.27 and MSVC++ 19.50.35727 
 > **This buffer is not thread-safe; concurrent calls may overwrite each other.**
 
 ### Example
-This code was reproduced from [`c/main.c`](https://github.com/tiash-and-cats/nvgif/blob/master/c/main.c).
+This code was reproduced from [`c/main.c`](https://github.com/tiash-and-cats/nvgif/blob/master/c/main.c). It uses `lodepng`.
 ``` c
 #include "nvgif.h"
 #include "lodepng.h"  // make sure lodepng is available
