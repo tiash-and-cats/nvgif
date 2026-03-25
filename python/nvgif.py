@@ -13,6 +13,7 @@ from nvgif_v2 import NVGIFv2
 from nvgif_v3 import NVGIFv3
 from nvgif_v4 import NVGIFv4
 from nvgif_v5 import NVGIFv5
+from nvgif_v6 import NVGIFv6
 
 class NVGIF:
     DEFAULT_COMPRESSIONS = {
@@ -20,7 +21,8 @@ class NVGIF:
         2: ["rle"],
         3: ["rle"],
         4: ["rlezlib"],
-        5: ["rle", "zlib"]
+        5: ["rle", "zlib"],
+        6: ["rle", "zlib"],
     }
     
     def __init__(self):
@@ -29,7 +31,8 @@ class NVGIF:
             2: NVGIFv2(),
             3: NVGIFv3(),
             4: NVGIFv4(),
-            5: NVGIFv5()
+            5: NVGIFv5(),
+            6: NVGIFv6(),
         }
 
     def encode(self, image, out_path, version=4, compression=None, alpha=0):
@@ -58,7 +61,13 @@ class NVGIF:
                 "rle": NVGIFv5.CompressionType.RLE,
                 "zlib": NVGIFv5.CompressionType.ZLIB,
                 "rgb565": NVGIFv5.CompressionType.RGB565,
-            }
+            },
+            6: {
+                "none": NVGIFv6.CompressionType.NONE,
+                "rle": NVGIFv6.CompressionType.RLE,
+                "zlib": NVGIFv6.CompressionType.ZLIB,
+                "rgb565": NVGIFv6.CompressionType.RGB565,
+            },
         }
         
         if isinstance(compression, list):

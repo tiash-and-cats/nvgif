@@ -160,39 +160,43 @@ The Python implementation of NVGIF requires Pillow. It supports all NVGIF versio
 > `DEFAULT_COMPRESSIONS`
 > > A dictionary mapping versions to their default compression.
 
-#### `NVGIF.encode(image: str | PIL.Image.Image, out_path: str, version=4, compression=None, alpha=0) -> None:`
-> Takes the image at `image` and encodes it into an NVGIF with version `version` at `out_path`. If `compression` is not given, it is set to `NVGIF.DEFAULT_COMPRESSIONS[version]`.
+#### `NVGIF.encode(image: str | PIL.Image.Image, out_path: str, version: int=6, compression: list | None=None, alpha=False) -> None:`
+> Takes the image at `image` and encodes it into an NVGIF with version `version` at `out_path`. If `alpha` is true and `version < 3`, then `alpha` is ignored. If `compression` is not given, it is set to `NVGIF.DEFAULT_COMPRESSIONS[version]`, otherwise it must be a list of zero or more of these strings:
+> - `"rle"`: Run length encoding (v2+).
+> - `"zlib"`: Zlib compression (v4+).
+> - `"rlezlib"`: RLE *and* Zlib compression (v4).
+> - `"rgb565"`: RGB565 encoding (v5+).
 
 #### `NVGIF.decode(in_path: str[, out_path: str]) -> PIL.Image.Image | None:`
 > Takes the NVGIF at `in_path` and decodes it into an image at `out_path`. If `out_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ### Examples
 Encode and decode images:
-``` python
+```python
 from PIL import Image
 from nvgif import NVGIF
 
-# Encode a PNG into NVGIF v5
+# Encode a PNG into NVGIF v5 with RLE+Zlib and alpha
 img = Image.open("input.png").convert("RGBA")
 nvg = NVGIF()
-nvg.encode(img, "output.nvg", version=5, compression=["rle","zlib"], alpha=1)
+nvg.encode(img, "output.nvg", version=5, compression=["rle","zlib"], alpha=True)
 
 # Decode back into Pillow
 decoded = nvg.decode("output.nvg")
 decoded.show()
 ```
 This can be rewritten using the `NvgifImagePlugin`, which allows for seamless integration with Pillow:
-``` python
+```python
 from PIL import Image
-import NvgifImagePlugin
+import NvgifImagePlugin  # registers the NVGIF format with Pillow
 
-# Open an NVGIF file directly
-img = Image.open("example.nvg")
-img.show()
-
-# Save an image as NVGIF v5 with RLE+Zlib compression
+# Encode a PNG into NVGIF v5 with RLE+Zlib and alpha
 img = Image.open("input.png").convert("RGBA")
-img.save("output.nvg", format="NVGIF", version=5, compression=["rle","zlib"])
+img.save("output.nvg", format="NVGIF", version=5, compression=["rle","zlib"], alpha=True)
+
+# Decode back into Pillow
+img = Image.open("output.nvg")
+img.show()
 ```
 
 ## C#
