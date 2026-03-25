@@ -280,7 +280,7 @@ The `pixels` buffer in `nvg_Image` is **RGBA**.
 OpenCV expects **BGRA** (or BGR) channel ordering.
 To display or save correctly, convert after wrapping into a `cv::Mat`:
 
-```cpp
+``` c++
 cv::Mat rgba(img->height, img->width, CV_8UC4, img->pixels);
 cv::Mat bgra;
 cv::cvtColor(rgba, bgra, cv::COLOR_RGBA2BGRA);

@@ -1,3 +1,5 @@
+/* This file was taken from https://github.com/richleland/pygments-css/blob/master/default.css 
+   It is the Pygments default theme. */
 .highlight .hll { background-color: #ffffcc }
 .highlight  { background: #f8f8f8; }
 .highlight .c { color: #408080; font-style: italic } /* Comment */
