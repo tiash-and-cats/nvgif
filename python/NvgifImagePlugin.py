@@ -12,6 +12,12 @@ from PIL import Image, ImageFile
 from nvgif import NVGIF
 
 def _open(fp, filename):
+    # Peek at the first 3 bytes to confirm NVGIF magic
+    header = fp.read(3)
+    fp.seek(0)  # reset file pointer
+    if header != b"NVG":
+        raise SyntaxError("Not an NVGIF file")  # Pillow will try other plugins
+
     decoder = NVGIF()
     img = decoder.decode(filename)
     return img
@@ -19,13 +25,12 @@ def _open(fp, filename):
 def _save(im, fp, filename, **params):
     version = params.get("version", 5)  # default to v5
     compression = params.get("compression", None)
-
-    # Automatically decide alpha based on mode
     alpha = (im.mode == "RGBA")
 
     encoder = NVGIF()
     encoder.encode(im, filename, version=version, compression=compression, alpha=alpha)
 
+# Register NVGIF format explicitly
 Image.register_open("NVGIF", _open)
 Image.register_save("NVGIF", _save)
 Image.register_extension("NVGIF", ".nvg")

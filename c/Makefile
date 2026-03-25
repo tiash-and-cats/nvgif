@@ -18,5 +18,5 @@ simple:
 
 opencv:
 	cl /EHsc main.cpp nvgif.c \
-	/I"$(OPENCV)/build/include" \
+	/I"$(OPENCV)\build\include" \
 	/Fe"$(OUTCPP)" /link $(OPENCV_LIB)
