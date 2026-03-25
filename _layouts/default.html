@@ -3,8 +3,9 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<link rel="stylesheet" href="{{ '/_layouts/default.css' | relative_url }}">
+<!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script-->
 <title>{{ page.title }} | NVGIF docs</title>
 <style>
 body {
@@ -284,12 +285,12 @@ function openNav() {
 }
 
 // Syntax highlighting
-document.querySelectorAll("div.highlighter-rouge:has(div.highlight > pre.highlight > code)").forEach(e => {
+/*document.querySelectorAll("div.highlighter-rouge:has(div.highlight > pre.highlight > code)").forEach(e => {
   const language = Array.from(e.classList).filter(x => x.startsWith("language-"))[0].slice(9);
   const codeE = e.querySelector("code");
   codeE.classList.add("hljs");
   codeE.innerHTML = hljs.highlight(codeE.innerText, { language, ignoreIllegals: true }).value;
-});
+});*/
 
 // Table of Contents
 function buildTOCGraph(level, i, headings) {
