@@ -224,6 +224,26 @@ The C# implementation of NVGIF requires `System.Drawing.Common`. As such, it is 
 ### `public static Bitmap NVGIF.NVGIF.Decode(byte[] nvgData)`
 > Decode an NVGIF buffer (v1..v4) and return a Bitmap.
 
+### Example
+Decode an NVGIF and save it as PNG:
+``` c#
+using System;
+using System.Drawing;        // for Bitmap
+using System.Drawing.Imaging; // for ImageFormat
+using System.IO;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        byte[] bytes = File.ReadAllBytes("../images/drawing.nvg4");
+        Bitmap bmp = NVGIF.NVGIF.Decode(bytes);
+        bmp.Save("decoded.png", ImageFormat.Png);
+        Console.WriteLine("NVGIF decoded!");
+    }
+}
+```
+
 ## JavaScript
 
 > **Note:** Types are given for illustration purposes only, the implementation itself is not written in TypeScript, but rather JavaScript.
@@ -247,6 +267,28 @@ The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `Mutati
 >
 > <code>canvas: <a href="https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas">OffscreenCanvas</a> | null</code>
 > > If the load was successful, is an [`OffscreenCanvas`](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas) object with decoded image data on it's surface, otherwise `null`.
+
+### Example
+Show an NVGIF via the image element:
+``` html
+<img src="images/drawing.nvg">
+
+<script type="module" src="nvgif.js"></script> <!-- nvgif.js -->
+```
+Draw an image onto a canvas:
+``` html
+<canvas id="myCanvas" width="400" height="400" style="border:1px solid grey"></canvas>
+<script type="module" src="nvgif.js"></script> <!-- nvgif.js -->
+<script>
+window.addEventListener("DOMContentLoaded", () => { // important!!
+  (async() => {
+    const imgCanvas = await loadNVGIF("images/drawing.nvg");
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(imgCanvas, 40, 40);
+  })();
+</script>
+```
 
 ## C
 

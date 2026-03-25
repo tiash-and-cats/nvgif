@@ -7,12 +7,12 @@ title: "nvgif.js demo page"
 
 <table>
 <tr><td>PNG (1.56KB): </td><td><img src="images/drawing.png"></img></td></tr>
-<tr><td>NVGIFv5 (1.09KB): </td><td><img src="images/drawing.nvg"></img></td></tr>
+<tr><td>NVGIFv6 (1.09KB): </td><td><img src="images/drawing.nvg"></img></td></tr>
 </table>
 
 <table>
-<tr><td>JPEG (5.79KB): </td><td><img src="images/drawing.png"></img></td></tr>
-<tr><td>NVGIFv5 with lossy compression (1.05KB): </td><td><img src="images/drawing_lossy.nvg"></img></td></tr>
+<tr><td>JPEG (5.79KB): </td><td><img src="images/drawing.jpg"></img></td></tr>
+<tr><td>NVGIFv6 with lossy compression (1.05KB): </td><td><img src="images/drawing_lossy.nvg"></img></td></tr>
 </table>
 
 <p>Check the <a href="https://github.com/tiash-and-cats/nvgif/blob/master/nvgifjstest.html">source code</a>! You only need to include <code>nvgif.js</code> and NVGIF files will be decoded in-browser.</p>
@@ -34,7 +34,7 @@ title: "nvgif.js demo page"
 
 <div id="myDiv"></div>
 
-<script type="module" src="nvgif.js"></script> 
+<script type="module" src="nvgif.js"></script>
 <script>
 window.addEventListener("DOMContentLoaded", () => { // important!!
   (async() => {
@@ -43,7 +43,7 @@ window.addEventListener("DOMContentLoaded", () => { // important!!
     const ctx = canvas.getContext("2d");
     ctx.drawImage(imgCanvas, 40, 40);
   })();
-  
+
   const btn = document.getElementById("myBtn");
   btn.onclick = () => {
     const div = document.getElementById("myDiv");

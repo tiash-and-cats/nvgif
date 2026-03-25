@@ -32,7 +32,7 @@ namespace NVGIFTest
             };
             this.Controls.Add(pictureBox);
 
-            byte[] bytes = System.IO.File.ReadAllBytes("../images/drawing.nvg");
+            byte[] bytes = System.IO.File.ReadAllBytes("../images/drawing.nvg4");
             Bitmap bmp = NVGIF.NVGIF.Decode(bytes);
             pictureBox.Image = bmp;
         }

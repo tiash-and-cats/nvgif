@@ -9,4 +9,4 @@ To run the demo, do:
 dotnet run
 ```
 
-It will run the demo and open a WinForms window which shows the demo file `images/example.nvg`.
+It will run the demo and open a WinForms window which shows the demo file `images/example.nvg4`.
