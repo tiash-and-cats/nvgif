@@ -246,7 +246,9 @@ The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `Mutati
 
 ## C
 
-The C implementation of NVGIF was tested with TCC 0.9.27 and MSVC++ 19.50.35727 for x64. It only supports v1-v3 decoding right now. To use it, download the files and link against `nvgif.c`, and include the header file `nvgif.h`. It has been tested with `lodepng` (C) and OpenCV (C++). Examples are in [`c/`](https://github.com/tiash-and-cats/nvgif/tree/master/c). Listed below are the main things in `nvgif.h` and `nvgif.c`:
+The C implementation of NVGIF was tested with TCC 0.9.27 and MSVC++ 19.50.35727 for x64. It only supports v1-v3 decoding right now. To use it, download the files and link against `nvgif.c`, and include the header file `nvgif.h`. It has been tested with `lodepng` (C) and OpenCV (C++). Examples are in [`c/`](https://github.com/tiash-and-cats/nvgif/tree/master/c). 
+
+> **WARNING:** This API is not thread-safe! If you want threads, you've got to synchronize it yourself.
 
 ### `typedef struct nvg_Image`
 > A structure that represents a decoded NVGIF.
@@ -261,13 +263,17 @@ The C implementation of NVGIF was tested with TCC 0.9.27 and MSVC++ 19.50.35727 
 > > The height of the image.
 
 ### `nvg_Image* nvg_decode_image(const char *filename)`
-> Decodes the NVGIF at `filename` and returns image data in the form of an `nvg_Image *`. The pointer must be freed using `nvg_free_image`. If there were errors, returns `NULL` and puts an error message in `nvg_error`.
+> Decodes the NVGIF at `filename`. On success, returns a pointer to an `nvg_Image`. On failure, returns `NULL` and sets `nvg_error`.
 
 ### `void nvg_free_image(nvg_Image *img)`
 > Frees the image at `img`. This must be called after you are done with image structs returned from `nvg_decode_image`.
 
 ### `char nvg_error[128]`
-> Starts out blank. When an error occurs, an error message is put into this string.
+> A global buffer that contains the most recent error message.  
+> It starts out empty, and when an error occurs a formatted string is written into this buffer using `vsnprintf`.  
+> The message remains valid until the next error occurs, at which point the buffer is updated.  
+> Messages longer than 127 characters are truncated to fit.  
+> **This buffer is not thread-safe; concurrent calls may overwrite each other.**
 
 ### Important note for OpenCV
 The `pixels` buffer in `nvg_Image` is **RGBA**.

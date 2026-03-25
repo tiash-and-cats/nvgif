@@ -17,18 +17,13 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    // Wrap pixels into an OpenCV Mat (temporary wrapper)
-    cv::Mat oldMat(img->height, img->width, CV_8UC4, img->pixels);
-
-    // Clone so OpenCV owns its own copy
-    cv::Mat rgba = oldMat.clone();
-
-    // Free NVGIF image (safe now, since OpenCV has its own copy)
-    nvg_free_image(img);
-    
-    // Convert to BGRA (which is what OpenCV expects)
+    // Wrap pixels into an OpenCV Mat
+    cv::Mat oldMat = cv::Mat(img->height, img->width, CV_8UC4, img->pixels).clone();
     cv::Mat mat;
-    cv::cvtColor(rgba, mat, cv::COLOR_RGBA2BGRA);
+    cv::cvtColor(oldMat, mat, cv::COLOR_RGBA2BGRA);
+
+    // Free NVGIF image
+    nvg_free_image(img);
 
     // Show the image
     cv::imshow("NVGIF Image", mat);
