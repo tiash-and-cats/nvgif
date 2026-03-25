@@ -321,6 +321,45 @@ The C implementation of NVGIF was tested with TCC 0.9.27 and MSVC++ 19.50.35727 
 > Messages longer than 127 characters are truncated to fit.  
 > **This buffer is not thread-safe; concurrent calls may overwrite each other.**
 
+### Example
+This code was reproduced from [`c/main.c`](https://github.com/tiash-and-cats/nvgif/blob/master/c/main.c).
+``` c
+#include "nvgif.h"
+#include "lodepng.h"  // make sure lodepng is available
+
+int main(int argc, char **argv) {
+    if (argc < 3) {
+        fprintf(stderr, "Usage: %s input.nvg output.png\n", argv[0]);
+        return 1;
+    }
+
+    const char *infile = argv[1];
+    const char *outfile = argv[2];
+
+    // Decode NVGIF
+    nvg_Image *img = nvg_decode_image(infile);
+    if (!img) {
+        fprintf(stderr, "NVGIF decode error: %s\n", nvg_error);
+        return 1;
+    }
+
+    // Write PNG using lodepng
+    unsigned error = lodepng_encode32_file(outfile, img->pixels, img->width, img->height);
+    if (error) {
+        fprintf(stderr, "lodepng error %u: %s\n", error, lodepng_error_text(error));
+        nvg_free_image(img);
+        return 1;
+    }
+
+    printf("Successfully decoded %s and wrote %s (%dx%d)\n",
+           infile, outfile, img->width, img->height);
+
+    // Clean up
+    nvg_free_image(img);
+    return 0;
+}
+```
+
 ### Important note for OpenCV
 The `pixels` buffer in `nvg_Image` is **RGBA**.
 OpenCV expects **BGRA** (or BGR) channel ordering.
