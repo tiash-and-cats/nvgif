@@ -287,6 +287,7 @@ window.addEventListener("DOMContentLoaded", () => { // important!!
     const ctx = canvas.getContext("2d");
     ctx.drawImage(imgCanvas, 40, 40);
   })();
+});
 </script>
 ```
 
