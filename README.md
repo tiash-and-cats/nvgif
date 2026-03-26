@@ -1,10 +1,10 @@
 ![NVGIF logo](logo.png)
 
-# This is version 5 of the Not Very Good Image Format 
+# This is version 6 of the Not Very Good Image Format 
 
 NVGIF is a tiny, simple image format designed for fun, experimentation, and learning. Despite its tongue‑in‑cheek name, NVGIF is only slightly larger than PNG on average, and it comes with clear specs and **4(!)** reference implementations. As it has so many implementations, that basically proves it's a standard.
 
-Version 5 expands NVGIF with flexible compression bitmasks and introduces RGB565 as a lossy encoding option, reducing file size while discarding alpha for efficiency.
+Version 6 introduces simple CRC32 error checking to NVGIF.
 
 ## How do I use this repo?
 
@@ -36,7 +36,7 @@ The Github repo contains 4 reference implementations of NVGIF:
 
 - **JavaScript (`nvgif.js`):**
   Browser decoder. Finds `<img>` and `<picture>` elements with NVGIF sources and replaces them with decoded PNGs via [Blob URIs](https://en.wikipedia.org/wiki/Blob_URI_scheme). Also has an `NVGIFImage` with `.onload` and `.onerror` so that you can draw images onto a canvas.
-  Supports all versions (v1-v5, decode-only). Uses [`pako`](https://github.com/nodeca/pako) via jsDelivr for v4 compression. It also has a more modern promise-based loader. Example in [`nvgifjstest.html`](nvgifjstest.html).
+  Supports all versions (v1-v6, decode-only). Uses [`pako`](https://github.com/nodeca/pako) via jsDelivr for v4 compression. It also has a more modern promise-based loader. Example in [`nvgifjstest.html`](nvgifjstest.html).
 
 - **C# (`csharp/NVGIF.cs`):**
   Requires `System.Drawing.Common`. As such, it is Windows-specific. Provides an `NVGIF` class with `.Decode` method.  
