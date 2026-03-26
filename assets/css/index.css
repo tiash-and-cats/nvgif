@@ -1,3 +1,5 @@
+* { box-sizing: border-box; }
+
 body {
   margin: 0;
   font-family: system-ui, Arial, Helvetica, sans-serif;
@@ -32,6 +34,7 @@ nav .logo {
   font-family: Verdana;
   background-color: #CC00F3;
   color: white !important;
+  height: 50px;
 }
 
 nav .logo:hover {
