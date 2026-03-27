@@ -2,19 +2,25 @@
 
 ## Introduction
 
-The GitHub repository provides reference implementations in Python, C#, JavaScript, and C.
-- **Python** → full encoder/decoder support for NVGIF v1–v5, with Pillow integration.
-- **C#** → lightweight, Windows-specific decoder for NVGIF v1–v4 using `System.Drawing.Common`.
-- **JavaScript** → browser‑ready decoder that integrates with the DOM via `MutationObserver`.
-- **C** → simple, portable decoder for v1-v3, easily integrated into libraries like OpenCV.
+The GitHub repository provides multiple implementations of NVGIF so that developers can see exactly how to integrate NVGIF into their apps.
 
-Together, these implementations make NVGIF portable across platforms and languages, while keeping the format's playful spirit alive.
+## Supported Versions Overview
+
+| Language     | Type                  | Versions Supported | Notes |
+|--------------|-----------------------|-------------------|-------|
+| **Python**   | Full implementation   | v1–v6 | Encoder + decoder, Pillow plugin |
+| **C#**       | Full implementation   | v1–v4 | Windows‑only, uses System.Drawing.Common |
+| **JavaScript** | Full implementation | v1–v5 | Decode‑only, browser‑ready, uses pako |
+| **C**        | Reference implementation | v1–v3 | Portable decoder, tested with TCC/MSVC |
+| **Java**     | Binding to C (JNA)    | v1–v3 | Requires native library, not standalone |
 
 ## Python
 
 The Python implementation of NVGIF requires Pillow. It supports all NVGIF versions (v1-v6). An NVGIF plugin for Pillow is included ([`python/NvgifImagePlugin.py`](https://github.com/tiash-and-cats/nvgif/tree/master/python/NvgifImagePlugin.py)). To use it, simply import it (with `nvgif.py` and all the `nvgif_v1-5.py` files in the same directory) and open an NVGIF of your choice.
 
 ### `nvgif_v1.NVGIFv1` objects
+
+**Source:** [`python/nvgif_v1.py`](https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif_v1.py)
 
 #### `class nvgif_v1.NVGIFv1:`
 > An NVGIF v1 encoder and decoder.
@@ -32,6 +38,8 @@ The Python implementation of NVGIF requires Pillow. It supports all NVGIF versio
 > Takes the NVGIFv1 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ### `nvgif_v2.NVGIFv2` objects
+
+**Source:** [`python/nvgif_v2.py`](https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif_v2.py)
 
 #### `class nvgif_v2.NVGIFv2:`
 > An NVGIF v2 encoder and decoder.
@@ -55,6 +63,8 @@ The Python implementation of NVGIF requires Pillow. It supports all NVGIF versio
 > Takes the NVGIFv2 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ### `nvgif_v3.NVGIFv3` objects
+
+**Source:** [`python/nvgif_v3.py`](https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif_v3.py)
 
 #### `class nvgif_v3.NVGIFv3:`
 > An NVGIF v3 encoder and decoder.
@@ -84,6 +94,8 @@ The Python implementation of NVGIF requires Pillow. It supports all NVGIF versio
 > Takes the NVGIFv3 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ### `nvgif_v4.NVGIFv4` objects
+
+**Source:** [`python/nvgif_v4.py`](https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif_v4.py)
 
 #### `class nvgif_v4.NVGIFv4:`
 > An NVGIF v4 encoder and decoder.
@@ -120,6 +132,8 @@ The Python implementation of NVGIF requires Pillow. It supports all NVGIF versio
 
 ### `nvgif_v5.NVGIFv5` objects
 
+**Source:** [`python/nvgif_v5.py`](https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif_v5.py)
+
 #### `class nvgif_v5.NVGIFv5:`
 > An NVGIFv5 encoder and decoder.
 >
@@ -153,6 +167,8 @@ The Python implementation of NVGIF requires Pillow. It supports all NVGIF versio
 > Takes the NVGIFv5 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
 
 ### `nvgif.NVGIF` objects
+
+**Source:** [`python/nvgif.py`](https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif.py)
 
 #### `class nvgif.NVGIF:`
 > An NVGIF encoder and decoder wrapper that wraps `nvgif_v1.NVGIFv1` to `nvgif_v5.NVGIFv5`.
@@ -201,6 +217,8 @@ img.show()
 
 ## C#
 
+**Source:** [`csharp/NVGIF.cs`](https://github.com/tiash-and-cats/nvgif/blob/master/csharp/NVGIF.cs)
+
 The C# implementation of NVGIF requires `System.Drawing.Common`. As such, it is Windows-specific. It supports v1-v4, and it can only decode NVGIF files as of now. Example in [`csharp/NVGIFTest.cs`](https://github.com/tiash-and-cats/nvgif/tree/master/csharp).
 
 ### `public static class NVGIF.NVGIF`
@@ -246,7 +264,9 @@ class Program
 
 ## JavaScript
 
-> **Note:** Types are given for illustration purposes only, the implementation itself is not written in TypeScript, but rather JavaScript.
+**Source:** [`nvgif.js`](https://github.com/tiash-and-cats/nvgif/blob/master/nvgif.js)
+
+> **NOTE:** Types are given for illustration purposes only, the implementation itself is not written in TypeScript, but rather JavaScript.
 
 The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `MutationObserver` to look for changes in the DOM. When it detects one, it will sweep through all undecoded NVGIFs in the page and decode them. It supports `<img>` and `<picture>`. It supports NVGIFv1-v5 (decode-only).
 
@@ -293,6 +313,8 @@ window.addEventListener("DOMContentLoaded", () => { // important!!
 
 ## C
 
+**Source:** [`c/nvgif.c`](https://github.com/tiash-and-cats/nvgif/blob/master/c/nvgif.c), [`c/nvgif.h`](https://github.com/tiash-and-cats/nvgif/blob/master/c/nvgif.h)
+
 The C implementation of NVGIF was tested with TCC 0.9.27 and MSVC++ 19.50.35727 for x64. It only supports v1-v3 decoding right now. To use it, download the files and link against `nvgif.c`, and include the header file `nvgif.h`. It has been tested with `lodepng` (C) and OpenCV (C++). Examples are in [`c/`](https://github.com/tiash-and-cats/nvgif/tree/master/c). 
 
 > **WARNING:** This API is not thread-safe! If you want threads, you've got to synchronize it yourself.
@@ -316,8 +338,8 @@ The C implementation of NVGIF was tested with TCC 0.9.27 and MSVC++ 19.50.35727 
 > Frees the image at `img`. This must be called after you are done with image structs returned from `nvg_decode_image`.
 
 ### `int nvg_errnum`
-> A global integer that contains one of the `nvg_ERRNO_*` constants. It represents the type of error.
-> It starts out as -1, and when an error occurs an `nvg_ERRNO_*` constant is written to it.
+> A global integer that contains one of the [`nvg_ERRNO_*` constants](#codenvgerrnocode-constants). It represents the type of error.
+> It starts out as -1, and when an error occurs an [`nvg_ERRNO_*` constant](#codenvgerrnocode-constants) is written to it.
 > The integer remains valid until the next error occurs, at which point the integer is updated.  
 > **This integer is not thread-safe; concurrent calls may overwrite each other.**
 
@@ -330,6 +352,9 @@ The C implementation of NVGIF was tested with TCC 0.9.27 and MSVC++ 19.50.35727 
 
 ### `#define nvg_error nvg_errval`
 > An alias for backwards-compatibility reasons. Still commonly used.
+
+### `const char* nvg_get_errval(void)`
+> This function is included purely for FFI reasons. It simply returns the value of `nvg_errval`.
 
 ### `nvg_ERRNO_*` constants
 
@@ -402,3 +427,33 @@ cv::cvtColor(rgba, bgra, cv::COLOR_RGBA2BGRA);
 ```
 
 Without this conversion, colors will appear swapped (e.g. red → blue).
+
+### Java (package `nvgif`)
+
+**Source:** [`c/java/nvgif/NVGIFDecoder.java`](https://github.com/tiash-and-cats/nvgif/blob/master/c/java/nvgif/NVGIFDecoder.java)
+
+There is a Java binding for the C implementation. As such, it only supports v1-v3. It uses Java Native Access (JNA) to use the C dynamic library. It isn't considered it's own reference implementation because it's simply a Java binding for the C implementation, nothing more. To use it, you must [download the `c/` folder](https://download-directory.github.io/?url=https://github.com/tiash-and-cats/nvgif/tree/master/c) and follow the instructions in the README to build the Java bindings. After that's done, copy everything inside `java/dist` to your project.
+
+#### `public static java.awt.image.BufferedImage nvgif.NVGIF.decode(String filename) throws java.io.IOException`
+> Decodes the image at `filename` and returns it in the form of a `BufferedImage`. Under the hood, it uses [`nvg_decode_image`](#codenvgimage-nvgdecodeimageconst-char-filenamecode) to decode the image, transforms it into a `BufferedImage`, and then uses [`nvg_free_image`](#codevoid-nvgfreeimagenvgimage-imgcode) to free the `Image` structure.
+
+#### Example
+
+``` java
+import nvgif.NVGIFDecoder;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
+
+public class NVGIFTest {
+    public static void main(String[] args) throws Exception {
+        if (args.length < 2) {
+            System.err.println("Usage: NVGIFTest input.nvg output.png");
+            return;
+        }
+        BufferedImage img = NVGIFDecoder.decode(args[0]);
+        ImageIO.write(img, "png", new File(args[1]));
+        System.out.println("Decoded " + args[0] + " and wrote " + args[1]);
+    }
+}
+```

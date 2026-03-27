@@ -18,6 +18,17 @@
 /* Backwards compatibility */
 #define nvg_error nvg_errval
 
+#ifdef DYLIB
+    #if defined(_WIN32) || defined(_WIN64)
+        #include <windows.h>
+        #define nvg__EXPORT __declspec(dllexport)
+    #else
+        #define nvg__EXPORT __attribute__((visibility("default")))
+    #endif
+#else
+    #define nvg__EXPORT
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -25,12 +36,7 @@ extern "C" {
 extern int nvg_errnum;
 extern char nvg_errval[128];
 
-const char *nvg_errnum_str[4] = {
-    "I/O error",
-    "not enough memory",
-    "unsupported operation",
-    "invalid data"
-};
+extern const char *nvg_errnum_str[4];
 
 typedef struct {
     unsigned char *pixels; // RGBA buffer
@@ -41,6 +47,7 @@ typedef struct {
 // Function declarations
 nvg_Image* nvg_decode_image(const char *filename);
 void nvg_free_image(nvg_Image *img);
+const char* nvg_get_errval(void);
 
 #ifdef __cplusplus
 }

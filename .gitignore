@@ -1,8 +1,28 @@
-csharp/bin
-csharp/obj
+# C#
+csharp/bin/
+csharp/obj/
+
+# C build artifacts
 c/*.exe
 c/*.obj
 c/*.dll
+c/*.def
 c/*.lib
+c/*/*.dll
+c/*/*.def
+
+# Generated images
 c/*.png
-python/__pycache__/*
+c/*/*.png
+
+# Python
+python/__pycache__/
+*.pyc
+
+# Java
+c/java/*.class
+c/java/*/*.class
+c/java/dist/*
+
+# Misc
+*.log

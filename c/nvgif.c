@@ -12,8 +12,19 @@ any kind of fee or subscription.
 extern "C" {
 #endif
 
-int nvg_errnum = -1;
-char nvg_errval[128];
+nvg__EXPORT int nvg_errnum = -1;
+nvg__EXPORT char nvg_errval[128];
+
+const char *nvg_errnum_str[4] = {
+    "I/O error",
+    "not enough memory",
+    "unsupported operation",
+    "invalid data"
+};
+
+nvg__EXPORT const char* nvg_get_errval(void) {
+    return nvg_errval;
+}
 
 static void* nvg__throwerr(int type, const char *fmt, ...) {
     va_list args;
@@ -75,14 +86,14 @@ static unsigned char* nvg__decode_row(const unsigned char *row, int comp, int bp
     }
 }
 
-void nvg_free_image(nvg_Image *img) {
+nvg__EXPORT void nvg_free_image(nvg_Image *img) {
     if (img) {
         free(img->pixels);
         free(img);
     }
 }
 
-nvg_Image* nvg_decode_image(const char *filename) {
+nvg__EXPORT nvg_Image* nvg_decode_image(const char *filename) {
     FILE *f = fopen(filename, "rb");
     if (!f) {
         return nvg__throwerr(nvg_ERRNO_IO_ERROR, "unable to open file");
