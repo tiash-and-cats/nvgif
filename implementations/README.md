@@ -9,9 +9,9 @@ The GitHub repository provides multiple implementations of NVGIF so that develop
 | Language     | Type                  | Versions Supported | Notes |
 |--------------|-----------------------|-------------------|-------|
 | **Python**   | Full implementation   | v1–v6 | Encoder + decoder, Pillow plugin |
+| **JavaScript** | Full implementation | v1–v6 | Decode‑only, browser‑ready, uses pako |
 | **C#**       | Full implementation   | v1–v4 | Windows‑only, uses System.Drawing.Common |
-| **JavaScript** | Full implementation | v1–v5 | Decode‑only, browser‑ready, uses pako |
-| **C**        | Reference implementation | v1–v3 | Portable decoder, tested with TCC/MSVC |
+| **C**        | Full implementation | v1–v3 | Portable decoder, tested with TCC/MSVC |
 | **Java**     | Binding to C (JNA)    | v1–v3 | Requires native library, not standalone |
 
 ## Python
@@ -268,7 +268,7 @@ class Program
 
 > **NOTE:** Types are given for illustration purposes only, the implementation itself is not written in TypeScript, but rather JavaScript.
 
-The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `MutationObserver` to look for changes in the DOM. When it detects one, it will sweep through all undecoded NVGIFs in the page and decode them. It supports `<img>` and `<picture>`. It supports NVGIFv1-v5 (decode-only).
+The JavaScript implementation of NVGIF uses pako via jsDelivr. It uses a `MutationObserver` to look for changes in the DOM. When it detects one, it will sweep through all undecoded NVGIFs in the page and decode them. It supports `<img>` and `<picture>`. It supports all versions (decode-only).
 
 ### `async globalThis.loadNVGIF(src: string): OffscreenCanvas`
 > Decodes the NVGIF at the URL `src` and returns the image data in the form of an [`OffscreenCanvas`](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas).
