@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
     // Decode NVGIF using C implementation
     nvg_Image* img = nvg_decode_image(infile);
     if (!img) {
-        std::cerr << "NVGIF decode error: " << nvg_error << std::endl;
+        std::cerr << "NVGIF decode error: (" << nvg_errnum_str[nvg_errnum] << nvg_errval << std::endl;
         return 1;
     }
 

@@ -6,7 +6,7 @@ The GitHub repository provides reference implementations in Python, C#, JavaScri
 - **Python** → full encoder/decoder support for NVGIF v1–v5, with Pillow integration.
 - **C#** → lightweight, Windows-specific decoder for NVGIF v1–v4 using `System.Drawing.Common`.
 - **JavaScript** → browser‑ready decoder that integrates with the DOM via `MutationObserver`.
-- **C** → simple, portable decoder for v1 and v2, easily integrated into libraries like OpenCV.
+- **C** → simple, portable decoder for v1-v3, easily integrated into libraries like OpenCV.
 
 Together, these implementations make NVGIF portable across platforms and languages, while keeping the format's playful spirit alive.
 
@@ -310,17 +310,45 @@ The C implementation of NVGIF was tested with TCC 0.9.27 and MSVC++ 19.50.35727 
 > > The height of the image.
 
 ### `nvg_Image* nvg_decode_image(const char *filename)`
-> Decodes the NVGIF at `filename`. On success, returns a pointer to an `nvg_Image`. On failure, returns `NULL` and sets `nvg_error`.
+> Decodes the NVGIF at `filename`. On success, returns a pointer to an `nvg_Image`. On failure, returns `NULL` and sets `nvg_errnum` and `nvg_errval`.
 
 ### `void nvg_free_image(nvg_Image *img)`
 > Frees the image at `img`. This must be called after you are done with image structs returned from `nvg_decode_image`.
 
-### `char nvg_error[128]`
+### `int nvg_errnum`
+> A global integer that contains one of the `nvg_ERRNO_*` constants. It represents the type of error.
+> It starts out as -1, and when an error occurs an `nvg_ERRNO_*` constant is written to it.
+> The integer remains valid until the next error occurs, at which point the integer is updated.  
+> **This integer is not thread-safe; concurrent calls may overwrite each other.**
+
+### `char nvg_errval[128]`
 > A global buffer that contains the most recent error message.  
 > It starts out empty, and when an error occurs a formatted string is written into this buffer using `vsnprintf`.  
 > The message remains valid until the next error occurs, at which point the buffer is updated.  
 > Messages longer than 127 characters are truncated to fit.  
 > **This buffer is not thread-safe; concurrent calls may overwrite each other.**
+
+### `#define nvg_error nvg_errval`
+> An alias for backwards-compatibility reasons. Still commonly used.
+
+### `nvg_ERRNO_*` constants
+
+These constants represent different kinds or categories of errors.
+
+#### `#define nvg_ERRNO_IO_ERROR 0`
+> IO error.
+
+#### `#define nvg_ERRNO_NO_MEMORY 1`
+> Not enough memory.
+
+#### `#define nvg_ERRNO_UNSUPPORTED 2`
+> Unsupported operation.
+
+#### `#define nvg_ERRNO_INVALID_DATA 3`
+> Invalid data.
+
+#### `const char *nvg_errnum_str[4]`
+> A mapping that maps each `nvg_ERRNO_*` constant to a human-readable description.
 
 ### Example
 This code was reproduced from [`c/main.c`](https://github.com/tiash-and-cats/nvgif/blob/master/c/main.c). It uses `lodepng`.
@@ -340,7 +368,8 @@ int main(int argc, char **argv) {
     // Decode NVGIF
     nvg_Image *img = nvg_decode_image(infile);
     if (!img) {
-        fprintf(stderr, "NVGIF decode error: %s\n", nvg_error);
+        fprintf(stderr, "NVGIF decode error: (%s) %s\n", 
+                nvg_errnum_str[nvg_errnum], nvg_errval);
         return 1;
     }
 

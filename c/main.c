@@ -13,7 +13,8 @@ int main(int argc, char **argv) {
     // Decode NVGIF
     nvg_Image *img = nvg_decode_image(infile);
     if (!img) {
-        fprintf(stderr, "NVGIF decode error: %s\n", nvg_error);
+        fprintf(stderr, "NVGIF decode error: (%s) %s\n", 
+                nvg_errnum_str[nvg_errnum], nvg_errval);
         return 1;
     }
 
