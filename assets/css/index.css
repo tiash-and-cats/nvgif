@@ -196,12 +196,16 @@ h1, h2, h3, h4, h5, h6 {
   color: inherit;
 }
 
-.dropdown-btn > a:hover {
+.dropdown-btn.active:hover, .dropdown-btn.active:focus {
+  background-color: #CC00F3;
+}
+
+.dropdown-btn > a:hover, .dropdown-btn > a:focus {
   text-decoration: underline;
 }
 
 /* On mouse-over */
-.sidenav a:hover, .dropdown-btn:hover {
+.sidenav a:hover, .sidenav a:focus, .dropdown-btn:hover {
   color: #f1f1f1;
 }
 

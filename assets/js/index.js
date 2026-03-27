@@ -61,6 +61,7 @@ var dropdown = document.getElementsByClassName("dropdown-btn");
 var i;
 
 for (i = 0; i < dropdown.length; i++) {
+  dropdown[i].tabindex = -1;
   dropdown[i].addEventListener("click", function(e) {
     if (e.target.tagName === "A") return;
     this.classList.toggle("active");
@@ -69,6 +70,13 @@ for (i = 0; i < dropdown.length; i++) {
       dropdownContent.style.display = "none";
     } else {
       dropdownContent.style.display = "block";
+    }
+  });
+  dropdown[i].addEventListener("keydown", function(e) {
+    if (e.target.tagName !== "A") return;
+    if (e.key === " ") {
+      e.preventDefault();
+      this.click();
     }
   });
 }
