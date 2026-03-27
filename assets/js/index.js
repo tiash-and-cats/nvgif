@@ -81,6 +81,7 @@ headings.forEach(e => {
   a.className = "permalink";
   e.innerHTML += " "
   e.appendChild(a);
+  e.tabindex = -1;
 });
 
 // Funny quotes!
