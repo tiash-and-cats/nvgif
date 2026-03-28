@@ -4,6 +4,7 @@ body {
   margin: 0;
   font-family: system-ui, Arial, Helvetica, sans-serif;
   color: #222222;
+  scroll-padding-top: 66px;
 }
 
 nav {
