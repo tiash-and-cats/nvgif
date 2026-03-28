@@ -29,12 +29,10 @@ simple:
 	$(CC) -o $(OUTC) -I. main.c lodepng.c nvgif.c $(FLAGS)
 
 opencv:
-ifeq ($(OS),Windows_NT)
-	$(CXX) /EHsc main.cpp nvgif.c \
-	/I"$(OPENCV)\build\include" \
-	/Fe"$(OUTCPP)" /link $(OPENCV_LIB) $(FLAGS)
+ifeq ($(CXX),cl)
+	$(CXX) /EHsc main.cpp nvgif.c /I"$(OPENCV)\build\include" /Fe"$(OUTCPP)" /link $(OPENCV_LIB) $(FLAGS)
 else
-	$(CXX) main.cpp nvgif.c -I$(OPENCV) -o $(OUTCPP) $(OPENCV_LIB) $(FLAGS)
+	$(CXX) main.cpp nvgif.c -I$(OPENCV)/build/include -o $(OUTCPP) $(OPENCV_LIB) $(FLAGS)
 endif
 
 

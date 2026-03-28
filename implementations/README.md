@@ -16,175 +16,35 @@ The GitHub repository provides multiple implementations of NVGIF so that develop
 
 ## Python
 
-The Python implementation of NVGIF requires Pillow. It supports all NVGIF versions (v1-v6). An NVGIF plugin for Pillow is included ([`python/NvgifImagePlugin.py`](https://github.com/tiash-and-cats/nvgif/tree/master/python/NvgifImagePlugin.py)). To use it, simply import it (with `nvgif.py` and all the `nvgif_v1-5.py` files in the same directory) and open an NVGIF of your choice.
+### `nvgif` - Python implementation of NVGIF
 
-### `nvgif_v1.NVGIFv1` objects
+The Python implementation of NVGIF requires Pillow. It supports all NVGIF versions (v1-v6). 
 
-**Source:** [`python/nvgif_v1.py`](https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif_v1.py)
+#### `nvgif.NVGIF` objects
 
-#### `class nvgif_v1.NVGIFv1:`
-> An NVGIF v1 encoder and decoder.
->
-> `HEADER_MAGIC = b"NVG"`
-> > The magic number for NVGIF files.
->
-> `VERSION = 1`
-> > The NVGIF version the decoder decodes.
+**Source:** [`python/nvgif/__init__.py`](https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif/__init__.py)
 
-#### `NVGIFv1.encode(png_path: str | PIL.Image.Image, nvg_path: str) -> None:`
-> Takes the image at `png_path` and encodes it into an NVGIFv1 at `nvg_path`.
-
-#### `NVGIFv1.decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`
-> Takes the NVGIFv1 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
-
-### `nvgif_v2.NVGIFv2` objects
-
-**Source:** [`python/nvgif_v2.py`](https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif_v2.py)
-
-#### `class nvgif_v2.NVGIFv2:`
-> An NVGIF v2 encoder and decoder.
->
-> `HEADER_MAGIC = b"NVG"`
-> > The magic number for NVGIF files.
->
-> `VERSION = 2`
-> > The NVGIF version the decoder decodes.
->
-> `COMPRESSION_NONE = 0`
-> > No compression.
->
-> `COMPRESSION_RLE = 1`
-> > RLE compression.
-
-#### `NVGIFv2.encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int=COMPRESSION_RLE) -> None:`
-> Takes the image at `png_path` and encodes it into an NVGIFv2 at `nvg_path` using `compression`.
-
-#### `NVGIFv2.decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`
-> Takes the NVGIFv2 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
-
-### `nvgif_v3.NVGIFv3` objects
-
-**Source:** [`python/nvgif_v3.py`](https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif_v3.py)
-
-#### `class nvgif_v3.NVGIFv3:`
-> An NVGIF v3 encoder and decoder.
->
-> `HEADER_MAGIC = b"NVG"`
-> > The magic number for NVGIF files.
->
-> `VERSION = 3`
-> > The NVGIF version the decoder decodes.
->
-> `COMPRESSION_NONE = 0`
-> > No compression.
->
-> `COMPRESSION_RLE = 1`
-> > RLE compression.
->
-> `ALPHA_DISABLED = 0`
-> > RGB pixels.
->
-> `ALPHA_ENABLED = 1`
-> > RGBA pixels.
-
-#### `NVGIFv3.encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int=COMPRESSION_RLE, alpha=ALPHA_DISABLED) -> None:`
-> Takes the image at `png_path` and encodes it into an NVGIFv3 at `nvg_path` with `alpha` using `compression`.
-
-#### `NVGIFv3.decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`
-> Takes the NVGIFv3 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
-
-### `nvgif_v4.NVGIFv4` objects
-
-**Source:** [`python/nvgif_v4.py`](https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif_v4.py)
-
-#### `class nvgif_v4.NVGIFv4:`
-> An NVGIF v4 encoder and decoder.
->
-> `HEADER_MAGIC = b"NVG"`
-> > The magic number for NVGIF files.
->
-> `VERSION = 4`
-> > The NVGIF version the decoder decodes.
->
-> `COMPRESSION_NONE = 0`
-> > No compression.
->
-> `COMPRESSION_RLE = 1`
-> > RLE compression.
->
-> `COMPRESSION_ZLIB = 2`
-> > Zlib compression.
->
-> `COMPRESSION_RLE_ZLIB = 3`
-> > RLE *and* Zlib compression. See spec for details.
->
-> `ALPHA_DISABLED = 0`
-> > RGB pixels.
->
-> `ALPHA_ENABLED = 1`
-> > RGBA pixels.
-
-#### `NVGIFv4.encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int=COMPRESSION_RLE_ZLIB, alpha=ALPHA_DISABLED) -> None:`
-> Takes the image at `png_path` and encodes it into an NVGIFv4 at `nvg_path` with `alpha` using `compression`.
-
-#### `NVGIFv4.decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`
-> Takes the NVGIFv4 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
-
-### `nvgif_v5.NVGIFv5` objects
-
-**Source:** [`python/nvgif_v5.py`](https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif_v5.py)
-
-#### `class nvgif_v5.NVGIFv5:`
-> An NVGIFv5 encoder and decoder.
->
-> `HEADER_MAGIC = b"NVG"`
-> > The magic number for NVGIF files.
->
-> `VERSION = 5`
-> > The NVGIF version the decoder decodes.
->
-
-#### `class NVGIFv5.CompressionType:`
-> An [IntFlag enum](https://docs.python.org/3/library/enum.html#enum.IntFlag) that represents compression types.
-> >
-> `NONE = 0`
-> > No compression.
->
-> `RLE = 1`
-> > RLE compression.
->
-> `ZLIB = 2`
-> > Zlib compression.
->
-> `RGB565 = 4`
-> > RGB565 encoding as rudimentary compression.
-
-#### `NVGIFv5.encode(png_path: str | PIL.Image.Image, nvg_path: str, compression: int | CompressionType=NVGIFv5.CompressionType.RLE | NVGIFv5.CompressionType.ZLIB, alpha=False) -> None:`
-> Takes the image at `png_path` and encodes it into an NVGIFv5 at `nvg_path` with `alpha` using `compression`.
-> > **NOTE:** Alpha cannot be used with RGB565 encoding. Doing so will emit a [`UserWarning`](https://docs.python.org/3/library/exceptions.html#UserWarning) and alpha will not be enabled.
-
-#### `NVGIFv5.decode(nvg_path: str[, png_path: str]) -> PIL.Image.Image | None:`
-> Takes the NVGIFv5 at `nvg_path` and decodes it into an image at `png_path`. If `png_path` is not given, returns the decoded `PIL.Image.Image`.
-
-### `nvgif.NVGIF` objects
-
-**Source:** [`python/nvgif.py`](https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif.py)
-
-#### `class nvgif.NVGIF:`
+##### `class nvgif.NVGIF:`
 > An NVGIF encoder and decoder wrapper that wraps `nvgif_v1.NVGIFv1` to `nvgif_v5.NVGIFv5`.
 >
 > `DEFAULT_COMPRESSIONS`
 > > A dictionary mapping versions to their default compression.
 
-#### `NVGIF.encode(image: str | PIL.Image.Image, out_path: str, version: int=6, compression: list | None=None, alpha=False) -> None:`
+##### `NVGIF.encode(image: str | PIL.Image.Image, out_path: str, version: int=6, compression: list | None=None, alpha=False) -> None:`
 > Takes the image at `image` and encodes it into an NVGIF with version `version` at `out_path`. If `alpha` is true and `version < 3`, then `alpha` is ignored. If `compression` is not given, it is set to `NVGIF.DEFAULT_COMPRESSIONS[version]`, otherwise it must be a list of zero or more of these strings:
 > - `"rle"`: Run length encoding (v2+).
 > - `"zlib"`: Zlib compression (v4+).
 > - `"rlezlib"`: RLE *and* Zlib compression (v4).
 > - `"rgb565"`: RGB565 encoding (v5+).
 
-#### `NVGIF.decode(in_path: str[, out_path: str]) -> PIL.Image.Image | None:`
+##### `NVGIF.decode(in_path: str[, out_path: str]) -> PIL.Image.Image | None:`
 > Takes the NVGIF at `in_path` and decodes it into an image at `out_path`. If `out_path` is not given, returns the decoded `PIL.Image.Image`.
+
+### `nvgif.NvgifImagePlugin` - NVGIF plugin for Pillow
+
+**Source:** [`python/nvgif/NvgifImagePlugin.py`](https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif/NvgifImagePlugin.py)
+
+To use the NVGIF image plugin for Pillow, simply import it and Pillow will be able to open NVGIF images.
 
 ### Examples
 Encode and decode images:
@@ -217,14 +77,16 @@ img.show()
 
 ## C#
 
+### `NVGIF` - NVGIF C# implementation
+
 **Source:** [`csharp/NVGIF.cs`](https://github.com/tiash-and-cats/nvgif/blob/master/csharp/NVGIF.cs)
 
 The C# implementation of NVGIF requires `System.Drawing.Common`. As such, it is Windows-specific. It supports v1-v4, and it can only decode NVGIF files as of now. Example in [`csharp/NVGIFTest.cs`](https://github.com/tiash-and-cats/nvgif/tree/master/csharp).
 
-### `public static class NVGIF.NVGIF`
+#### `public static class NVGIF.NVGIF`
 > An NVGIF decoder. Supports v1-4.
 
-### `public enum NVGIF.NVGIF.CompressionType : byte`
+#### `public enum NVGIF.NVGIF.CompressionType : byte`
 > An enum of compression types.
 >
 > `None = 0`
@@ -239,7 +101,7 @@ The C# implementation of NVGIF requires `System.Drawing.Common`. As such, it is 
 > `RLE_Zlib = 3`
 > > RLE *and* Zlib compression. See spec for details.
 
-### `public static Bitmap NVGIF.NVGIF.Decode(byte[] nvgData)`
+#### `public static Bitmap NVGIF.NVGIF.Decode(byte[] nvgData)`
 > Decode an NVGIF buffer (v1..v4) and return a Bitmap.
 
 ### Example
@@ -428,9 +290,11 @@ cv::cvtColor(rgba, bgra, cv::COLOR_RGBA2BGRA);
 
 Without this conversion, colors will appear swapped (e.g. red → blue).
 
-### Java (package `nvgif`)
+## Java (package `nvgif`)
 
 **Source:** [`c/java/nvgif/NVGIFDecoder.java`](https://github.com/tiash-and-cats/nvgif/blob/master/c/java/nvgif/NVGIFDecoder.java)
+
+### `nvgif` - Java bindings for C implemenation
 
 There is a Java binding for the C implementation. As such, it only supports v1-v3. It uses Java Native Access (JNA) to use the C dynamic library. It isn't considered it's own reference implementation because it's simply a Java binding for the C implementation, nothing more. To use it, you must [download the `c/` folder](https://download-directory.github.io/?url=https://github.com/tiash-and-cats/nvgif/tree/master/c) and follow the instructions in the README to build the Java bindings. After that's done, copy everything inside `java/dist` to your project.
 

@@ -5,15 +5,15 @@ The NVGIF docs & reference implementations are licensed under the MIT License.
 In practice this means you can use this code in your projects without paying
 any kind of fee or subscription.
 
-This file contains a class NVGIF which is a wrapper for nvgif_v1.NVGIFv1
-through nvgif_v5.NVGIFv5.
+This file contains a class NVGIF which is a wrapper for nvgif._core.v1.NVGIFv1
+through nvgif._core.v5.NVGIFv5.
 """
-from nvgif_v1 import NVGIFv1
-from nvgif_v2 import NVGIFv2
-from nvgif_v3 import NVGIFv3
-from nvgif_v4 import NVGIFv4
-from nvgif_v5 import NVGIFv5
-from nvgif_v6 import NVGIFv6
+from ._core.v1 import NVGIFv1
+from ._core.v2 import NVGIFv2
+from ._core.v3 import NVGIFv3
+from ._core.v4 import NVGIFv4
+from ._core.v5 import NVGIFv5
+from ._core.v6 import NVGIFv6
 
 class NVGIF:
     DEFAULT_COMPRESSIONS = {

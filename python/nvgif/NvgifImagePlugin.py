@@ -9,7 +9,7 @@ This is an NVGIF plugin for Pillow. It needs nvgif.py, which needs nvgif_v1.py t
 nvgif_v5.py.
 """
 from PIL import Image, ImageFile
-from nvgif import NVGIF
+from . import NVGIF
 
 def _open(fp, filename):
     # Peek at the first 3 bytes to confirm NVGIF magic

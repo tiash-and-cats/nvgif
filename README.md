@@ -32,7 +32,7 @@ The Github repo contains 4 reference implementations of NVGIF:
 
 - **Python (`python/nvgif.py`):**
   Requires `pillow`. Provides an `NVGIF` class with `.encode` and `.decode` methods.  
-  Supports all versions (v1-v6). There is an NVGIF plugin for Pillow in [`python/NvgifImagePlugin.py`](https://github.com/tiash-and-cats/nvgif/tree/master/python/NvgifImagePlugin.py). Just import it (with all the other files in the same directory) and you'll be able to open NVGIF files with Pillow!
+  Supports all versions (v1-v6). There is an NVGIF plugin for Pillow. Just import it (with all the other files in the same directory) and you'll be able to open NVGIF files with Pillow!
 
 - **JavaScript (`nvgif.js`):**
   Browser decoder. Finds `<img>` and `<picture>` elements with NVGIF sources and replaces them with decoded PNGs via [Blob URIs](https://en.wikipedia.org/wiki/Blob_URI_scheme). Also has an `NVGIFImage` with `.onload` and `.onerror` so that you can draw images onto a canvas.
@@ -44,6 +44,11 @@ The Github repo contains 4 reference implementations of NVGIF:
   
 - **C (`c/nvgif.c`):**
   Provides an `nvg_decode_image` function and uses `nvg_error` for errors. Supports v1-v3 (decode-only). Tested with TCC and lodepng, and MSVC and OpenCV. Examples in [`c/`](https://github.com/tiash-and-cats/nvgif/tree/master/c/).
+  
+There is also one binding for NVGIF:
+
+- **Java (`c/java/nvgif/NVGIFDecoder.java`):**
+  Has an `nvgif.NVGIFDecoder` class with `decode` method. It is a binding for the C implementation. Examples in [`c/java/`](https://github.com/tiash-and-cats/nvgif/tree/master/c/java/).
 
 Detailed API docs are in [NVGIF Implementations](implementations/).
 

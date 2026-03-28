@@ -1,6 +1,6 @@
 import argparse
 from nvgif import NVGIF
-from nvgif_v5 import NVGIFv5
+from nvgif._core.v5 import NVGIFv5
 from PIL import Image, ImageTk
 import tkinter as tk
 
