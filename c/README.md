@@ -29,20 +29,26 @@ make opencv OPENCV=./opencv OPENCV_LIB=opencv_world480.lib
 make OUTC=D:\nvgiftest.exe
 ```
 
-## Java Demo
+## Java
 
-To build the Java bindings and demo:
+To build the Java bindings:
 
 ```bash
 make -B java
-make jdemo
 ```
 
 This produces:
 - `java/dist/nvgif.dll` (Windows)
 - `java/dist/nvgif.so` (Linux/macOS)
 - Compiled Java classes in `java/dist/nvgif/`
-- The demo class `NVGIFTest.class` in `java/`
+
+If you want to use the bindings in your own projects, simply copy the files in `java/dist` into your project.
+To make the demo, run:
+```bash
+make jdemo
+```
+
+This produces the demo class `NVGIFTest.class` in `java/`
 
 ### Running the demo
 
@@ -55,7 +61,7 @@ java --enable-native-access=ALL-UNNAMED -cp .;dist;jna-jpms-5.18.1.jar NVGIFTest
 
 **Linux/macOS:**
 ```bash
-java --enable-native-access=ALL-UNNAMED -cp .;dist;jna-jpms-5.18.1.jar NVGIFTest <filename>
+java --enable-native-access=ALL-UNNAMED -cp .:dist:jna-jpms-5.18.1.jar NVGIFTest <filename>
 ```
 
 This will decode `<filename>` and save the result as `output.png`.
