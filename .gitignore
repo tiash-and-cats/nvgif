@@ -2,7 +2,7 @@
 csharp/bin/
 csharp/obj/
 
-# C build artifacts
+# C
 c/*.exe
 c/*.obj
 c/*.dll
@@ -16,7 +16,9 @@ c/*.png
 c/*/*.png
 
 # Python
-python/__pycache__/*.*
+python/nvgif/__pycache__/*
+python/package/dist/*
+python/package/src/nvgif.egg-info/*
 *.pyc
 
 # Java
