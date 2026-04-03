@@ -1,6 +1,6 @@
 # C#
-csharp/bin/
-csharp/obj/
+csharp/bin/*
+csharp/obj/*
 
 # C
 c/*.exe
@@ -25,6 +25,9 @@ python/package/src/nvgif.egg-info/*
 c/java/*.class
 c/java/*/*.class
 c/java/dist/*
+
+# Docs
+implementations/build/*
 
 # Misc
 *.log
