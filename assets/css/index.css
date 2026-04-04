@@ -1,7 +1,7 @@
 * { 
   box-sizing: border-box; 
   & > .permalink, & > .headerlink {
-    color: #999999;
+    color: #999999 !important;
     font-size: 0.8em;
     padding: 0 4px;
     display: none;
