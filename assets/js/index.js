@@ -55,10 +55,10 @@ function buildTOCView(g, e) {
 
 const headings = document.querySelectorAll("article :is(h1, h2, h3, h4, h5, h6)");
 
-if (globalThis._SPHINX) { /* the Sphinx layout both sets this variable and 
-                             populates the TOC; see implementation/_themes/
-                             nvgif/layout.html and implementation/_themes/
-                             nvgif/localtoc.html. */
+if (!globalThis._SPHINX) { /* the Sphinx layout both sets this variable and 
+                              populates the TOC; see implementation/_themes/
+                              nvgif/layout.html and implementation/_themes/
+                              nvgif/localtoc.html. */
   const toc = buildTOCGraph(1, 0, headings);
   buildTOCView(toc, document.querySelector(".sidenav"));
 }
