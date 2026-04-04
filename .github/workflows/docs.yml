@@ -33,8 +33,10 @@ jobs:
       # Sphinx build
       - name: Build Sphinx
         run: |
-          pip install sphinx
-          sphinx-build -b html implementations/source _site/implementations
+            pip install sphinx
+            sphinx-build -b html implementations/source sphinx-out
+            mkdir -p _site/implementations
+            cp -r sphinx-out/* _site/implementations/
 
       # Upload combined site
       - name: Upload artifact
