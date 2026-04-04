@@ -88,15 +88,17 @@ for (i = 0; i < dropdown.length; i++) {
 }
 
 // Permalinks
-headings.forEach(e => {
-  const a = document.createElement("a");
-  a.innerText = "#";
-  a.href = `#${e.id}`;
-  a.className = "permalink";
-  e.innerHTML += " "
-  e.appendChild(a);
-  e.tabindex = -1;
-});
+if (!globalThis._SPHINX) {
+  headings.forEach(e => {
+    const a = document.createElement("a");
+    a.innerText = "#";
+    a.href = `#${e.id}`;
+    a.className = "permalink";
+    e.innerHTML += " "
+    e.appendChild(a);
+    e.tabindex = -1;
+  });
+}
 
 // Funny quotes!
 const quotes = [
