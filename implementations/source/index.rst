@@ -1,7 +1,7 @@
 Welcome to the NVGIF implementation docs!
 =========================================
 
-Welcome! NVGIF is an image format. Check the `home page </>`_ for details. NVGIF has 4 reference implementations:
+Welcome! NVGIF is an image format. Check the `home page </nvgif/>`_ for details. NVGIF has 4 reference implementations:
    - **Python:** Has both encoding and decoding capabilities, supports v1-v6.
    - **C#:** Has decoding support only, supports v1-v4.
    - **JavaScript:** Has decoding support only, supports v1-v6, adapted to the web.
