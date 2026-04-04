@@ -134,8 +134,8 @@ nav .search-container button:hover {
   }
 }
 
-a, a:visited {color: dodgerBlue;}
-a:hover {color: royalBlue;}
+article :is(a, a:visited) {color: dodgerBlue;}
+article a:hover {color: royalBlue;}
 
 @media screen and (max-width: 600px) {
   nav.responsive > .icon {
