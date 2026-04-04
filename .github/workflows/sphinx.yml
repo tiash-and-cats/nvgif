@@ -14,8 +14,8 @@ jobs:
 
       - name: Build HTML
         uses: ammaraskar/sphinx-action@master
-          with:
-            docs-folder: implementations/source
+        with:
+          docs-folder: implementations/source
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
