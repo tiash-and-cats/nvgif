@@ -134,7 +134,7 @@ nav .search-container button:hover {
   }
 }
 
-a {color: dodgerBlue;}
+a, a:visited {color: dodgerBlue;}
 a:hover {color: royalBlue;}
 
 @media screen and (max-width: 600px) {
