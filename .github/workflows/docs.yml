@@ -33,15 +33,10 @@ jobs:
       # Sphinx build
       - name: Build Sphinx
         run: |
-            echo "##[group]Installing Sphinx"
             pip install sphinx
-            echo "##[endgroup]"
-            echo "Building into sphinx-out"
             sphinx-build -b html implementations/source sphinx-out
-            echo "##[group]Post-build"
-            sudo mkdir -p _site/implementations && echo Verified existence of _site and _site/implementations
-            sudo cp -r sphinx-out/* _site/implementations/ && Copied contents of sphinx-out into _site/implementations
-            echo "##[endgroup]"
+            sudo mkdir -p _site/implementations
+            sudo cp -r sphinx-out/* _site/implementations/
 
       # Upload combined site
       - name: Upload artifact
