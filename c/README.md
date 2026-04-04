@@ -15,10 +15,10 @@ By default:
 You can override variables at the command line:
 
 - `CC` → C compiler (default: `tcc`)
-- `CXX` → C++ compiler (default: `cl` on Windows)
+- `CXX` → C++ compiler (default: `cl`)
 - `FLAGS` → extra flags for C/C++ compiler
-- `OUTC` → C compiler output (default: `nvgifsimple.exe`)
-- `OUTCPP` → C++ compiler output (default: `nvgifopencv.exe`)
+- `OUTC` → C compiler output (default: `nvgifsimple[.exe]`)
+- `OUTCPP` → C++ compiler output (default: `nvgifopencv[.exe]`)
 - `OPENCV` → path to OpenCV installation (default: `E:\opencv`)
 - `OPENCV_LIB` → OpenCV monolithic library name (default: `opencv_world4120.lib`)
 
@@ -42,13 +42,13 @@ This produces:
 - `java/dist/nvgif.so` (Linux/macOS)
 - Compiled Java classes in `java/dist/nvgif/`
 
-If you want to use the bindings in your own projects, simply copy the files in `java/dist` into your project.
+If you want to use the bindings in your own projects, simply copy the files in `java/dist` into your project and include them in your classpath. You will also need to copy the JNA JAR (`java/jna-jpms-5.18.1.jar`) and include it in your classpath.
 To make the demo, run:
 ```bash
 make jdemo
 ```
 
-This produces the demo class `NVGIFTest.class` in `java/`
+This produces the demo class `NVGIFTest.class` in `java/`.
 
 ### Running the demo
 
