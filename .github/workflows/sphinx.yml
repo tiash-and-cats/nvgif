@@ -15,18 +15,18 @@ jobs:
       - name: Build HTML
         uses: ammaraskar/sphinx-action@master
         with:
-          docs-folder: implementations
-          build-command: sphinx-build -b html implementations/source docs/build/html/implementations
+          docs-folder: implementations/source
+          build-command: sphinx-build -b html implementations/source implementations/build/html/implementations
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: html-docs
-          path: docs/build/html/
+          path: implementations/build/html/
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/main'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/build/html
+          publish_dir: implementations/build/html
