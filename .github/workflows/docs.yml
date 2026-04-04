@@ -35,8 +35,8 @@ jobs:
         run: |
             pip install sphinx
             sphinx-build -b html implementations/source sphinx-out
-            mkdir -p _site/implementations
-            cp -r sphinx-out/* _site/implementations/
+            sudo mkdir -p _site/implementations
+            sudo cp -r sphinx-out/* _site/implementations/
 
       # Upload combined site
       - name: Upload artifact
