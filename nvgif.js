@@ -134,6 +134,7 @@ function decodeNVGIF(bytes) {
       alpha = !!bytes[5];
       width = view.getUint16(6, false);
       height = view.getUint16(8, false);
+      // there should not be a break here!
     case 6:
       checksum = view.getUint32(9, false);
       break;
