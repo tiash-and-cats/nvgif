@@ -1,11 +1,11 @@
 ``nvgif`` - Python implementation of NVGIF
-======================================
+==========================================
 
 **Source:** `python/nvgif/__init__.py <https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif/__init__.py>`_
 
-.. py:class:: NVGIF
+.. py:class:: nvgif.NVGIF
 
-   An NVGIF encoder and decoder wrapper that wraps ``nvgif_v1.NVGIFv1`` to ``nvgif_v5.NVGIFv5``.
+   An NVGIF encoder and decoder.
 
    .. py:attribute:: DEFAULT_COMPRESSIONS
 
@@ -31,16 +31,18 @@
       If ``out_path`` is not given, returns the decoded ``PIL.Image.Image``.
 
 ``nvgif.NvgifImagePlugin`` - NVGIF plugin for Pillow
-================================================
+====================================================
 
 **Source:** `python/nvgif/NvgifImagePlugin.py <https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif/NvgifImagePlugin.py>`_
 
 To use the NVGIF image plugin for Pillow, simply import it and Pillow will be able to open NVGIF images.
 
-Examples
-========
+.. rubric:: Examples
+   :heading-level: 1
 
-Encode and decode images::
+Encode and decode images:
+
+.. code-block:: Python
 
    from PIL import Image
    from nvgif import NVGIF
@@ -54,7 +56,9 @@ Encode and decode images::
    decoded = nvg.decode("output.nvg")
    decoded.show()
 
-This can be rewritten using the ``NvgifImagePlugin``, which allows for seamless integration with Pillow::
+This can be rewritten using the ``NvgifImagePlugin``, which allows for seamless integration with Pillow:
+
+.. code-block:: Python
 
    from PIL import Image
    import NvgifImagePlugin  # registers the NVGIF format with Pillow

@@ -1,0 +1,65 @@
+<div>
+  <h3>Table of Contents</h3>
+  <div id="toc"></div>
+</div>
+
+<script>
+const sphinxToc = `{{ toc }}`; // raw HTML string from Sphinx
+const sphinxTocDoc = new DOMParser().parseFromString(sphinxToc, "text/html");
+
+// Convert <ul>/<li> structure into a graph of headings
+function parseTocList(ul) {
+  const items = [];
+  ul.querySelectorAll(":scope > li").forEach(li => {
+    const link = li.querySelector(":scope > a");
+    if (!link) return;
+    const g = {
+      id: link.getAttribute("href").replace(/^#/, ""),
+      heading: link.innerHTML.trim(),
+      childHeadings: []
+    };
+    const childUl = li.querySelector(":scope > ul");
+    if (childUl) {
+      g.childHeadings = parseTocList(childUl);
+    }
+    items.push(g);
+  });
+  return items;
+}
+
+function buildTOCView(g, e) {
+  if (g.childHeadings.length === 0) {
+    const a = document.createElement("a");
+    a.href = `#${g.id}`;
+    a.innerHTML = g.heading;
+    e.appendChild(a);
+  } else {
+    const btn = document.createElement("button");
+    btn.className = "dropdown-btn active";
+    const a = document.createElement("a");
+    a.href = `#${g.id}`;
+    a.innerHTML = g.heading;
+    btn.appendChild(a);
+    const i = document.createElement("i");
+    i.className = "fa fa-caret-down";
+    btn.appendChild(i);
+    e.appendChild(btn);
+
+    const drp = document.createElement("div");
+    drp.className = "dropdown-container";
+    drp.style.display = "block";
+    for (let subG of g.childHeadings) {
+      buildTOCView(subG, drp);
+    }
+    e.appendChild(drp);
+  }
+}
+
+// Build graph from parsed Sphinx TOC
+const rootUl = sphinxTocDoc.querySelector("ul");
+const tocGraph = parseTocList(rootUl);
+
+// Render into #toc
+const tocContainer = document.querySelector("#toc");
+tocGraph.forEach(g => buildTOCView(g, tocContainer));
+</script>

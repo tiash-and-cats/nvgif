@@ -1,0 +1,59 @@
+{% extends "!basic/layout.html" %}
+
+{% macro linklocalcss(url) %}
+  <link rel="stylesheet" href="../../../{{ url }}"> <!-- development -->
+  <link rel="stylesheet" href="/nvgif/{{ url }}"> <!-- production -->
+{% endmacro %}
+
+{% block extrahead %}
+  {{ super() }}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  {{ linklocalcss("assets/css/index.css") }}
+  {{ linklocalcss("assets/css/pygments.css") }}
+{% endblock %}
+
+{% block document %} 
+  <article>
+    {% block body %}{% endblock %}
+  </article>
+{% endblock %}
+
+{% block relbar1 %}
+  <nav id="myTopnav">
+    <a href="/nvgif/" class="logo">nvgif</a>
+    <div class="relcontainer">
+      {{ relbar() }}
+    </div>
+    <div class="search-container">
+      <form action="{{ pathto('search') }}">
+        <input type="text" placeholder="Search.." name="q">
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
+  </nav>
+{% endblock %}
+
+{% block sidebar1 %}
+  <aside class="sidenav">
+    {% include "localtoc.html" %}
+    {% include "relations.html" %}
+  </aside>
+{% endblock %}
+
+{% block sidebar2 %}{% endblock %}
+{% block relbar2 %}{% endblock %}
+
+{% block footer %}
+  <footer role="contentinfo">
+    <p><em><script>
+      const quotes = [
+        "You didn't need efficiency, the efficiency was inside you all along.",
+        "Perhaps the best image format was the friends we made along the way."
+      ];
+      document.write(quotes[Math.floor(quotes.length * Math.random())]);
+    </script></em></p>
+    <p>&copy; tiash-and-cats &amp; contributors <script>document.write(new Date().getFullYear())</script><br>
+    <small>The NVGIF docs, examples & reference implementations are licensed under the MIT License. In practice this means you can use this code in your projects without paying any kind of fee or subscription.</small></p>
+    <p><small>This part of the documentation specifically is powered by Sphinx.</small></p>
+  </footer>
+{% endblock %}
