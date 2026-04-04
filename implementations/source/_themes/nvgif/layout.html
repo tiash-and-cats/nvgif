@@ -2,12 +2,12 @@
 
 {% macro linklocalcss(url) %}
   <link rel="stylesheet" href="../../../{{ url }}"> <!-- development -->
-  <link rel="stylesheet" href="/nvgif/{{ url }}"> <!-- production -->
+  <link rel="stylesheet" href="../{{ url }}"> <!-- production -->
 {% endmacro %}
 
 {% macro linklocaljs(url) %}
   <script src="../../../{{ url }}"></script> <!-- development -->
-  <script src="/nvgif/{{ url }}"></script> <!-- production -->
+  <script src="../{{ url }}"></script> <!-- production -->
 {% endmacro %}
 
 {% block extrahead %}
