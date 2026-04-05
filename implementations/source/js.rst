@@ -1,3 +1,5 @@
+.. default-domain:: js
+
 ``nvgif.js`` - NVGIF JavaScript implementation
 ==============================================
 
@@ -10,11 +12,11 @@ When it detects one, it sweeps through all undecoded NVGIFs in the page and deco
 It supports ``<img>`` and ``<picture>`` elements.  
 It supports all versions (decode‑only).
 
-.. js:function:: async globalThis.loadNVGIF(src: string)
+.. function:: async globalThis.loadNVGIF(src)
 
    Decodes the NVGIF at the URL ``src`` and returns the image data in the form of an `OffscreenCanvas <https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas>`_.
 
-.. js:class:: globalThis.NVGIFImage(src: string)
+.. class:: globalThis.NVGIFImage(src)
 
    This class tries to mimic the behavior of ``Image``.  
    When it is created, it starts loading the image at ``src``.
@@ -22,19 +24,19 @@ It supports all versions (decode‑only).
    - If the load succeeds, calls ``onload`` with no arguments and sets ``imgData`` to an ``ImageData`` object with the decoded data.  
    - If the load fails, calls ``onerror`` with no arguments.
 
-   .. js:attribute:: onload
+   .. attribute:: onload
 
       A callback called upon a successful load.
 
-   .. js:attribute:: onerror
+   .. attribute:: onerror
 
       A callback called upon a failed load.
 
-   .. js:attribute:: imgData
+   .. attribute:: imgData
 
       If the load was successful, contains an `ImageData <https://developer.mozilla.org/en-US/docs/Web/API/ImageData>`_ object with decoded image data, otherwise ``null``.
 
-   .. js:attribute:: canvas
+   .. attribute:: canvas
 
       If the load was successful, contains an `OffscreenCanvas <https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas>`_ object with decoded image data on its surface, otherwise ``null``.
 

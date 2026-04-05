@@ -1,3 +1,5 @@
+.. default-domain:: c
+
 ``nvgif.c`` & ``nvgif.h`` - NVGIF's C Implementation
 ====================================================
 
@@ -15,53 +17,53 @@ It has been tested with **lodepng (C)** and **OpenCV (C++)**. Examples are in `c
    This API is **not thread‑safe**!  
    If you want threads, you must synchronize it yourself.
 
-.. c:type:: nvg_Image
+.. type:: nvg_Image
 
    A structure that represents a decoded NVGIF.
 
-   .. c:member:: unsigned char *pixels
+   .. member:: unsigned char *pixels
 
       A buffer that contains RGBA data.
 
-   .. c:member:: int width
+   .. member:: int width
 
       The width of the image.
 
-   .. c:member:: int height
+   .. member:: int height
 
       The height of the image.
 
-.. c:function:: nvg_Image* nvg_decode_image(const char *filename)
+.. function:: nvg_Image* nvg_decode_image(const char *filename)
 
    Decodes the NVGIF at ``filename``.  
    On success, returns a pointer to an ``nvg_Image``.  
    On failure, returns ``NULL`` and sets ``nvg_errnum`` and ``nvg_errval``.
 
-.. c:function:: void nvg_free_image(nvg_Image *img)
+.. function:: void nvg_free_image(nvg_Image *img)
 
    Frees the image at ``img``.  
    This must be called after you are done with image structs returned from ``nvg_decode_image``.
 
-.. c:var:: int nvg_errnum
+.. var:: int nvg_errnum
 
    A global integer that contains one of the ``nvg_ERRNO_*`` constants.  
    It represents the type of error.  
    Starts out as ``-1``. When an error occurs, a ``nvg_ERRNO_*`` constant is written to it.  
    **Not thread‑safe; concurrent calls may overwrite each other.**
 
-.. c:var:: char nvg_errval[128]
+.. var:: char nvg_errval[128]
 
    A global buffer that contains the most recent error message.  
    Starts out empty. When an error occurs, a formatted string is written into this buffer using ``vsnprintf``.  
    Messages longer than 127 characters are truncated.  
    **Not thread‑safe; concurrent calls may overwrite each other.**
 
-.. c:macro:: nvg_error
+.. macro:: nvg_error
 
    An alias for backwards‑compatibility reasons. Still commonly used.  
    Equivalent to ``nvg_errval``.
 
-.. c:function:: const char* nvg_get_errval(void)
+.. function:: const char* nvg_get_errval(void)
 
    This function is included purely for FFI reasons.  
    It simply returns the value of ``nvg_errval``.
@@ -71,31 +73,31 @@ Error Constants
 
 These constants represent different categories of errors.
 
-.. c:macro:: nvg_ERRNO_IO_ERROR
+.. macro:: nvg_ERRNO_IO_ERROR
 
    **Value:** 0
    
    IO error.
 
-.. c:macro:: nvg_ERRNO_NO_MEMORY
+.. macro:: nvg_ERRNO_NO_MEMORY
 
    **Value:** 1
    
    Not enough memory.
 
-.. c:macro:: nvg_ERRNO_UNSUPPORTED
+.. macro:: nvg_ERRNO_UNSUPPORTED
 
    **Value:** 2
    
    Unsupported operation.
 
-.. c:macro:: nvg_ERRNO_INVALID_DATA
+.. macro:: nvg_ERRNO_INVALID_DATA
 
    **Value:** 3
    
    Invalid data.
 
-.. c:var:: const char *nvg_errnum_str[4]
+.. var:: const char *nvg_errnum_str[4]
 
    A mapping that maps each ``nvg_ERRNO_*`` constant to a human‑readable description.
 

@@ -1,17 +1,19 @@
+.. default-domain:: py
+
 ``nvgif`` - Python implementation of NVGIF
 ==========================================
 
 **Source:** `python/nvgif/__init__.py <https://github.com/tiash-and-cats/nvgif/blob/master/python/nvgif/__init__.py>`_
 
-.. py:class:: nvgif.NVGIF
+.. class:: nvgif.NVGIF
 
    An NVGIF encoder and decoder.
 
-   .. py:attribute:: DEFAULT_COMPRESSIONS
+   .. attribute:: DEFAULT_COMPRESSIONS
 
       A dictionary mapping versions to their default compression.
 
-   .. py:function:: encode(image: str | PIL.Image.Image, out_path: str, version: int = 6, compression: list | None = None, alpha = False) -> None
+   .. function:: encode(image: str | PIL.Image.Image, out_path: str, version: int = 6, compression: list | None = None, alpha = False) -> None
 
       Takes the image at ``image`` and encodes it into an NVGIF with version ``version`` at ``out_path``.
 
@@ -24,7 +26,7 @@
       - ``"rlezlib"``: RLE *and* Zlib compression (v4).
       - ``"rgb565"``: RGB565 encoding (v5+).
 
-   .. py:function:: decode(in_path: str[, out_path: str]) -> PIL.Image.Image | None
+   .. function:: decode(in_path: str[, out_path: str]) -> PIL.Image.Image | None
 
       Takes the NVGIF at ``in_path`` and decodes it into an image at ``out_path``.
 

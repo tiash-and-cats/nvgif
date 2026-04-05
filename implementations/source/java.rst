@@ -1,3 +1,5 @@
+.. default-domain:: java
+
 ``package nvgif`` - Java bindings for ``nvgif.c``
 =================================================
 
@@ -12,7 +14,7 @@ It is not considered its own reference implementation because it is simply a bin
 To use it, you must `download the c/ folder <https://download-directory.github.io/?url=https://github.com/tiash-and-cats/nvgif/tree/master/c>`_ and follow the instructions in the README to build the Java bindings.  
 After that’s done, copy everything inside ``java/dist`` to your project.
 
-.. class:: NVGIFDecoder
+.. type:: public class NVGIFDecoder
 
    .. method:: public static java.awt.image.BufferedImage decode(String filename) throws java.io.IOException
 
