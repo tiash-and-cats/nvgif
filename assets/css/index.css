@@ -63,7 +63,7 @@ nav div.related {
   }
 }
 
-@media screen and (max-width: 12var(--bigger-font)) {
+@media screen and (max-width: 1160px) {
   nav div.related { display: none; }
 }
 
@@ -117,6 +117,10 @@ nav .search-container button {
 
 nav .search-container button:hover {
   background: var(--brand-dark);
+}
+
+@media screen and (max-width: 386px) {
+  nav .search-container { display: none; }
 }
 
 @media screen and (max-width: 600px) {

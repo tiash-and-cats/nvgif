@@ -3,6 +3,8 @@
 ``package nvgif`` - Java bindings for ``nvgif.c``
 =================================================
 
+.. package:: nvgif
+
 **Source:** `c/java/nvgif/NVGIFDecoder.java <https://github.com/tiash-and-cats/nvgif/blob/master/c/java/nvgif/NVGIFDecoder.java>`_
 
 There is a Java binding for the C implementation.  
