@@ -20,6 +20,7 @@ body {
   --brand-dark: #7C0094;
   --brand-light: #CC00F3;
   --off-white: #f2f2f2;
+  --bigger-font: 17px;
 }
 
 nav {
@@ -38,7 +39,7 @@ nav > a, nav .relcontainer {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: var(--bigger-font);
 }
 
 nav .relcontainer {
@@ -62,7 +63,7 @@ nav div.related {
   }
 }
 
-@media screen and (max-width: 1217px) {
+@media screen and (max-width: 12var(--bigger-font)) {
   nav div.related { display: none; }
 }
 
@@ -94,7 +95,7 @@ nav .search-container {
 nav input[type=text] {
   padding: 6px;
   margin-top: 8px;
-  font-size: 17px;
+  font-size: var(--bigger-font);
   border: none;
   background-color: #222;
   color: var(--off-white);
@@ -107,7 +108,7 @@ nav .search-container button {
   margin-top: 8px;
   margin-right: 16px;
   background: var(--brand-light);
-  font-size: 17px;
+  font-size: var(--bigger-font);
   border: none;
   cursor: pointer;
   color: var(--off-white);
@@ -329,6 +330,7 @@ pre {
   height: 1px;
   overflow: hidden;
 }
+
 .skip-link:focus {
   left: 0;
   top: 0;
@@ -338,4 +340,42 @@ pre {
   color: white;
   padding: 8px;
   z-index: 1000;
+}
+
+/* Style the search field */
+form.search input[type=text] {
+  padding: 10px;
+  font-size: var(--bigger-font);
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: white;
+  font-family: inherit;
+  height: 42px;
+  outline: none;
+}
+
+/* Style the submit button */
+form.search button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: var(--brand-light);
+  color: white;
+  font-size: var(--bigger-font);
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+  height: 42px;
+}
+
+form.search button:hover {
+  background: var(--brand-dark);
+}
+
+/* Clear floats */
+form.search::after {
+  content: "";
+  clear: both;
+  display: table;
 }

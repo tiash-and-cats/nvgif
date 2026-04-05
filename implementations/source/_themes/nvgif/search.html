@@ -1,0 +1,14 @@
+{% extends "!basic/search.html" %}
+
+{% block searchtext %}
+<blockquote>
+  <strong>NOTE:</strong> Searching for multiple words only shows matches that contain all words.
+</blockquote>
+{% endblock %}
+
+{% block searchbox %}
+<form class="search" action="">
+  <input type="text" placeholder="Search.." autocomplete="off" name="q">
+  <button type="submit"><i class="fa fa-search"></i></button>
+</form>
+{% endblock %}
