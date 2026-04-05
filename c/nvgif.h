@@ -9,6 +9,8 @@
 
 #define nvg_COMPRESSION_NONE 0
 #define nvg_COMPRESSION_RLE  1
+#define nvg_COMPRESSION_ZLIB  2
+#define nvg_COMPRESSION_RLE_ZLIB  3
 
 #define nvg_ERRNO_IO_ERROR 0
 #define nvg_ERRNO_NO_MEMORY 1
