@@ -75,14 +75,14 @@ static unsigned char* nvg__decode_row(const unsigned char *row, int comp, int bp
     if (comp == nvg_COMPRESSION_NONE) {
         unsigned char *copy = malloc(w * bpp);
         if (!copy) {
-            nvg__throwerr(nvg_ERRNO_NO_MEMORY, "not enough memory for raw row"); return NULL;
+            return nvg__throwerr(nvg_ERRNO_NO_MEMORY, "not enough memory for raw row");
         }
         memcpy(copy, row, w * bpp);
         return copy;
     } else if (comp == nvg_COMPRESSION_RLE) {
         return nvg__decode_rle(row, bpp, w);
     } else {
-        nvg__throwerr(nvg_ERRNO_UNSUPPORTED, "unsupported compression type %d", comp); return NULL;
+        return nvg__throwerr(nvg_ERRNO_UNSUPPORTED, "unsupported compression type %d", comp);
     }
 }
 

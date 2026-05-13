@@ -70,7 +70,15 @@ def main():
         nv.decode(args.input, args.output)
         print(f"✓ Decoded NVGIF: {args.input} → {args.output}")
 
-    elif args.command == "info":        with open(args.input, "rb") as f:            hdr = f.read(11)        ver = hdr[3]        if ver == 1:            w = int.from_bytes(hdr[4:6], "big")            h = int.from_bytes(hdr[6:8], "big")            print(f"NVGIF v1 — {w}×{h}")        elif ver in (2, 3, 4, 5):
+    elif args.command == "info":
+        with open(args.input, "rb") as f:
+            hdr = f.read(11)
+        ver = hdr[3]
+        if ver == 1:
+            w = int.from_bytes(hdr[4:6], "big")
+            h = int.from_bytes(hdr[6:8], "big")
+            print(f"NVGIF v1 — {w}×{h}")
+        elif ver in (2, 3, 4, 5):
             if ver >= 5:
                 c = []
                 if hdr[4] & NVGIFv5.CompressionType.RGB565:
@@ -85,9 +93,17 @@ def main():
                     1: "RLE",
                     2: "Zlib",
                     3: "RLE+Zlib",
-                }[hdr[4]]            a = hdr[5] if ver >= 3 else None            w = int.from_bytes(hdr[6:8], "big")            h = int.from_bytes(hdr[8:10], "big")            print(f"NVGIF v{ver} — {w}×{h}, compression={c}, alpha={a and "Yes" or "No"}")        else:            print("✗ Unsupported NVGIF version")
-
-    elif args.command == "view":        img = nv.decode(args.input)        view_image(img, f"NVGIF — {args.input}")
+                }[hdr[4]]
+            a = hdr[5] if ver >= 3 else None
+            w = int.from_bytes(hdr[6:8], "big")
+            h = int.from_bytes(hdr[8:10], "big")
+            print(f"NVGIF v{ver} — {w}×{h}, compression={c}, alpha={a and "Yes" or "No"}")
+        else:
+            print("✗ Unsupported NVGIF version")
+            
+    elif args.command == "view":
+        img = nv.decode(args.input)
+        view_image(img, f"NVGIF — {args.input}")
 
 if __name__ == "__main__":
     main()
