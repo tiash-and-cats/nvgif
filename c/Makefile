@@ -4,8 +4,6 @@
 # In practice this means you can use this code in your projects without paying
 # any kind of fee or subscription.
 
-# tab char: (	)
-
 CC=tcc
 CXX=cl
 FLAGS=
@@ -42,3 +40,5 @@ java:
 
 jdemo:
 	javac -cp java/jna-jpms-5.18.1.jar$(PATHSEP)java/dist -d java java/NVGIFTest.java
+
+.PHONY: simple opencv java jdemo

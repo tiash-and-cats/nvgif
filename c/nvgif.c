@@ -26,7 +26,7 @@ nvg__EXPORT const char* nvg_get_errval(void) {
     return nvg_errval;
 }
 
-static void* nvg__throwerr(int type, const char *fmt, ...) {
+static void* nvg__throwerr(int type, const char* fmt, ...) {
     va_list args;
     va_start(args, fmt);
     vsnprintf(nvg_errval, sizeof(nvg_errval), fmt, args);
@@ -35,7 +35,7 @@ static void* nvg__throwerr(int type, const char *fmt, ...) {
     return NULL; // caller must return this if desired
 }
 
-static int nvg__fread(void *addr, size_t size, size_t num, FILE *f) {
+static int nvg__fread(void* addr, size_t size, size_t num, FILE* f) {
     if (fread(addr, size, num, f) != num) {
         fclose(f);
         return -1;
@@ -43,7 +43,7 @@ static int nvg__fread(void *addr, size_t size, size_t num, FILE *f) {
     return 0;
 }
 
-static int nvg__read_be16(FILE *f, uint16_t *out) {
+static int nvg__read_be16(FILE* f, uint16_t* out) {
     unsigned char buf[2];
     if (nvg__fread(buf, 1, 2, f) < 0) {
         return -1; // signal error
@@ -52,7 +52,7 @@ static int nvg__read_be16(FILE *f, uint16_t *out) {
     return 0; // success
 }
 
-static unsigned char* nvg__decode_rle(const unsigned char *row, int bpp, int expectedPixels) {
+static unsigned char* nvg__decode_rle(const unsigned char* row, int bpp, int expectedPixels) {
     unsigned char *result = malloc(expectedPixels * bpp);
     if (!result) {
         nvg__throwerr(nvg_ERRNO_NO_MEMORY, "not enough memory for RLE decode"); return NULL;
@@ -71,7 +71,7 @@ static unsigned char* nvg__decode_rle(const unsigned char *row, int bpp, int exp
     return result;
 }
 
-static unsigned char* nvg__decode_row(const unsigned char *row, int comp, int bpp, int w) {
+static unsigned char* nvg__decode_row(const unsigned char* row, int comp, int bpp, int w) {
     if (comp == nvg_COMPRESSION_NONE) {
         unsigned char *copy = malloc(w * bpp);
         if (!copy) {
@@ -86,14 +86,14 @@ static unsigned char* nvg__decode_row(const unsigned char *row, int comp, int bp
     }
 }
 
-nvg__EXPORT void nvg_free_image(nvg_Image *img) {
+nvg__EXPORT void nvg_free_image(nvg_Image* img) {
     if (img) {
         free(img->pixels);
         free(img);
     }
 }
 
-nvg__EXPORT nvg_Image* nvg_decode_image(const char *filename) {
+nvg__EXPORT nvg_Image* nvg_decode_image(const char* filename) {
     FILE *f = fopen(filename, "rb");
     if (!f) {
         return nvg__throwerr(nvg_ERRNO_IO_ERROR, "unable to open file");

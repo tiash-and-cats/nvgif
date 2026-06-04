@@ -4,7 +4,7 @@ The Makefile provides multiple build targets for NVGIF:
 
 - `make simple` → builds the pure C decoder with TinyCC by default.
 - `make opencv` → builds the OpenCV viewer & decoder (MSVC++ on Windows, g++/clang on Linux/macOS).
-- `make -B java` → builds the native NVGIF shared library (`.dll`/`.so`) and compiles the Java bindings.
+- `make java` → builds the native NVGIF shared library (`.dll`/`.so`) and compiles the Java bindings.
 - `make jdemo` → compiles the Java demo program (`NVGIFTest.java`).
 
 By default:
@@ -34,7 +34,7 @@ make OUTC=D:\nvgiftest.exe
 To build the Java bindings:
 
 ```bash
-make -B java
+make java
 ```
 
 This produces:
