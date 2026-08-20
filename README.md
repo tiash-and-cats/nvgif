@@ -47,14 +47,14 @@ The Github repo contains 4 reference implementations of NVGIF:
   
 There is also one binding for NVGIF:
 
-- **Java (`c/java/nvgif/NVGIFDecoder.java`):**
+- **Java ([`c/java`](https://github.com/tiash-and-cats/nvgif/tree/master/c/java)):**
   Has an `nvgif.NVGIFDecoder` class with `decode` method. It is a binding for the C implementation. Examples in [`c/java/`](https://github.com/tiash-and-cats/nvgif/tree/master/c/java/).
 
 Detailed API docs are in [NVGIF Implementations](implementations/).
 
 ## Specification
 
-The specification can be found [here](specs/). It used to be at [`https://tiashdev.github.io/tiashfam-resources/nvgif/specs/`](https://tiashdev.github.io/tiashfam-resources/nvgif/specs/).
+The specification can be found [here](specs/). It used to be at https://tiashdev.github.io/tiashfam-resources/nvgif/specs/.
 
 ## NVGIF CLI Tool
 
