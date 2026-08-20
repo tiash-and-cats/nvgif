@@ -44,7 +44,9 @@ class NVGIFv6:
         b5 = (b >> 3) & 0x1F   # top 5 bits of blue
         return (r5 << 11) | (g6 << 5) | b5
 
-    def encode(self, image_or_path, out_path, compression=CompressionType.RLE | CompressionType.ZLIB, alpha=False):
+    def encode(self, image_or_path, out_path, 
+               compression=CompressionType.RLE | CompressionType.ZLIB,
+               alpha=False):
         if isinstance(image_or_path, Image.Image):
             img = image_or_path.convert("RGBA")
         else:
@@ -54,7 +56,10 @@ class NVGIFv6:
         bpp = 4 if alpha else 3
 
         if alpha and compression & self.CompressionType.RGB565:
-            warnings.warn("RGB565 encoding cannot have alpha. Alpha will not be enabled.", UserWarning)
+            warnings.warn(
+                "RGB565 encoding cannot have alpha. Alpha "
+                "will not be enabled.", UserWarning
+            )
             bpp = 3
             alpha = False
 
