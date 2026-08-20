@@ -309,7 +309,6 @@ async function handleNVGIFImages() {
   async function decode(e, attr="src") {
     try {
       const src = new URL(e[attr], document.baseURI).href;
-      console.log("nvgif: Loading image:", src);
       const start = Date.now();
       const canvas = await loadNVGIF(src);
       e.dataset["old" + attr] = e[attr];
@@ -329,8 +328,8 @@ async function handleNVGIFImages() {
                              picture > source[srcset$=".nvg2"], 
                              picture > source[srcset$=".nvg3"], 
                              picture > source[srcset$=".nvg4"],
-							               picture > source[srcset$=".nvg5"],
-							               picture > source[srcset$=".nvg6"]`).forEach(e => decode(e, "srcset"));
+                             picture > source[srcset$=".nvg5"],
+                             picture > source[srcset$=".nvg6"]`).forEach(e => decode(e, "srcset"));
 }
 
 // Initial scan
