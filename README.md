@@ -30,19 +30,19 @@ The MIME type of NVGIF files is `image/x-nvgif`.
 
 The Github repo contains 4 reference implementations of NVGIF:
 
-- **Python (`python/nvgif.py`):**
+- **Python ([`python`](https://github.com/tiash-and-cats/nvgif/tree/master/python)):**
   Requires `pillow`. Provides an `NVGIF` class with `.encode` and `.decode` methods.  
   Supports all versions (v1-v6). There is an NVGIF plugin for Pillow. Just import it (with all the other files in the same directory) and you'll be able to open NVGIF files with Pillow!
 
-- **JavaScript (`nvgif.js`):**
+- **JavaScript ([`nvgif.js`](https://github.com/tiash-and-cats/nvgif/blob/master/nvgif.js)):**
   Browser decoder. Finds `<img>` and `<picture>` elements with NVGIF sources and replaces them with decoded PNGs via [Blob URIs](https://en.wikipedia.org/wiki/Blob_URI_scheme). Also has an `NVGIFImage` with `.onload` and `.onerror` so that you can draw images onto a canvas.
   Supports all versions (v1-v6, decode-only). Uses [`pako`](https://github.com/nodeca/pako) via jsDelivr for v4 compression. It also has a more modern promise-based loader. Example in [`nvgifjstest.html`](nvgifjstest.html).
 
-- **C# (`csharp/NVGIF.cs`):**
+- **C# ([`csharp`](https://github.com/tiash-and-cats/nvgif/tree/master/csharp)):**
   Requires `System.Drawing.Common`. As such, it is Windows-specific. Provides an `NVGIF` class with `.Decode` method.  
   Supports v1-v4 (decode-only). Example in [`csharp/NVGIFTest.cs`](https://github.com/tiash-and-cats/nvgif/tree/master/csharp).
   
-- **C (`c/nvgif.c`):**
+- **C ([`c`](https://github.com/tiash-and-cats/nvgif/tree/master/c)):**
   Provides an `nvg_decode_image` function and uses `nvg_error` for errors. Supports v1-v3 (decode-only). Tested with TCC and lodepng, and MSVC and OpenCV. Examples in [`c/`](https://github.com/tiash-and-cats/nvgif/tree/master/c/).
   
 There is also one binding for NVGIF:
