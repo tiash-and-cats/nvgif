@@ -156,45 +156,8 @@ function decodeNVGIF(bytes) {
   const imgData = ctx.createImageData(width, height);
   const pixelBuffer = imgData.data;
 
-  if (version <= 3) {
-    // Row-based decode
-    for (let y = 0; y < height; y++) {
-      const rowLength = view.getUint16(offset, false);
-      offset += 2;
-
-      const rowData = bytes.slice(offset, offset + rowLength);
-      offset += rowLength;
-
-      const decoded = decodeRow(rowData, compression, bpp, width, version);
-
-      for (let x = 0; x < width; x++) {
-        const srcIndex = x * bpp;
-        const dstIndex = (y * width + x) * 4;
-        pixelBuffer[dstIndex]     = decoded[srcIndex];
-        pixelBuffer[dstIndex + 1] = decoded[srcIndex + 1];
-        pixelBuffer[dstIndex + 2] = decoded[srcIndex + 2];
-        pixelBuffer[dstIndex + 3] = bpp === 4 ? decoded[srcIndex + 3] : 255;
-      }
-    }
-  } else if (version === 4) {
-    if (compression === C_NONE || compression === C_RLE) {
-      // Same row-based logic as v1–3
-      for (let y = 0; y < height; y++) {
-        const rowLength = view.getUint16(offset, false);
-        offset += 2;
-        const rowData = bytes.slice(offset, offset + rowLength);
-        offset += rowLength;
-        const decoded = decodeRow(rowData, compression, bpp, width);
-        for (let x = 0; x < width; x++) {
-          const srcIndex = x * bpp;
-          const dstIndex = (y * width + x) * 4;
-          pixelBuffer[dstIndex]     = decoded[srcIndex];
-          pixelBuffer[dstIndex + 1] = decoded[srcIndex + 1];
-          pixelBuffer[dstIndex + 2] = decoded[srcIndex + 2];
-          pixelBuffer[dstIndex + 3] = bpp === 4 ? decoded[srcIndex + 3] : 255;
-        }
-      }
-    } else if (compression === C_ZLIB) {
+  if (version <= 4) {
+    if (version === 4 && compression === C_ZLIB) {
       const compressed = bytes.slice(offset);
       const decompressed = pako.inflate(compressed);
 
@@ -205,25 +168,33 @@ function decodeNVGIF(bytes) {
         pixelBuffer[j + 2] = decompressed[i + 2];
         pixelBuffer[j + 3] = bpp === 4 ? decompressed[i + 3] : 255;
       }
-    } else if (compression === C_RLEZLIB) {
-      const compressed = bytes.slice(offset);
-
-      const decompressed = pako.inflate(compressed);
-
+    } else {
+      let decmp;
       let innerOffset = 0;
+      if (version === 4 && compression === C_RLEZLIB) {
+        const compressed = bytes.slice(offset);
+        decmp = pako.inflate(compressed);
+      } else {
+        decmp = bytes.slice(offset);
+      }
+      
+      // Row-based decode
       for (let y = 0; y < height; y++) {
-        const rowLength = (decompressed[innerOffset] << 8) | decompressed[innerOffset + 1];
+        const rowLength = view.getUint16(offset, false);
         innerOffset += 2;
-        const rowData = decompressed.slice(innerOffset, innerOffset + rowLength);
+
+        const rowData = decmp.slice(innerOffset, innerOffset + rowLength);
         innerOffset += rowLength;
-        const rowDecoded = rleDecode(rowData, bpp, width);
+
+        const decoded = decodeRow(rowData, compression, bpp, width, version);
+
         for (let x = 0; x < width; x++) {
           const srcIndex = x * bpp;
           const dstIndex = (y * width + x) * 4;
-          pixelBuffer[dstIndex]     = rowDecoded[srcIndex];
-          pixelBuffer[dstIndex + 1] = rowDecoded[srcIndex + 1];
-          pixelBuffer[dstIndex + 2] = rowDecoded[srcIndex + 2];
-          pixelBuffer[dstIndex + 3] = bpp === 4 ? rowDecoded[srcIndex + 3] : 255;
+          pixelBuffer[dstIndex]     = decoded[srcIndex];
+          pixelBuffer[dstIndex + 1] = decoded[srcIndex + 1];
+          pixelBuffer[dstIndex + 2] = decoded[srcIndex + 2];
+          pixelBuffer[dstIndex + 3] = bpp === 4 ? decoded[srcIndex + 3] : 255;
         }
       }
     }
