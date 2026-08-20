@@ -276,7 +276,7 @@ async function loadNVGIF(url) {
   const bytes = new Uint8Array(buffer);
 
   const canvas = decodeNVGIF(bytes);
-  loadNVGIF.cache[url] = canvas;
+  loadNVGIF.cache[new URL(url, document.baseURI).href] = canvas;
 
   return canvas;
 };
@@ -306,9 +306,10 @@ globalThis.NVGIFImage = class {
 };
 
 async function handleNVGIFImages() {
-  document.querySelectorAll(`img[src$=".nvg"], img[src$=".nvg1"],
+  document.querySelectorAll(`img[src$=".nvg"],  img[src$=".nvg1"],
                              img[src$=".nvg2"], img[src$=".nvg3"], 
-                             img[src$=".nvg4"], img[src$=".nvg5"]`).forEach(async(e) => {
+                             img[src$=".nvg4"], img[src$=".nvg5"],
+                             img[src$=".nvg6"],`).forEach(async(e) => {
     try {
       console.log("nvgif: Loading image:", e.src);
       const start = Date.now();
@@ -320,12 +321,13 @@ async function handleNVGIFImages() {
       console.error("nvgif: NVGIF decode error:", err, "while decoding", e.src);
     }
   });
-  document.querySelectorAll(`picture > source[srcset$=".nvg"], 
+  document.querySelectorAll(`picture > source[srcset$=".nvg"],
                              picture > source[srcset$=".nvg1"],
                              picture > source[srcset$=".nvg2"], 
                              picture > source[srcset$=".nvg3"], 
                              picture > source[srcset$=".nvg4"],
-							 picture > source[srcset$=".nvg5"]`).forEach(async(e) => {
+							               picture > source[srcset$=".nvg5"],
+							               picture > source[srcset$=".nvg6"]`).forEach(async(e) => {
     try {
       console.log("nvgif: Loading image:", e.srcset);
       const start = Date.now();
