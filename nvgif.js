@@ -170,12 +170,15 @@ function decodeNVGIF(bytes) {
       }
     } else {
       let decmp;
+      let comp;
       let innerOffset = 0;
       if (version === 4 && compression === C_RLEZLIB) {
         const compressed = bytes.slice(offset);
         decmp = pako.inflate(compressed);
+        comp = C_RLE;
       } else {
         decmp = bytes.slice(offset);
+        comp = compression;
       }
       
       // Row-based decode
@@ -186,7 +189,7 @@ function decodeNVGIF(bytes) {
         const rowData = decmp.slice(innerOffset, innerOffset + rowLength);
         innerOffset += rowLength;
 
-        const decoded = decodeRow(rowData, compression, bpp, width, version);
+        const decoded = decodeRow(rowData, comp, bpp, width, version);
 
         for (let x = 0; x < width; x++) {
           const srcIndex = x * bpp;
