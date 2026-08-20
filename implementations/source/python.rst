@@ -63,7 +63,7 @@ This can be rewritten using the ``NvgifImagePlugin``, which allows for seamless 
 .. code-block:: Python
 
    from PIL import Image
-   import NvgifImagePlugin  # registers the NVGIF format with Pillow
+   import nvgif.NvgifImagePlugin  # registers the NVGIF format with Pillow
 
    # Encode a PNG into NVGIF v5 with RLE+Zlib and alpha
    img = Image.open("input.png").convert("RGBA")
