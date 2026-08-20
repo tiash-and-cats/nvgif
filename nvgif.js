@@ -309,7 +309,7 @@ async function handleNVGIFImages() {
   document.querySelectorAll(`img[src$=".nvg"],  img[src$=".nvg1"],
                              img[src$=".nvg2"], img[src$=".nvg3"], 
                              img[src$=".nvg4"], img[src$=".nvg5"],
-                             img[src$=".nvg6"],`).forEach(async(e) => {
+                             img[src$=".nvg6"]`).forEach(async(e) => {
     try {
       console.log("nvgif: Loading image:", e.src);
       const start = Date.now();
