@@ -311,12 +311,13 @@ async function handleNVGIFImages() {
                              img[src$=".nvg4"], img[src$=".nvg5"],
                              img[src$=".nvg6"]`).forEach(async(e) => {
     try {
-      console.log("nvgif: Loading image:", e.src);
+      const src = new URL(e.src, document.baseURI).href;
+      console.log("nvgif: Loading image:", src);
       const start = Date.now();
-      const canvas = await loadNVGIF(e.src);
+      const canvas = await loadNVGIF(src);
       e.dataset.oldSrc = e.src;
       e.src = URL.createObjectURL(await canvas.convertToBlob());
-      console.log("nvgif: Loaded image:", e.dataset.oldSrc, "in", Date.now() - start, "ms");
+      console.log("nvgif: Loaded image:", src, "in", Date.now() - start, "ms");
     } catch (err) {
       console.error("nvgif: NVGIF decode error:", err, "while decoding", e.src);
     }
