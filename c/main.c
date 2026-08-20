@@ -1,5 +1,5 @@
 #include "nvgif.h"
-#include "lodepng.h"  // make sure lodepng is available
+#include "lodepng.h"
 
 int main(int argc, char **argv) {
     if (argc < 3) {
