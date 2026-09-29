@@ -327,7 +327,7 @@ async function handleNVGIFImages() {
     }
   }
 
-  const select = (sel, attr) => [`${tag}[${attr}$=".nvg"]`, ...Array.from({ length: MAX_VERSION }, (value, index) => `${tag}[${attr}$=".nvg${index + 1}"]`)].join(", ");
+  const select = (sel, attr) => [`${sel}[${attr}$=".nvg"]`, ...Array.from({ length: MAX_VERSION }, (value, index) => `${sel}[${attr}$=".nvg${index + 1}"]`)].join(", ");
 
   const update = (sel, attr) => document.querySelectorAll(select(sel, attr)).forEach(e => decode(e, attr));
 
