@@ -6,6 +6,9 @@ const C_ZLIB = 2;
 const C_RLEZLIB = 3;
 const C_RGB565 = 4;
 
+const MIN_VERSION = 1;
+const MAX_VERSION = 6;
+
 /*
   CRC32 lookup table, precomputed for efficiency.
   Generated with:
@@ -26,7 +29,7 @@ function assert(condt, message) {
   if (!condt) {
     throw new Error(message);
   }
-} 
+}
 
 function headerSizeForVersion(version) {
   switch (version) {
@@ -116,6 +119,11 @@ function decodeNVGIF(bytes) {
   assert(bytes[2] === "G".codePointAt(0), "Invalid NVGIF");
 
   const version = bytes[3];
+
+  if (version < MIN_VERSION || version > MAX_VERSION) {
+    throw new Error("Unsupported version");
+  }
+
   let width = 0, height = 0, compression = C_NONE, alpha = false, checksum = 0;
 
   switch (version) {
@@ -229,27 +237,27 @@ function decodeNVGIF(bytes) {
     }
   } else if (version >= 5) {
     let data = bytes.slice(offset);
-    
+
     if (version >= 6 && checksum !== crc32(data)) {
       throw new Error("checksum verification failed");
     }
-  
+
     if (compression & C_ZLIB) {
       data = pako.inflate(data);
     }
     if (compression & C_RLE) {
       data = batchRleDecode(data);
     }
-  
+
     let innerOffset = 0;
     for (let y = 0; y < height; y++) {
       const rowLen = (data[innerOffset] << 8) | data[innerOffset + 1];
       innerOffset += 2;
       const rowData = data.slice(innerOffset, innerOffset + rowLen);
       innerOffset += rowLen;
-  
+
       const decoded = decodeRow(rowData, compression, bpp, width, version);
-  
+
       for (let x = 0; x < width; x++) {
         const srcIndex = x * bpp;
         const dstIndex = (y * width + x) * 4;
@@ -270,7 +278,7 @@ async function loadNVGIF(url) {
   if (loadNVGIF.cache[url]) {
     return loadNVGIF.cache[url];
   }
-  
+
   const response = await fetch(url);
   const buffer = await response.arrayBuffer();
   const bytes = new Uint8Array(buffer);
@@ -306,7 +314,7 @@ globalThis.NVGIFImage = class {
 };
 
 async function handleNVGIFImages() {
-  async function decode(e, attr="src") {
+  async function decode(e, attr) {
     try {
       const src = new URL(e[attr], document.baseURI).href;
       const start = Date.now();
@@ -319,17 +327,12 @@ async function handleNVGIFImages() {
     }
   }
 
-  document.querySelectorAll(`img[src$=".nvg"],  img[src$=".nvg1"],
-                             img[src$=".nvg2"], img[src$=".nvg3"], 
-                             img[src$=".nvg4"], img[src$=".nvg5"],
-                             img[src$=".nvg6"]`).forEach(e => decode(e, "src"));
-  document.querySelectorAll(`picture > source[srcset$=".nvg"],
-                             picture > source[srcset$=".nvg1"],
-                             picture > source[srcset$=".nvg2"], 
-                             picture > source[srcset$=".nvg3"], 
-                             picture > source[srcset$=".nvg4"],
-                             picture > source[srcset$=".nvg5"],
-                             picture > source[srcset$=".nvg6"]`).forEach(e => decode(e, "srcset"));
+  const select = (sel, attr) => [`${tag}[${attr}$=".nvg"]`, ...Array.from({ length: MAX_VERSION }, (value, index) => `${tag}[${attr}$=".nvg${index + 1}"]`)].join(", ");
+
+  const update = (sel, attr) => document.querySelectorAll(select(sel, attr)).forEach(e => decode(e, attr));
+
+  update("img", "src");
+  update("picture > source", "srcset");
 }
 
 // Initial scan
